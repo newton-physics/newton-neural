@@ -113,6 +113,10 @@ If you omit ``states`` or ``commands``, the recorder defaults to :class:`Sampler
 :meth:`~newton_neural.systems.BindingArticulation.state_bounds`), which are often wider than your operating region.
 Narrow them explicitly as above so simulation budget is spent on relevant states.
 
+A sampler draws the states of one world. Where worlds are replicated with a spacing, the recorder shifts every drawn
+floating-base position by the offset of its world (:meth:`~newton_neural.systems.BindingArticulation.place`), so
+each robot starts beside the static geometry of its own world.
+
 .. list-table::
    :widths: 28 72
    :header-rows: 1

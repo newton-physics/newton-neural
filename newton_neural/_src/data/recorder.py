@@ -158,7 +158,8 @@ class TrajectoryRecorder:
         if len(worlds) == 0:
             return
         states = {}
-        for name, value in self.states.sample(len(worlds)).items():
+        # A sampler draws the states of one world. The binding carries them to the worlds they start.
+        for name, value in self.simulation.binding.place(self.states.sample(len(worlds)), worlds).items():
             states[name] = value.new_zeros(len(world_mask), *value.shape[1:])
             states[name][worlds] = value
         self.simulation.restart(states, world_mask)

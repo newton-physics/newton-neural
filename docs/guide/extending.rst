@@ -678,7 +678,8 @@ inputs target :class:`~newton_neural.systems.BindingArticulation`):
 
 1. A :class:`~newton_neural.systems.BindingBase` subclass (returned by ``system.bind()``) providing
    ``system``, ``world_count``, ``read_state``, ``read_control``, ``write_state``, ``write_control``,
-   ``state_bounds``, and ``command_bounds``.
+   ``state_bounds``, and ``command_bounds``. Override ``place`` if the worlds hold the system at different
+   places of one scene, so that states drawn for one world start every world at its own place.
 2. A :class:`~newton_neural.data.SimulationBase` subclass wrapping your reference solver with ``step`` and
    ``restart`` (enabling :class:`~newton_neural.data.TrajectoryRecorder`, :meth:`.NeRDBase.sources`, and live
    audits).

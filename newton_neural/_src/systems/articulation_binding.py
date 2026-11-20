@@ -195,6 +195,13 @@ class BindingArticulation(BindingBase):
         base_coord_count, self._base_dof_count = (7, 6) if spec.floating_base else (0, 0)
         actuated_coords, actuated_dofs = coords[:, base_coord_count:], dofs[:, self._base_dof_count :]
         self._state = {"joint_q": _Rows("joint_q", coords, device), "joint_qd": _Rows("joint_qd", dofs, device)}
+        # Where each world's floating base rests by default, relative to the first world. Worlds built with a
+        # spacing differ by it, and worlds built on top of one another leave nothing to shift.
+        self._base_offset = None
+        if spec.floating_base:
+            rest = model.joint_q.numpy()[coords[:, :3]]
+            if (rest != rest[0]).any():
+                self._base_offset = torch.as_tensor(rest - rest[0], dtype=torch.float32, device=device)
         self._control = {
             name: _Rows(name, actuated_coords if name == "joint_target_q" else actuated_dofs, device)
             for name in spec.control
@@ -231,13 +238,27 @@ class BindingArticulation(BindingBase):
         for name, rows in self._control.items():
             rows.write(getattr(control, name), frames[name], None)
 
+    def place(self, frames: Frames, worlds: Tensor) -> Frames:
+        """Shift floating-base positions drawn around world 0's default pose to the default places of ``worlds``.
+
+        Worlds replicated with a spacing rest at different places of one scene, each beside its own static
+        geometry. A state drawn within :meth:`state_bounds` lies around world 0's place, so it is moved by the
+        offset between the default base position of its world and that of world 0. A fixed base, and worlds that
+        rest at one place, leave ``frames`` as they are.
+        """
+        if self._base_offset is None:
+            return frames
+        joint_q = frames["joint_q"].clone()
+        joint_q[:, :3] += self._base_offset[worlds].to(joint_q.dtype)
+        return {**frames, "joint_q": joint_q}
+
     def state_bounds(self) -> dict[str, tuple[Tensor, Tensor]]:
         """Derive finite ``(low, high)`` sampling bounds for ``joint_q`` and ``joint_qd`` from world 0's limits.
 
         Unbounded revolute/prismatic limits default to ``+-pi`` rad / ``+-1.0`` m; velocity limits are capped at
-        ``20.0`` rad/s or m/s. Floating-base positions span ``+-0.25`` m around world 0's default pose, quaternion
-        components span ``[-1, 1]`` (normalized on reset), and base linear/angular velocities span ``+-1.0`` m/s
-        and ``+-2.0`` rad/s.
+        ``20.0`` rad/s or m/s. Floating-base positions span ``+-0.25`` m around world 0's default pose (:meth:`place`
+        carries a drawn state to another world), quaternion components span ``[-1, 1]`` (normalized on reset),
+        and base linear/angular velocities span ``+-1.0`` m/s and ``+-2.0`` rad/s.
         """
         model = self.view.model
         low, high = self._actuated_reach()

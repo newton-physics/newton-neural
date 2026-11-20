@@ -84,6 +84,19 @@ class BindingBase(abc.ABC):
     def command_bounds(self) -> dict[str, tuple[Tensor, Tensor]]:
         """Return ``(low, high)`` sampling bounds ``[*shape]`` for each ``CONTROL`` signal (``+-inf`` if unbounded)."""
 
+    def place(self, frames: Frames, worlds: Tensor) -> Frames:
+        """Carry ``STATE`` signals drawn for the first world to the worlds they start.
+
+        A sampler draws the states of one world, within :meth:`state_bounds`. Where the worlds of a model hold the
+        system at different places of one scene, a binding overrides this method so that every world starts at
+        its own place. The default returns ``frames`` as they are.
+
+        Args:
+            frames: ``STATE`` signals ``[len(worlds), *shape]``.
+            worlds: Indices ``[len(worlds)]`` of the worlds that the rows of ``frames`` start.
+        """
+        return frames
+
 
 class SystemBase(nn.Module, Part, abc.ABC):
     """Pure-PyTorch specification of a simulated system's signals, features, and state integration.

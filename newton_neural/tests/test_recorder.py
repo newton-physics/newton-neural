@@ -19,6 +19,7 @@ from newton_neural.contacts import ContactInputSet
 from newton_neural.data import (
     CommandHeld,
     SamplerBase,
+    SamplerFloatingBase,
     SamplerSobol,
     SamplerUniform,
     SignalSource,
@@ -376,6 +377,25 @@ def test_sampler_takes_the_count(test: TestTrajectoryRecorder, device: torch.dev
     test.assertTrue((arrays["joint_q"][:, [0, 3, 6]] == 0.0).all())
 
 
+def test_floating_bases_start_in_their_own_worlds(test: TestTrajectoryRecorder, device: torch.device) -> None:
+    """Record worlds that are spaced apart and expect every floating base to start around its own world's place,
+    with the default sampler and with one that draws around the pose of the first world."""
+    model = fixtures.quadruped_model(3, device)
+    system = SystemArticulation.from_model(model, "quadruped")
+    for sampled in (False, True):
+        simulation = SimulationNewton(model, newton.solvers.SolverMuJoCo(model, njmax=128), system, frame_dt=FRAME_DT)
+        rest = simulation.binding.read_state(model.state())["joint_q"].clone()
+        test.assertGreater((rest[1:, 0] - rest[0, 0]).min().item(), 1.0)  # the worlds of the fixture are spaced
+        states = SamplerFloatingBase(rest[0], position=((-0.1, -0.1, 0.0), (0.1, 0.1, 0.0))) if sampled else None
+        TrajectoryRecorder(simulation, FlashNeRD(system).to(device), states=states)
+        start = simulation.binding.read_state(simulation.state)["joint_q"]
+        test.assertLessEqual((start[:, :2] - rest[:, :2]).abs().max().item(), 0.25 + 1e-6)
+        # A state handed to the simulation itself is written where it says.
+        simulation.restart({"joint_q": rest[:1].expand(3, -1), "joint_qd": torch.zeros(3, 18, device=device)})
+        written = simulation.binding.read_state(simulation.state)["joint_q"][:, :3]
+        test.assertTrue(torch.equal(written, rest[:1, :3].expand(3, -1)))
+
+
 def test_windows(test: TestTrajectoryRecorder, device: torch.device) -> None:
     """Load a recorded dataset as training windows that stay inside episodes."""
     simulation = _arm_simulation(device)
@@ -540,6 +560,7 @@ for _function in (
     test_failed_recording_leaves_a_dataset,
     test_model_beside_the_dataset,
     test_sampler_takes_the_count,
+    test_floating_bases_start_in_their_own_worlds,
     test_windows,
     test_free_motion_label,
     test_free_motion_requirements,
