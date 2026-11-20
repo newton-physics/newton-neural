@@ -15,12 +15,15 @@ from torch import Tensor
 from torch.nn.parallel import DistributedDataParallel
 
 from ..core.compilation import with_own_code
+from ..core.precision import tensor_float_products
 from ..core.signal import Frames
 from ..data.windows import TrajectoryBatch
 from ..models.nerd import NeRDBase
 
-_VALUE_TOLERANCE = 1e-5
-"""Max allowed relative difference between compiled and eager loss on checked calls (floor 1.0)."""
+_VALUE_TOLERANCES = {False: 1e-5, True: 1e-3}
+"""Max allowed relative difference between compiled and eager loss on checked calls (floor 1.0), by whether
+float32 matrix products run in TF32. TF32 rounds a product to about three digits, and compiled code multiplies in
+another order than eager code, by an amount that depends on the GPU."""
 
 
 class ErrorKind(StrEnum):
@@ -121,7 +124,9 @@ class LossOneStep(LossBase):
         """Compile the core tensor loss with ``torch.compile`` (noise injection and contact FK stay eager).
 
         When ``check=True``, compares the first grad and first no-grad non-autocast calls against eager evaluation
-        and raises ``RuntimeError`` on discrepancy (pass ``check=False`` for stochastic models like dropout).
+        and raises ``RuntimeError`` on discrepancy (pass ``check=False`` for stochastic models like dropout). The
+        values may differ by ``1e-5`` of the eager loss or of one, whichever is greater, and by ``1e-3`` where
+        float32 matrix products run in TF32.
 
         Args:
             check: Verify first compiled calls against eager loss.
@@ -147,16 +152,17 @@ class LossOneStep(LossBase):
         return current
 
     def _check(self, compiled: Tensor, *arguments: Any) -> None:
-        """Raise ``RuntimeError`` if ``compiled`` deviates from eager ``_window_loss`` beyond ``_VALUE_TOLERANCE``."""
+        """Raise ``RuntimeError`` if ``compiled`` deviates from eager ``_window_loss`` beyond ``_VALUE_TOLERANCES``."""
+        tolerance = _VALUE_TOLERANCES[tensor_float_products(compiled.device)]
         with torch.no_grad():
             # On the model itself, since a forward of the wrapper exchanges buffers with the other processes.
             eager = self._window_loss(_unwrapped(arguments[0]), *arguments[1:])
             error = ((compiled - eager).abs() / eager.abs().clamp_min(1.0)).item()
-        if not error <= _VALUE_TOLERANCE:  # Fails on NaN too
+        if not error <= tolerance:  # Fails on NaN too
             raise RuntimeError(
                 f"the compiled loss is {compiled.item():.6g} and the eager loss of the same frames is "
                 f"{eager.item():.6g}. They differ by {error:.3g} of the eager loss or of one, whichever is "
-                f"greater, more than {_VALUE_TOLERANCE:.3g}. The frames or the weights are not finite, the "
+                f"greater, more than {tolerance:.3g}. The frames or the weights are not finite, the "
                 "compiler is at fault, or the model draws random numbers at every call, as dropout does. "
                 "Compile the loss of such a model with compile(check=False)"
             )

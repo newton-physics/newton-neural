@@ -46,13 +46,21 @@ FRAME_COUNT = 6
 """Frames per window, which gives 5 predictions."""
 
 VALUE_TOLERANCE = 1e-5
-"""Largest difference from the eager loss that a checked call of a compiled loss accepts, relative to the eager
-loss or to one, whichever is greater."""
+"""Largest difference from the eager loss that a checked call of a compiled loss accepts in IEEE float32, relative
+to the eager loss or to one, whichever is greater."""
 
-COMPILED_GRADIENT_TOLERANCE = 1e-2
-"""Largest difference from the gradient of the eager loss that the compiled losses of the small models of the
-tests may show in TensorFloat-32, relative to its length. Above what a few outputs add whose error rounding
-moves across zero, which flips their gradient under the absolute error."""
+TENSOR_FLOAT_VALUE_TOLERANCE = 1e-3
+"""The same in TensorFloat-32, which rounds a product to about three digits. Compiled code multiplies in another
+order than eager code, and how far that moves the loss depends on the GPU."""
+
+COMPILED_GRADIENT_TOLERANCE = 1e-4
+"""Largest difference from the gradient of the eager loss that a compiled loss may show in IEEE float32, relative
+to its length."""
+
+TENSOR_FLOAT_GRADIENT_TOLERANCE = 1e-1
+"""The same in TensorFloat-32 for the small models of the tests. Rounding moves the error of a few outputs across
+zero, which flips their gradient under the absolute error, and the architecture of the GPU decides how many
+products round."""
 
 TENSOR_CORE_WINDOW_COUNT = 64
 """Windows with which TensorFloat-32 changes the losses of the small models of the tests. cuBLAS computes the
@@ -307,27 +315,34 @@ def _gradient(nerd: NeRDBase) -> Tensor:
 def _assert_compiled_matches_eager(
     test: unittest.TestCase, nerd: NeRDBase, batch: TrajectoryBatch, **settings: Any
 ) -> LossOneStep:
-    """Compile a loss and require the value and the gradient of the eager loss under the same seed, at the first
-    call, which checks itself, and at the next, while float32 matrix products run in TensorFloat-32.
+    """Compile a loss and require the value and the gradient of the eager loss under the same seed.
+
+    First while float32 matrix products run in TensorFloat-32, as a training script sets it, where the first call
+    checks itself. Then in IEEE float32, where compiled and eager code agree to rounding on every GPU.
 
     Returns:
         The compiled loss.
     """
     eager, compiled = LossOneStep(**settings), LossOneStep(**settings)
     compiled.compile(fullgraph=True)  # so that the compiler raises where it would give up and run the loss eagerly
-    with process_precision("high"):  # as a training script sets it
-        for seed in range(2):
-            found = []
-            for loss in (eager, compiled):
-                torch.manual_seed(seed)
-                nerd.zero_grad()
-                value = loss(nerd, batch)
-                value.backward()
-                found.append((value.detach(), _gradient(nerd)))
-            (expected, expected_gradient), (value, gradient) = found
-            test.assertLessEqual((value - expected).abs() / expected.abs().clamp_min(1.0), VALUE_TOLERANCE)
-            error = ((gradient - expected_gradient).norm() / expected_gradient.norm()).item()
-            test.assertLessEqual(error, COMPILED_GRADIENT_TOLERANCE, f"the gradient differs by {error:.3g}")
+    for setting, value_tolerance, gradient_tolerance in (
+        ("high", TENSOR_FLOAT_VALUE_TOLERANCE, TENSOR_FLOAT_GRADIENT_TOLERANCE),
+        ("highest", VALUE_TOLERANCE, COMPILED_GRADIENT_TOLERANCE),
+    ):
+        with process_precision(setting):
+            for seed in range(2):
+                found = []
+                for loss in (eager, compiled):
+                    torch.manual_seed(seed)
+                    nerd.zero_grad()
+                    value = loss(nerd, batch)
+                    value.backward()
+                    found.append((value.detach(), _gradient(nerd)))
+                (expected, expected_gradient), (value, gradient) = found
+                error = ((value - expected).abs() / expected.abs().clamp_min(1.0)).item()
+                test.assertLessEqual(error, value_tolerance, f"{setting}, the loss differs by {error:.3g}")
+                error = ((gradient - expected_gradient).norm() / expected_gradient.norm()).item()
+                test.assertLessEqual(error, gradient_tolerance, f"{setting}, the gradient differs by {error:.3g}")
     return compiled
 
 
@@ -430,6 +445,14 @@ def test_compiled_loss_checks_itself(test: unittest.TestCase, device: torch.devi
         loss.compile()
     with test.assertRaisesRegex(RuntimeError, "compiled loss is"):
         loss(nerd, batch)
+
+    # In TensorFloat-32 the check accepts what the rounding of the products moves, and no more.
+    if device.type == "cuda":
+        with process_precision("high"):
+            loose = TENSOR_FLOAT_VALUE_TOLERANCE * max(1.0, expected.item())
+            compiled_loss(0.5 * loose)(nerd, batch)
+            with test.assertRaisesRegex(RuntimeError, "compiled loss is"):
+                compiled_loss(2.0 * loose)(nerd, batch)
 
     # A copy of a compiled loss computes with its own settings.
     squared = copy.deepcopy(compiled_loss(0.0))

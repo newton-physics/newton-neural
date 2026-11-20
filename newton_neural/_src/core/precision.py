@@ -32,6 +32,11 @@ class Precision(StrEnum):
     """16-bit bfloat16 linear weights and autocast matmuls (FP32 dynamic range, 7-bit mantissa)."""
 
 
+def tensor_float_products(device: torch.device) -> bool:
+    """Whether float32 matrix products on ``device`` run in TF32 under PyTorch's process-global setting."""
+    return device.type == "cuda" and torch.backends.cuda.matmul.fp32_precision == "tf32"
+
+
 SWITCH_LOCK = threading.RLock()
 """Reentrant lock serializing access to PyTorch's process-global CUDA ``fp32_precision`` flag."""
 

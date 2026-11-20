@@ -147,9 +147,10 @@ than short experiments.
 CPU compilation requires a local C++ toolchain, so the guard above enables it only on CUDA.
 
 By default (``check=True``), the first gradient-tracking call and first no-grad call also compute the eager loss and
-raise a ``RuntimeError`` if the compiled value differs by more than ``1e-5`` relative to ``max(|eager|, 1)``. Calls
-under ``torch.autocast`` and later recompilations (e.g., for different batch sizes) are not re-checked. If your
-custom network is stochastic during training (e.g., dropout), pass ``loss.compile(check=False)``.
+raise a ``RuntimeError`` if the compiled value differs by more than ``1e-5`` relative to ``max(|eager|, 1)``, or by
+more than ``1e-3`` where FP32 matmuls run in TF32, whose rounding depends on the order of the products and on the
+GPU. Calls under ``torch.autocast`` and later recompilations (e.g., for different batch sizes) are not re-checked.
+If your custom network is stochastic during training (e.g., dropout), pass ``loss.compile(check=False)``.
 
 5. Save and load checkpoints
 ----------------------------
