@@ -22,6 +22,7 @@ from torch import Tensor, nn
 
 from ..core.normalizer import FEATURE_LIMIT, Normalizer
 from ..core.signal import Frames, SignalRole, SignalSpec
+from ..core.stream import torch_on_warp_stream
 from ..systems.articulation import SystemArticulation, robot_frame
 from ..systems.articulation_binding import BindingArticulation, Pattern
 from .contact_input import ContactInputBase, ContactSensorBase
@@ -246,11 +247,14 @@ class ContactInputProbes(ContactInputBase):
             binding = system.bind(model)
             self._replicas[world_count, device] = (model, model.state(), binding, self.sensor(model, binding))
         model, state, binding, sensor = self._replicas[world_count, device]
-        binding.write_state(state, {name: frames[name].flatten(0, -2) for name in ("joint_q", "joint_qd")})
-        newton.eval_fk(model, state.joint_q, state.joint_qd, state)
-        features = sensor.update(state, None)[SIGNAL]
-        # Clone because sensor.features is overwritten by subsequent calls.
-        return {SIGNAL: features.unflatten(0, lead).to(joint_q.dtype, copy=True)}
+        # A copy, because sensor.features is overwritten by subsequent calls.
+        features = joint_q.new_empty(*lead, len(self.probes), FEATURE_COUNT)
+        # The state copy, the kinematics and the result copy run on one CUDA stream, in this order.
+        with torch_on_warp_stream(device):
+            binding.write_state(state, {name: frames[name].flatten(0, -2) for name in ("joint_q", "joint_qd")})
+            newton.eval_fk(model, state.joint_q, state.joint_qd, state)
+            features.copy_(sensor.update(state, None)[SIGNAL].unflatten(0, lead))
+        return {SIGNAL: features}
 
     def encoder(self) -> ContactEncoderProbes:
         """Create a :class:`ContactEncoderProbes` for this configuration."""

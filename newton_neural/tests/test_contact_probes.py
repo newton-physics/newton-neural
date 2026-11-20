@@ -373,6 +373,30 @@ def test_encoder(test: unittest.TestCase, device: torch.device) -> None:
     test.assertTrue(torch.equal(restored(frames), encoder(frames)))
 
 
+def test_evaluate_on_a_stream_of_the_caller(test: unittest.TestCase, device: torch.device) -> None:
+    """Sense the pose it is given when the caller works on a busy PyTorch stream of its own."""
+    model, system, contact_input = _scene("quadruped", 4, device)
+    frames = {name: value.clone() for name, value in system.bind(model).read_state(model.state()).items()}
+    rises = (1.0, 2.0, 3.0)
+    gaps = []
+    for rise in rises:
+        with torch.cuda.stream(torch.cuda.Stream(device)):
+            busy = torch.randn(4096, 4096, device=device)
+            for _ in range(24):
+                busy = torch.nn.functional.normalize(busy @ busy)
+            raised = {**frames, "joint_q": frames["joint_q"].clone()}
+            raised["joint_q"][:, 2] += rise
+            gaps.append(contact_input.evaluate(system, raised)[SIGNAL][..., 0])
+    # A call from the default stream poses the same replica, which must not reach the results handed out before.
+    gaps.append(contact_input.evaluate(system, frames)[SIGNAL][..., 0])
+    # A caller that works on Warp's stream already, as a solver's step does.
+    with torch.cuda.stream(torch.cuda.ExternalStream(wp.get_stream(model.device).cuda_stream, device=device)):
+        gaps.append(contact_input.evaluate(system, raised)[SIGNAL][..., 0])
+    torch.cuda.synchronize(device)
+    for gap, rise in zip(gaps, (*rises, 0.0, rises[-1]), strict=True):
+        _assert_close(test, gap, torch.full_like(gap, STANDING_GAP + rise), 1e-5)
+
+
 class TestContactProbes(unittest.TestCase):
     pass
 
@@ -404,12 +428,8 @@ for _function in (
     test_encoder,
 ):
     add_function_test(TestContactProbes, _function.__name__, _function)
-add_function_test(
-    TestContactProbes,
-    test_sensor_replays_from_graph.__name__,
-    test_sensor_replays_from_graph,
-    devices=get_cuda_test_devices(),
-)
+for _function in (test_sensor_replays_from_graph, test_evaluate_on_a_stream_of_the_caller):
+    add_function_test(TestContactProbes, _function.__name__, _function, devices=get_cuda_test_devices())
 
 
 if __name__ == "__main__":
