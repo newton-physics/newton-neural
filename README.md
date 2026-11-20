@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/_static/newton-neural-logo-dark.svg">
+    <img src="docs/_static/newton-neural-logo-light.svg" alt="newton-neural logo" width="440">
+  </picture>
+</p>
+
 # newton-neural
 
 > [!WARNING]
@@ -27,8 +34,6 @@ Learned dynamics change that trade-off:
 This preview focuses on **speed**. Differentiable rollout and real-data fine-tuning utilities are not included yet.
 
 ## How it fits into Newton
-
-![Isaac Lab steps Newton, Newton steps a solver, and newton-neural runs alongside physics solvers using the same interface](docs/_static/architecture.svg)
 
 `newton-neural` depends only on Newton and integrates natively into Newton's simulation stack:
 

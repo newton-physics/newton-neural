@@ -120,7 +120,12 @@ html_css_files = ["custom.css"]
 html_show_sourcelink = False
 html_sidebars = {"**": ["sidebar-nav-bs.html"]}
 html_theme_options = {
-    "logo": {"text": f"newton-neural <span style='font-size: 0.8em; color: #888;'>({release})</span>"},
+    "logo": {
+        "image_light": "_static/newton-neural-logo-light.svg",
+        "image_dark": "_static/newton-neural-logo-dark.svg",
+        "text": f"newton-neural <span style='font-size: 0.8em; color: #888;'>({release})</span>",
+        "alt_text": "newton-neural logo",
+    },
     "icon_links": [{"name": "GitHub", "url": github_url, "icon": "fa-brands fa-github"}],
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
     "navigation_depth": 1,

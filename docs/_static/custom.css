@@ -16,3 +16,21 @@
 .bd-sidebar-primary .sidebar-header-items .sidebar-header-items__center {
     display: none;
 }
+
+/* The theme gives the logo and the name of the library a quarter of the header. Together they are wider than
+   that, so this section takes the width of its content and the navigation starts after it. */
+.bd-header .navbar-header-items__start {
+    width: auto;
+}
+
+/* From 960px to 1250px the header is too narrow for the logo, the name with its version, the navigation and
+   the search. The version gives way there and the logo is a little smaller, so the header keeps its rows. */
+@media (min-width: 960px) and (max-width: 1249.98px) {
+    .bd-header .navbar-brand .title span {
+        display: none;
+    }
+
+    .bd-header .navbar-brand img {
+        height: 2.6rem;
+    }
+}
