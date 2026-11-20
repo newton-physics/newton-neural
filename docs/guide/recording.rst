@@ -71,6 +71,11 @@ Each frame advances ``frame_dt=0.02`` s using 4 solver substeps of ``0.005`` s. 
     :class:`newton.solvers.SolverXPBD`. Pass ``collision_pipeline`` if the solver or a contact input requires
     Newton-detected contacts (see :doc:`contact`).
 
+    Newton leaves external actuators (``model.actuators``, added with ``ModelBuilder.add_actuator`` or authored
+    as USD actuator prims) to the caller of the solver to step. :class:`SimulationNewton` does not step them and
+    refuses a model that holds any, since their forces would be missing from every frame. Step such a model in a
+    :class:`SimulationBase` subclass of your own (see :doc:`extending`).
+
 3. Instantiate the model to declare signals
 -------------------------------------------
 

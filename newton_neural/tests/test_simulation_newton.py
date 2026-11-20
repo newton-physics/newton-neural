@@ -305,7 +305,7 @@ def test_bounds_are_those_of_the_binding(test: TestSimulationNewton, device: tor
 
 
 def test_refuses_bad_arguments(test: TestSimulationNewton, device: torch.device) -> None:
-    """Refuse a solver of another model and a frame without solver steps."""
+    """Refuse a solver of another model, a frame without solver steps and a model with external actuators."""
     model = fixtures.arm_model(2, device)
     system = SystemArticulation.from_model(model)
     other = newton.solvers.SolverFeatherstone(fixtures.arm_model(2, device))
@@ -313,6 +313,13 @@ def test_refuses_bad_arguments(test: TestSimulationNewton, device: torch.device)
         SimulationNewton(model, other, system, frame_dt=FRAME_DT)
     with test.assertRaisesRegex(ValueError, "substep_count"):
         SimulationNewton(model, newton.solvers.SolverFeatherstone(model), system, frame_dt=FRAME_DT, substep_count=0)
+    # Newton leaves external actuators to the caller of the solver, and the simulation would step without them.
+    robot = newton.ModelBuilder()
+    fixtures.add_arm(robot)
+    robot.add_actuator(newton.actuators.DrivePD, index=0, kp=100.0, kd=10.0)
+    actuated = robot.finalize(device=str(device))
+    with test.assertRaisesRegex(ValueError, "external actuators"):
+        SimulationNewton(actuated, newton.solvers.SolverFeatherstone(actuated), system, frame_dt=FRAME_DT)
 
 
 for _robot, _solver in (

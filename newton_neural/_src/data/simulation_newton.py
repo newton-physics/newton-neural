@@ -46,7 +46,9 @@ class SimulationNewton(SimulationBase):
 
     Raises:
         KeyError: If no articulation matches ``articulation``.
-        ValueError: If ``solver.model is not model``, ``substep_count < 1``, or ``model`` disagrees with ``system``.
+        ValueError: If ``solver.model is not model``, ``substep_count < 1``, ``model`` disagrees with ``system``,
+            or ``model`` holds external actuators (``model.actuators``), which Newton leaves to the caller of the
+            solver to step and this simulation does not step.
     """
 
     def __init__(
@@ -65,6 +67,13 @@ class SimulationNewton(SimulationBase):
             raise ValueError("the solver steps another model than the one given")
         if substep_count < 1:
             raise ValueError(f"a frame holds at least one solver step, got substep_count {substep_count}")
+        if model.actuators or model.batteries:
+            raise ValueError(
+                f"the model holds external actuators ({len(model.actuators)} in model.actuators), which Newton leaves "
+                "to the caller of the solver to step. This simulation does not step them, so their forces would "
+                "be missing from every frame. Step such a model in a simulation of your own, a subclass of "
+                "SimulationBase"
+            )
         self.model, self.solver = model, solver
         self.binding = system.bind(model, articulation)
         self.world_count = self.binding.world_count
