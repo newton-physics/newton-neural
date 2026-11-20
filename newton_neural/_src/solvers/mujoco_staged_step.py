@@ -4,15 +4,14 @@
 """Staged MuJoCo Warp step hook replacing robot ``qacc_smooth`` before constraint resolution.
 
 Isolates all access to ``SolverMuJoCo`` private attributes (``_mujoco_warp_step``, ``_use_speculative_contacts``)
-in one place and verifies at construction that the staged sequence reproduces MuJoCo Warp's native step.
+in one place. The staged sequence takes no step when it is installed. The tests of the library check that it
+reproduces MuJoCo Warp's native step.
 """
 
 from __future__ import annotations
 
 from types import SimpleNamespace
 
-import newton
-import numpy as np
 import warp as wp
 from newton.solvers import SolverMuJoCo
 
@@ -48,8 +47,8 @@ def replace_mujoco_warp_step(
 ) -> None:
     """Replace ``solver._mujoco_warp_step`` with public MuJoCo Warp stages injecting ``free_acceleration``.
 
-    Before activating ``dof_mask``, verifies that one unmasked staged step from the model's default state matches
-    MuJoCo Warp's native step within ``rtol=1e-4, atol=1e-5``.
+    Leaves the state of ``solver`` as it is. With an all-false ``dof_mask`` the stages reproduce MuJoCo Warp's
+    native step.
 
     Args:
         solver: MuJoCo Warp solver instance (GPU, no sleeping, no speculative contacts, Euler/implicit/implicitfast).
@@ -83,7 +82,7 @@ def replace_mujoco_warp_step(
             "free accelerations calls"
         ) from error
 
-    def staged_step(dof_mask: wp.array[wp.bool] = dof_mask) -> None:
+    def staged_step() -> None:
         m, d = solver.mjw_model, solver.mjw_data
         stage.step1(m, d)
         stage.fwd_actuation(m, d)
@@ -105,24 +104,4 @@ def replace_mujoco_warp_step(
         stage.sensor_acc(m, d, skip_rne_postconstraint=True)
         getattr(stage, integrate)(m, d)
 
-    expected = _step_from_default(solver)
-    solver._mujoco_warp_step = lambda: staged_step(wp.zeros_like(dof_mask))
-    found = _step_from_default(solver)
-    if not np.allclose(found, expected, rtol=1e-4, atol=1e-5):
-        raise RuntimeError(
-            f"the stages of MuJoCo Warp {mujoco_warp.__version__} do not reproduce its step. The joint state "
-            f"after one step differs by up to {np.abs(found - expected).max():.3g}"
-        )
     solver._mujoco_warp_step = staged_step
-
-
-def _step_from_default(solver: SolverMuJoCo) -> np.ndarray:
-    """Take one reference step from default state, reset ``solver``, and return concatenated ``[joint_q, joint_qd]``."""
-    model = solver.model
-    state, state_out = model.state(), model.state()
-    # Supply empty contacts if the solver expects external Newton collision detection.
-    contacts = None if solver.mjw_model.opt.run_collision_detection else newton.Contacts(0, 0, device=model.device)
-    # Invoke SolverMuJoCo base methods directly since SolverNeRDMuJoCo is still inside __init__.
-    SolverMuJoCo.step(solver, state, state_out, model.control(), contacts, solver.mj_model.opt.timestep)
-    SolverMuJoCo.reset(solver, state)
-    return np.concatenate([state_out.joint_q.numpy(), state_out.joint_qd.numpy()])

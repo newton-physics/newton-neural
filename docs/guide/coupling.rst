@@ -166,5 +166,5 @@ How injection works inside MuJoCo Warp
 
 :class:`SolverNeRDMuJoCo` replaces its instance's MuJoCo Warp step with the equivalent sequence of public MuJoCo Warp
 stage calls, inserting a Warp kernel between ``fwd_acceleration`` and ``solve`` that overwrites ``qacc_smooth`` on
-the robot's DOFs. At construction, the solver verifies that its staged step reproduces MuJoCo Warp's native step
-before enabling acceleration replacement.
+the robot's DOFs. Constructing the solver takes no step, so the first ``step()`` starts from the state it is given.
+The library's tests check that the staged sequence reproduces MuJoCo Warp's native step.

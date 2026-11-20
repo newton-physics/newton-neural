@@ -184,8 +184,44 @@ def test_prediction_replaces_robot_rows(test: TestSolverNeRDMuJoCo, device: torc
     torch.testing.assert_close(velocity[:, :6], own_velocity[:, :6], rtol=1e-5, atol=1e-5)
 
 
+def test_staged_step_reproduces_mujoco(test: TestSolverNeRDMuJoCo, device: torch.device) -> None:
+    """Reproduce MuJoCo Warp's own step with its stages while no free acceleration is replaced."""
+    model = fixtures.arm_with_box_model(WORLD_COUNT, device)
+    state, control = _random_state(model, SystemArticulation.from_model(model, "arm")), model.control()
+    wp.to_torch(control.joint_target_q).normal_()
+    replacement = wp.zeros(model.joint_dof_count, dtype=wp.float32, device=model.device)
+    mask = wp.zeros(model.joint_dof_count, dtype=wp.bool, device=model.device)
+    for options in ({}, {"use_mujoco_contacts": False}, {"integrator": "implicit"}):
+        staged, plain = SolverMuJoCo(model, **options), SolverMuJoCo(model, **options)
+        staged_module.replace_mujoco_warp_step(staged, replacement, mask)
+        collide = not options.get("use_mujoco_contacts", True)
+        found = _run(staged, state, 4, control, collide=collide)
+        expected = _run(plain, state, 4, control, collide=collide)
+        for name in ("joint_q", "joint_qd"):
+            np.testing.assert_allclose(
+                getattr(found, name).numpy(),
+                getattr(expected, name).numpy(),
+                rtol=1e-4,
+                atol=1e-5,
+                err_msg=f"{options} {name}",
+            )
+        moved = found.joint_q.numpy() - state.joint_q.numpy()
+        test.assertGreater(np.abs(moved).max(), 1e-3)
+
+
+def test_construction_takes_no_step(test: TestSolverNeRDMuJoCo, device: torch.device) -> None:
+    """Leave MuJoCo Warp as it is at construction, so that the first step starts from the state it is given."""
+    model = fixtures.arm_model(WORLD_COUNT, device)
+    with mock.patch.object(SolverMuJoCo, "step") as step:
+        solver = SolverNeRDMuJoCo(model, _nerd(device, coasting=True), articulation="arm")
+    step.assert_not_called()
+    state = model.state()
+    _joints(state)[:, 1] = 0.5
+    test.assertAlmostEqual(_joints(_run(solver, state, 1))[0, 1].item(), 0.5, delta=1e-2)
+
+
 def test_staged_step_guard(test: TestSolverNeRDMuJoCo, device: torch.device) -> None:
-    """Accept MuJoCo Warp's stages where they reproduce its step and refuse what they cannot run."""
+    """Install MuJoCo Warp's stages under the options they can run and refuse the others."""
     model = fixtures.arm_with_box_model(WORLD_COUNT, device)
 
     def replace(model: newton.Model = model, **options) -> SolverMuJoCo:
@@ -524,6 +560,8 @@ for _collide in (False, True):
     )
 for _function in (
     test_prediction_replaces_robot_rows,
+    test_staged_step_reproduces_mujoco,
+    test_construction_takes_no_step,
     test_staged_step_guard,
     test_refuses_what_it_cannot_run,
     test_loads_checkpoint,
