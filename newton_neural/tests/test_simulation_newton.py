@@ -12,13 +12,14 @@ import newton
 import numpy as np
 import torch
 import warp as wp
+from torch import Tensor
 
 from newton_neural import Frames
 from newton_neural._src.core import rotation as rot
 from newton_neural.data import SimulationBase, SimulationNewton
 from newton_neural.systems import SystemArticulation
 from newton_neural.tests import fixtures
-from newton_neural.tests.unittest_utils import add_function_test
+from newton_neural.tests.unittest_utils import add_function_test, get_cuda_test_devices
 
 FRAME_DT = 0.01
 WORLD_COUNT = 4
@@ -304,6 +305,41 @@ def test_bounds_are_those_of_the_binding(test: TestSimulationNewton, device: tor
     torch.testing.assert_close(quaternion, rot.normalize(-torch.ones(WORLD_COUNT, 4, device=device)))
 
 
+def test_step_on_a_stream_of_the_caller(test: TestSimulationNewton, device: torch.device) -> None:
+    """Restart and step from a busy PyTorch stream of the caller and expect the frame of the default stream, the
+    one that starts from the state given and takes the command given."""
+    model = fixtures.arm_model(2, device)
+    system = SystemArticulation.from_model(model, "arm", control=("joint_f",))
+    solver = newton.solvers.SolverMuJoCo(model)
+    simulation = SimulationNewton(model, solver, system, articulation="arm", frame_dt=FRAME_DT)
+    start = fixtures.random_frames(system, 2, device=device, seed=3)
+    state = {name: start[name] for name in ("joint_q", "joint_qd")}
+    command = {"joint_f": torch.ones(2, system.actuated_count, device=device)}
+
+    def frame(busy: bool, force: float) -> Tensor:
+        simulation.restart({name: torch.zeros_like(value) for name, value in state.items()})
+        simulation.step({"joint_f": torch.zeros_like(command["joint_f"])})
+        torch.cuda.synchronize(device)
+        if not busy:
+            simulation.restart(state)
+            simulation.step({"joint_f": force * command["joint_f"]})
+            return simulation.binding.read_state(simulation.state)["joint_qd"].clone()
+        with torch.cuda.stream(torch.cuda.Stream(device)):
+            work = torch.randn(4096, 4096, device=device)
+            for _ in range(24):
+                work = torch.nn.functional.normalize(work @ work)
+            simulation.restart({name: value.clone() for name, value in state.items()})
+            simulation.step({"joint_f": force * command["joint_f"].clone()})
+            found = simulation.binding.read_state(simulation.state)["joint_qd"].clone()
+        torch.cuda.synchronize(device)
+        return found
+
+    expected = frame(busy=False, force=1.0)
+    test.assertGreater((expected - frame(busy=False, force=0.0)).abs().max().item(), 1e-3)  # the command counts
+    for _ in range(3):
+        torch.testing.assert_close(frame(busy=True, force=1.0), expected, rtol=1e-5, atol=1e-6)
+
+
 def test_refuses_bad_arguments(test: TestSimulationNewton, device: torch.device) -> None:
     """Refuse a solver of another model, a frame without solver steps and a model with external actuators."""
     model = fixtures.arm_model(2, device)
@@ -350,6 +386,12 @@ for _function in (
     test_refuses_bad_arguments,
 ):
     add_function_test(TestSimulationNewton, _function.__name__, _function)
+add_function_test(
+    TestSimulationNewton,
+    test_step_on_a_stream_of_the_caller.__name__,
+    test_step_on_a_stream_of_the_caller,
+    devices=get_cuda_test_devices(),
+)
 
 
 if __name__ == "__main__":

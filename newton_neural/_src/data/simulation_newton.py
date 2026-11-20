@@ -16,6 +16,7 @@ from torch import Tensor
 from ..core.graph import GraphedWork
 from ..core.rotation import normalize
 from ..core.signal import Frames
+from ..core.stream import torch_on_warp_stream
 from ..systems.articulation_binding import reset_mask_entries
 from .simulation import SimulationBase
 
@@ -101,9 +102,11 @@ class SimulationNewton(SimulationBase):
 
     def step(self, command: Frames | None = None) -> None:
         """Write optional ``command`` into :attr:`control` and advance all worlds by one frame."""
-        if command is not None:
-            self.binding.write_control(self.control, command)
-        self._frame.run(self.state, self._next_state)
+        # PyTorch writes the command and Warp steps the frame, in this order on whichever stream the caller works.
+        with torch_on_warp_stream(self.device):
+            if command is not None:
+                self.binding.write_control(self.control, command)
+            self._frame.run(self.state, self._next_state)
         if self.substep_count % 2:  # Odd substep count leaves final output in _next_state
             self.state, self._next_state = self._next_state, self.state
 
@@ -123,18 +126,20 @@ class SimulationNewton(SimulationBase):
         non-robot bodies to model defaults), then writes ``frames``, normalizes free-joint quaternions, evaluates
         FK, and runs collision detection.
         """
-        # Newton's world_mask has length world_count + 1 (last entry is the global world).
-        worlds = torch.zeros(self.world_count + 1, dtype=torch.bool, device=self.device)
-        worlds[:-1] = True if world_mask is None else world_mask
-        self.solver.reset(self.state, wp.from_torch(worlds, dtype=wp.bool))
-        self.binding.write_state(self.state, frames, world_mask)
-        joint_q = wp.to_torch(self.state.joint_q)
-        quaternions = joint_q[self._quaternion_coords]
-        restarted = worlds[self._quaternion_world, None]
-        joint_q[self._quaternion_coords] = torch.where(restarted, normalize(quaternions), quaternions)
-        articulations = wp.from_torch(worlds[self._articulation_world], dtype=wp.bool)
-        newton.eval_fk(self.model, self.state.joint_q, self.state.joint_qd, self.state, mask=articulations)
-        self._collide(self.state)
+        # PyTorch and Warp take turns on the state, in this order on whichever stream the caller works.
+        with torch_on_warp_stream(self.device):
+            # Newton's world_mask has length world_count + 1 (last entry is the global world).
+            worlds = torch.zeros(self.world_count + 1, dtype=torch.bool, device=self.device)
+            worlds[:-1] = True if world_mask is None else world_mask
+            self.solver.reset(self.state, wp.from_torch(worlds, dtype=wp.bool))
+            self.binding.write_state(self.state, frames, world_mask)
+            joint_q = wp.to_torch(self.state.joint_q)
+            quaternions = joint_q[self._quaternion_coords]
+            restarted = worlds[self._quaternion_world, None]
+            joint_q[self._quaternion_coords] = torch.where(restarted, normalize(quaternions), quaternions)
+            articulations = wp.from_torch(worlds[self._articulation_world], dtype=wp.bool)
+            newton.eval_fk(self.model, self.state.joint_q, self.state.joint_qd, self.state, mask=articulations)
+            self._collide(self.state)
 
     def _collide(self, state: newton.State) -> None:
         if self.collision_pipeline is not None:

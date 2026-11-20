@@ -409,8 +409,20 @@ def test_evaluate_on_a_stream_of_the_caller(test: unittest.TestCase, device: tor
     # A caller that works on Warp's stream already, as a solver's step does.
     with torch.cuda.stream(torch.cuda.ExternalStream(wp.get_stream(model.device).cuda_stream, device=device)):
         gaps.append(contact_input.evaluate(system, raised)[SIGNAL][..., 0])
+    # Warp on busy streams made by PyTorch, which CUDA does not keep in order with PyTorch's default stream.
+    streams = []
+    for rise in rises:
+        streams.append(torch.cuda.Stream(device))
+        with torch.cuda.stream(streams[-1]):
+            busy = torch.randn(4096, 4096, device=device)
+            for _ in range(24):
+                busy = torch.nn.functional.normalize(busy @ busy)
+        with wp.ScopedStream(wp.stream_from_torch(streams[-1])):
+            raised = {**frames, "joint_q": frames["joint_q"].clone()}
+            raised["joint_q"][:, 2] += rise
+            gaps.append(contact_input.evaluate(system, raised)[SIGNAL][..., 0])
     torch.cuda.synchronize(device)
-    for gap, rise in zip(gaps, (*rises, 0.0, rises[-1]), strict=True):
+    for gap, rise in zip(gaps, (*rises, 0.0, rises[-1], *rises), strict=True):
         _assert_close(test, gap, torch.full_like(gap, STANDING_GAP + rise), 1e-5)
 
 
