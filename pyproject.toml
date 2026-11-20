@@ -69,7 +69,7 @@ environments = [
 [tool.uv.sources]
 # The PyTorch wheels on PyPI are built with CUDA for x86-64 alone, so aarch64 takes PyTorch from the CUDA index.
 torch = { index = "pytorch-cu130", marker = "platform_machine == 'aarch64'" }
-# Newton between releases, at the commit that Isaac Lab pins.
+# Newton between releases, at the commit that Isaac Lab pins. asv.conf.json installs the same commit.
 newton = { git = "https://github.com/newton-physics/newton.git", rev = "d31603ff5e8389d1d6b2a5daef6ea2cb074c26ff" }
 
 [[tool.uv.index]]
