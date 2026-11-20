@@ -17,6 +17,15 @@
     display: none;
 }
 
+/* The marker of API that may change without prior notice. */
+.admonition.experimental {
+    border-left-color: var(--pst-color-warning);
+}
+
+.admonition.experimental > .admonition-title {
+    background-color: var(--pst-color-warning-bg);
+}
+
 /* The theme gives the logo and the name of the library a quarter of the header. Together they are wider than
    that, so this section takes the width of its content and the navigation starts after it. */
 .bd-header .navbar-header-items__start {

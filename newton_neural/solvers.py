@@ -9,6 +9,8 @@ either a model instance or a checkpoint path of any registered family.
 
 ``load_nerd`` and ``same_duration`` are helper utilities for custom solvers built around
 :class:`~newton_neural.models.NeRDStepper`.
+
+.. experimental::
 """
 
 from ._src.core.duration import same_duration

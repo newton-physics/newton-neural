@@ -7,6 +7,8 @@
 :class:`~newton_neural.solvers.SolverNeRD`. ``PredictionFreeMotion`` predicts unconstrained joint accelerations for
 two-way contact coupling inside :class:`~newton_neural.solvers.SolverNeRDMuJoCo`. Subclass ``PredictionBase`` to
 define custom prediction targets.
+
+.. experimental::
 """
 
 from ._src.predictions.prediction import PredictionBase, PredictionFreeMotion, PredictionStateIncrement

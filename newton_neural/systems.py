@@ -7,6 +7,8 @@
 network features, and integrates predicted increments; ``BindingArticulation`` binds those signals to Newton's Warp
 arrays. ``robot_frame`` and ``robot_frame_floating`` compute the same robot coordinate frame inside Warp kernels.
 Subclass ``SystemBase`` and ``BindingBase`` for non-articulated systems.
+
+.. experimental::
 """
 
 from ._src.systems.articulation import SystemArticulation, robot_frame, robot_frame_floating

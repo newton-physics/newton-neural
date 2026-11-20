@@ -11,6 +11,8 @@ provides a standard multi-head attention baseline, and ``BackboneMLP`` provides 
 window (use ``window=1`` for single-frame predictions such as free motion). Subclass ``BackboneBase`` to define a
 custom backbone and verify it with :func:`newton_neural.testing.check_backbone_streaming`.
 
+.. experimental::
+
 .. py:module:: newton_neural.backbones
 .. currentmodule:: newton_neural.backbones
 

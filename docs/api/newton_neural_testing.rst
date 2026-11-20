@@ -10,6 +10,8 @@ Conformance checks for custom backbones, model families, and contact inputs.
 windowed training across mid-episode resets and NaN-poisoned history buffers. ``check_contact_input_recompute``
 verifies that a recomputable contact input's ``evaluate()`` matches its Warp sensor output.
 
+.. experimental::
+
 .. py:module:: newton_neural.testing
 .. currentmodule:: newton_neural.testing
 

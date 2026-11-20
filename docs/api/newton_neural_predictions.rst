@@ -11,6 +11,8 @@ Prediction targets defining network outputs and supervision labels.
 two-way contact coupling inside :class:`~newton_neural.solvers.SolverNeRDMuJoCo`. Subclass ``PredictionBase`` to
 define custom prediction targets.
 
+.. experimental::
+
 .. py:module:: newton_neural.predictions
 .. currentmodule:: newton_neural.predictions
 

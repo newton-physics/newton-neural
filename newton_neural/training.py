@@ -6,6 +6,8 @@
 ``LossOneStep`` computes normalized one-step prediction error over trajectory windows with optional state-noise
 injection and ``torch.compile`` support. ``create_optimizer`` builds either hybrid Muon + AdamW (``OptimizerMuon``)
 or plain AdamW. Subclass ``LossBase`` to implement custom training objectives.
+
+.. experimental::
 """
 
 from ._src.training.loss import ErrorKind, LossBase, LossOneStep

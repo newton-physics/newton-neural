@@ -14,6 +14,8 @@ This top-level module exports shared signal types and normalization utilities (:
 submodules are :mod:`newton_neural.models`, :mod:`newton_neural.data`, :mod:`newton_neural.training`,
 :mod:`newton_neural.evaluation`, and :mod:`newton_neural.solvers`.
 
+.. experimental::
+
 .. py:module:: newton_neural
 .. currentmodule:: newton_neural
 

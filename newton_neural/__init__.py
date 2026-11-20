@@ -10,6 +10,8 @@ This top-level module exports shared signal types and normalization utilities (:
 :class:`SignalRole`, :type:`Frames`, :class:`Normalizer`, and :class:`NewtonNeuralWarning`). The main workflow
 submodules are :mod:`newton_neural.models`, :mod:`newton_neural.data`, :mod:`newton_neural.training`,
 :mod:`newton_neural.evaluation`, and :mod:`newton_neural.solvers`.
+
+.. experimental::
 """
 
 from . import (

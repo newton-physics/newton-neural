@@ -7,6 +7,8 @@
 its network. ``NeRDBase`` defines the family-agnostic interface for loading checkpoints and implementing custom
 families. ``NeRDStepper`` executes compiled single-frame inference directly on tensors, and ``Precision`` enumerates
 deployment numeric modes (``fp32``, ``tf32``, ``fp16``, ``bf16``).
+
+.. experimental::
 """
 
 from ._src.core.precision import Precision

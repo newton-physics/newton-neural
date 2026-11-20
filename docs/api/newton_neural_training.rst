@@ -10,6 +10,8 @@ Training objectives and optimizers for PyTorch training loops.
 injection and ``torch.compile`` support. ``create_optimizer`` builds either hybrid Muon + AdamW (``OptimizerMuon``)
 or plain AdamW. Subclass ``LossBase`` to implement custom training objectives.
 
+.. experimental::
+
 .. py:module:: newton_neural.training
 .. currentmodule:: newton_neural.training
 

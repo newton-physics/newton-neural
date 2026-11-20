@@ -11,6 +11,8 @@ samplers (``Sampler*``) and command generators (``Command*``), and load contiguo
 ``TrajectoryWindows`` for training and evaluation. Use ``TrajectoryWriter`` to write datasets from custom simulation
 loops.
 
+.. experimental::
+
 .. py:module:: newton_neural.data
 .. currentmodule:: newton_neural.data
 

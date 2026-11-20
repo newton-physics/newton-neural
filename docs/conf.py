@@ -19,8 +19,9 @@ from typing import Any
 DOCS = Path(__file__).parent
 REPO_ROOT = DOCS.parent
 
-# Import generate_api from docs/.
+# Import generate_api from docs/ and the directives of docs/_ext.
 sys.path.append(str(DOCS))
+sys.path.append(str(DOCS / "_ext"))
 
 from generate_api import generate_all  # noqa: E402
 
@@ -51,6 +52,7 @@ extensions = [
     "sphinxcontrib.mermaid",
     "sphinx_copybutton",
     "sphinx_design",
+    "experimental",  # marks API that may change without prior notice
 ]
 
 templates_path = ["_templates"]

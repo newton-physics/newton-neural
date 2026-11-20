@@ -11,6 +11,8 @@ its network. ``NeRDBase`` defines the family-agnostic interface for loading chec
 families. ``NeRDStepper`` executes compiled single-frame inference directly on tensors, and ``Precision`` enumerates
 deployment numeric modes (``fp32``, ``tf32``, ``fp16``, ``bf16``).
 
+.. experimental::
+
 .. py:module:: newton_neural.models
 .. currentmodule:: newton_neural.models
 

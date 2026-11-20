@@ -11,6 +11,8 @@ detection. ``ContactInputSet`` encodes arbitrary rigid contacts reported by Newt
 fixed-size permutation-invariant code. Omit contact input for free-space robots or two-way MuJoCo Warp coupling.
 Subclass ``ContactInputBase`` and ``ContactSensorBase`` to add custom contact representations.
 
+.. experimental::
+
 .. py:module:: newton_neural.contacts
 .. currentmodule:: newton_neural.contacts
 

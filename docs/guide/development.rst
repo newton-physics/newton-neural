@@ -120,6 +120,11 @@ change public exports or top-level module docstrings, regenerate and commit them
 
 Docstrings follow Google style with tensor shapes and SI units (types go in annotations, not docstrings).
 
+The whole public API is experimental while the library is in preview. Every public module ends its docstring with
+Newton's ``.. experimental::`` directive (see Newton's `experimental-feature procedure
+<https://newton-physics.github.io/newton/latest/guide/development.html#experimental-features>`__), which renders
+the standard notice on the module's API page. A new public module carries the marker too.
+
 Benchmarks
 ----------
 

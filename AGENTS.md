@@ -10,6 +10,8 @@ This file adds what is specific to this repository.
 - Run `uvx pre-commit run -a` before committing.
 - The public API is what the modules directly under `newton_neural/` export through `__all__`. Implementation
   lives under `newton_neural/_src/` and is private.
+- The whole public API is experimental while the library is in preview. Every public module ends its docstring
+  with `.. experimental::`, the marker of Newton's guidelines, and a new public module gets it too.
 - Lower layers never import higher ones when the package runs. An import under `TYPE_CHECKING` may name a type
   of a higher layer. `uv run lint-imports` checks the layers declared in `pyproject.toml`.
 - A model family, such as `FlashNeRD`, is a subclass of `NeRDBase`. The tools of the library (recorder, losses,

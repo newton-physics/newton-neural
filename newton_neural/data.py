@@ -7,6 +7,8 @@ Wrap a Newton model and solver in ``SimulationNewton``, collect episodes using `
 samplers (``Sampler*``) and command generators (``Command*``), and load contiguous episode windows with
 ``TrajectoryWindows`` for training and evaluation. Use ``TrajectoryWriter`` to write datasets from custom simulation
 loops.
+
+.. experimental::
 """
 
 from ._src.data.commands import (

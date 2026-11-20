@@ -10,6 +10,8 @@ Open-loop rollout metrics and live simulation audits.
 and detrended vibration when controls are held constant, and ``audit_paired`` compares live divergence between a
 reference simulation and a neural candidate under shared commands.
 
+.. experimental::
+
 .. py:module:: newton_neural.evaluation
 .. currentmodule:: newton_neural.evaluation
 
