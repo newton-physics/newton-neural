@@ -619,18 +619,31 @@ def test_contact_force_estimates(test: unittest.TestCase, device: torch.device, 
 
 
 def test_refuses_reduced_contacts(test: unittest.TestCase, device: torch.device) -> None:
-    """Step with contacts of a pipeline that reduces them per body pair and expect the step to be refused."""
+    """Step with the contacts of a pipeline that reduces them per body pair. Expect a step that reads the contacts
+    to be refused, for its contact input or for the estimated contact forces, and a step that reads none to run."""
     model = _robot_model("quadruped", device)
-    solver = SolverNeRD(model, _nerd(model, "quadruped"), use_cuda_graph=False, compile=False)
     reduction = newton.CollisionPipeline.BodyPairReductionConfig()
     reduced = newton.CollisionPipeline(model, body_pair_reduction=reduction).contacts()
     test.assertTrue(reduced.rigid_contact_body_pair_reduced)
+    test.assertFalse(SolverNeRD.supports_body_pair_reduced_contacts)
+    refusal = "not validated for body-pair-reduced contacts"
     state = model.state()
+
+    solver = SolverNeRD(model, _nerd(model, "quadruped", _contact_set), use_cuda_graph=False, compile=False)
     _stand(solver, state, STAND_HEIGHT)
-    with test.assertRaisesRegex(ValueError, "body pair reduction.*without body_pair_reduction"):
+    with test.assertRaisesRegex(ValueError, refusal):
         solver.step(state, state, None, reduced, FRAME_DT)
     test.assertFalse(solver.stepper.export_history()["step"].any())
     solver.step(state, state, None, newton.CollisionPipeline(model).contacts(), FRAME_DT)
+
+    # Probes read no contacts, so their step takes reduced ones until the estimated contact forces are asked for.
+    solver = SolverNeRD(model, _nerd(model, "quadruped", _probes), use_cuda_graph=False, compile=False)
+    _stand(solver, state, STAND_HEIGHT)
+    solver.step(state, state, None, reduced, FRAME_DT)
+    test.assertTrue(solver.stepper.export_history()["step"].all())
+    observables = solver.observables([solver.ObservableKind.CONTACT_F], contacts=reduced)
+    with test.assertRaisesRegex(ValueError, refusal):
+        solver.step(state, state, None, reduced, FRAME_DT, observables=observables)
 
 
 def test_new_objects_every_step(test: unittest.TestCase, device: torch.device) -> None:

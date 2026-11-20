@@ -15,7 +15,7 @@ import torch
 import warp as wp
 from newton.solvers import SolverBase
 
-from ..contacts.kinematics import contact_gap, require_unreduced
+from ..contacts.kinematics import contact_gap
 from ..core.graph import GraphedWork
 from ..core.precision import Precision
 from ..models.nerd import NeRDBase
@@ -81,6 +81,11 @@ class SolverNeRD(SolverBase):
         """Dropped contact rows per world, shape ``(world_count + 1,)`` (last entry is Newton's global world)."""
 
     SUPPORTED_OBSERVABLES = frozenset({SolverBase.ObservableKind.CONTACT_F, ObservableKind.CONTACT_ROW_OVERFLOW})
+
+    supports_body_pair_reduced_contacts = False
+    """Contact rows and estimated contact forces read the gap between the two surfaces. A collision pipeline with
+    body pair reduction stores another separation for the contacts it keeps, so a step that reads the contacts
+    refuses reduced ones."""
 
     UNSEEN_MODEL_CHANGES: ClassVar[dict[newton.ModelFlags, str]] = {
         newton.ModelFlags.BODY_INERTIAL_PROPERTIES: _UNSEEN_CHANGE.format("masses, centres of mass and inertias"),
@@ -162,22 +167,24 @@ class SolverNeRD(SolverBase):
             state_in: Input state (body transforms must be up to date).
             state_out: Output state (may alias ``state_in``).
             control: Controls (defaults to ``model``'s control arrays if ``None``).
-            contacts: Unreduced contacts for ``state_in`` (required if sensor reads contacts or ``CONTACT_F`` is used).
+            contacts: Contacts for ``state_in``, required and unreduced if the contact input reads contacts or
+                ``CONTACT_F`` is requested. A step that reads no contacts takes any.
             dt: Step duration [s] (must match ``nerd.frame_dt``).
             observables: Optional preallocated :class:`Observables` container.
         """
-        # Contact rows and force estimates both require unreduced surface gaps.
-        if contacts is not None:
-            require_unreduced(contacts)
         require_frame_step(self.nerd, dt)
         contact_input = self.nerd.contact_input
-        if contacts is None and contact_input is not None and contact_input.reads_contacts:
+        reads_contacts = contact_input is not None and contact_input.reads_contacts
+        if contacts is None and reads_contacts:
             raise ValueError(
                 f"{type(contact_input).__name__} reads the contacts of the collision detector, and the step was "
                 "given none. Run collision detection on state_in, with newton.CollisionPipeline(model), and pass "
                 "its contacts"
             )
         self.validate_observables(observables, contacts)
+        # Contact rows and force estimates both read the gap between the surfaces, which reduced contacts lack.
+        if reads_contacts or (observables is not None and self.ObservableKind.CONTACT_F in observables.kinds):
+            self._require_unreduced_contacts(contacts)
         self._work.run(state_in, state_out, self._model_control if control is None else control, contacts, observables)
 
     @torch.inference_mode()  # Keep torch.compile specialization consistent across all calls
