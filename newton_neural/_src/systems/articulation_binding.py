@@ -260,7 +260,8 @@ class BindingArticulation(BindingBase):
     def state_bounds(self) -> dict[str, tuple[Tensor, Tensor]]:
         """Derive finite ``(low, high)`` sampling bounds for ``joint_q`` and ``joint_qd`` from world 0's limits.
 
-        Unbounded revolute/prismatic limits default to ``+-pi`` rad / ``+-1.0`` m; velocity limits are capped at
+        Unbounded revolute/prismatic limits default to ``+-pi`` rad / ``+-1.0`` m (or that far beyond the limit of
+        the other side, where that limit lies farther from zero); velocity limits are capped at
         ``20.0`` rad/s or m/s. Floating-base positions span ``+-0.25`` m around world 0's default pose (:meth:`place`
         carries a drawn state to another world), quaternion components span ``[-1, 1]`` (normalized on reset),
         and base linear/angular velocities span ``+-1.0`` m/s and ``+-2.0`` rad/s.
@@ -304,7 +305,12 @@ class BindingArticulation(BindingBase):
         reach = np.array([_ANGULAR_REACH if kind == "revolute" else _LINEAR_REACH for kind in kinds])
         lower = model.joint_limit_lower.numpy()[actuated_dofs]
         upper = model.joint_limit_upper.numpy()[actuated_dofs]
-        return np.where(lower > -_UNLIMITED, lower, -reach), np.where(upper < _UNLIMITED, upper, reach)
+        below, above = lower > -_UNLIMITED, upper < _UNLIMITED
+        # A side without a limit lies the default reach from zero, or from the limit of the other side where
+        # that one lies farther out, so the low bound stays below the high one.
+        low = np.where(below, lower, np.minimum(-reach, np.where(above, upper, 0.0) - reach))
+        high = np.where(above, upper, np.maximum(reach, np.where(below, lower, 0.0) + reach))
+        return low, high
 
     def _bounds(self, low: np.ndarray, high: np.ndarray) -> tuple[Tensor, Tensor]:
         device = wp.device_to_torch(self.view.model.device)

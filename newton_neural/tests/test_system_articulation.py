@@ -699,6 +699,7 @@ def test_bounds(test: unittest.TestCase, device: torch.device) -> None:
     lower[first], upper[first] = -newton.MAXVAL, newton.MAXVAL
     lower[first[1]], upper[first[1]] = -0.5, 0.7
     upper[first[3]] = 2.0
+    lower[first[4]], upper[first[5]] = 5.0, -4.0  # one limit each, farther from zero than the default reach
     lower[first[6:]], upper[first[6:]] = 0.0, 0.04
     velocity[first], effort[first] = 1.0e6, 5.0
     velocity[first[0]], velocity[first[7]], effort[first[2]] = 3.0, 50.0, 1.0e6
@@ -712,8 +713,8 @@ def test_bounds(test: unittest.TestCase, device: torch.device) -> None:
         array.assign(values)
 
     pi = math.pi
-    q_low = torch.tensor([-pi, -0.5, -pi, -pi, -pi, -pi, 0.0, 0.0], device=device)
-    q_high = torch.tensor([pi, 0.7, pi, 2.0, pi, pi, 0.04, 0.04], device=device)
+    q_low = torch.tensor([-pi, -0.5, -pi, -pi, 5.0, -4.0 - pi, 0.0, 0.0], device=device)
+    q_high = torch.tensor([pi, 0.7, pi, 2.0, 5.0 + pi, -4.0, 0.04, 0.04], device=device)
     speed = torch.tensor([3.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0], device=device)
     force = torch.tensor([5.0, 5.0, math.inf, 5.0, 5.0, 5.0, 5.0, 5.0], device=device)
     unbounded = torch.full((8,), math.inf, device=device)
