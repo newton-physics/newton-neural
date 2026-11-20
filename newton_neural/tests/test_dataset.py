@@ -170,6 +170,18 @@ class TestTrajectoryDataset(FolderTestCase):
             TrajectoryWriter(self.folder / "other", SIGNALS, FRAME_DT, generation={"states": object()})
         self.assertFalse((self.folder / "other").exists())
 
+    def test_signal_names_are_file_names(self) -> None:
+        """Refuse a signal name that is not an identifier, which a shard would write outside its folder."""
+        for name in ("../../outside", "a/b", "..", "", "joint q", "joint.q"):
+            with self.assertRaisesRegex(ValueError, "identifier"):
+                SignalSpec(name, (), SignalRole.STATE)
+        dataset = _record(self.folder / "data", *_one_episode(2, 4))
+        description = json.loads((dataset.path / "meta.json").read_text())
+        description["signals"][0]["name"] = "../../outside"
+        (dataset.path / "meta.json").write_text(json.dumps(description))
+        with self.assertRaisesRegex(ValueError, "identifier"):
+            TrajectoryDataset(dataset.path)
+
     def test_writer_leaves_a_dataset_after_an_error(self) -> None:
         """Leave the block of a writer by an error and open the shards written until then, marked incomplete."""
         episode_start, valid = _one_episode(2, 4)

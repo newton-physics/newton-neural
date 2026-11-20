@@ -40,7 +40,10 @@ class SignalSpec:
     """Schema describing one signal's name, per-world shape, role, dtype, and SI unit."""
 
     name: str
-    """Signal name (Newton-sourced signals keep Newton's attribute name, e.g., ``joint_q``)."""
+    """Signal name, a Python identifier (Newton-sourced signals keep Newton's attribute name, e.g., ``joint_q``).
+
+    A dataset stores every signal in a file of this name.
+    """
 
     shape: tuple[int, ...]
     """Shape for one world and one frame."""
@@ -55,6 +58,11 @@ class SignalSpec:
     """SI unit string (e.g., ``"m or rad"``), or empty if dimensionless."""
 
     def __post_init__(self) -> None:
+        if not self.name.isidentifier():
+            raise ValueError(
+                f"signal name {self.name!r} is not an identifier. A dataset stores every signal in a file of its "
+                "name, so a name holds letters, digits and underscores only"
+            )
         if self.dtype not in _TORCH_DTYPES:
             raise ValueError(f"signal {self.name!r} has dtype {self.dtype!r}. Use one of {sorted(_TORCH_DTYPES)}")
         # Coerce JSON-deserialized lists and strings back to tuple[int, ...] and SignalRole.
