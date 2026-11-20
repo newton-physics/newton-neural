@@ -3,8 +3,7 @@
 
 """Shared Warp helpers encoding Newton's body-point velocity and rigid-contact gap conventions.
 
-Used by both contact sensors and ``SolverNeRD``'s contact force estimator so both agree on surface separation and
-reject body-pair-reduced contacts consistently.
+Used by both contact sensors and ``SolverNeRD``'s contact force estimator so both agree on surface separation.
 """
 
 from __future__ import annotations
@@ -42,10 +41,9 @@ def point_velocity(
     """
     if body < 0:
         return wp.vec3()
-    # Newton stores linear velocity at the body CoM, so add omega x (point - com_world).
-    twist = body_qd[body]
-    arm = point - wp.transform_point(body_q[body], body_com[body])
-    return wp.spatial_top(twist) + wp.cross(wp.spatial_bottom(twist), arm)
+    # Newton stores the linear velocity at the body CoM, so the point is taken relative to it.
+    com = wp.transform_point(body_q[body], body_com[body])
+    return newton.math.velocity_at_point(body_qd[body], point - com)
 
 
 @wp.func
