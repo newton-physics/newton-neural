@@ -467,6 +467,23 @@ def test_mismatch_is_refused(test: unittest.TestCase, device: torch.device) -> N
     uneven.gravity.assign(gravity)
     with test.assertRaisesRegex(ValueError, r"gravity \[.*-1\.62\d*\] of world 2 differs from \[.*-9\.81\d*\]"):
         arm.bind(uneven)
+    # a robot that is moved and turned about gravity meets the gravity of the system, a tilted one does not
+    robot = newton.ModelBuilder()
+    fixtures.add_arm(robot)
+
+    def mounted(*rotations: wp.quat) -> newton.Model:
+        scene = newton.ModelBuilder()
+        for index, rotation in enumerate(rotations):
+            scene.add_world(robot, xform=wp.transform((2.0 * index, 1.0, 0.5), rotation))
+        return scene.finalize(device=str(device))
+
+    turned = wp.quat_from_axis_angle(wp.vec3(0.0, 0.0, 1.0), 1.0)
+    upside_down = wp.quat_from_axis_angle(wp.vec3(1.0, 0.0, 0.0), math.pi)
+    arm.bind(mounted(wp.quat_identity(), turned))
+    with test.assertRaisesRegex(ValueError, r"gravity \[.*9\.81\d*\] of world 1 differs from \[.*-9\.81\d*\].*tilted"):
+        arm.bind(mounted(wp.quat_identity(), upside_down))
+    # a system read from the tilted robot holds its mount
+    SystemArticulation.from_model(mounted(upside_down)).bind(mounted(upside_down, upside_down))
     # a robot with the same labels and tree, and one link a centimetre longer or one axis turned
     frame = spec.joints[2].parent_xform
     longer = dataclasses.replace(spec.joints[2], parent_xform=(frame[0], frame[1], frame[2] + 0.01, *frame[3:]))

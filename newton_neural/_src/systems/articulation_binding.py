@@ -21,6 +21,7 @@ import warp as wp
 from newton.selection import ArticulationView
 from torch import Tensor
 
+from ..core import rotation as rot
 from ..core.signal import Frames
 from .system import BindingBase
 
@@ -29,6 +30,9 @@ if TYPE_CHECKING:
 
 _FRAME_TOLERANCE = 1.0e-4
 """Max tolerance [m] when comparing joint frames and axes against ``SystemArticulation.Spec``."""
+
+_GRAVITY_TOLERANCE = 1.0e-3
+"""Max tolerance [m/s^2] when comparing gravity in the mount frame of a robot against the system's."""
 
 _UNLIMITED = 1.0e6
 """Threshold above which Newton joint limits are treated as unbounded (``newton.MAXVAL`` or default ``1e6``)."""
@@ -165,7 +169,8 @@ class BindingArticulation(BindingBase):
     Raises:
         KeyError: If no articulation matches ``articulation``.
         ValueError: If any world's articulation topology, labels, joint types, frames, axes, or gravity differs from
-            ``system``.
+            ``system``. Gravity is compared in the frame the robot is mounted in, so a world may place its robot
+            anywhere and turn it about gravity, and may not tilt it.
 
     Attributes:
         system: Bound :class:`SystemArticulation`.
@@ -368,13 +373,19 @@ def _locate(
             "system"
         )
 
-    gravity = model.gravity.numpy()[: view.world_count]
-    differs = ~np.isclose(gravity, spec.gravity, atol=1e-4).all(axis=-1)
+    # Gravity as each robot meets it, in the frame its root joint is mounted in. Where a world places its robot
+    # and how it turns it about gravity are free. A tilt changes the dynamics, which a model learns for one mount.
+    mounts = torch.as_tensor(model.joint_X_p.numpy()[root_joint_ids][:, 3:])
+    gravity = rot.rotate_inverse(mounts, torch.as_tensor(model.gravity.numpy()[: view.world_count])).numpy()
+    mount = torch.tensor(spec.joints[0].parent_xform[3:])
+    expected = rot.rotate_inverse(mount, torch.tensor(spec.gravity)).numpy()
+    differs = ~np.isclose(gravity, expected, atol=_GRAVITY_TOLERANCE).all(axis=-1)
     if differs.any():
         world = int(np.argmax(differs))
         raise ValueError(
-            f"the gravity {gravity[world].tolist()} of world {world} differs from {list(spec.gravity)}, which the "
-            "system holds"
+            f"the gravity {gravity[world].tolist()} of world {world} differs from {expected.tolist()}, which the "
+            "system holds. Both are taken in the frame the robot is mounted in, so a robot that is tilted in "
+            "another way than the system's meets another gravity"
         )
     return root_joint_ids, body_ids
 
