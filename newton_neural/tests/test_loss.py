@@ -279,6 +279,16 @@ def test_short_windows_are_refused(test: unittest.TestCase, device: torch.device
         test.assertTrue(torch.allclose(LossOneStep()(nerd, enough), expected, rtol=1e-5))
 
 
+def test_other_frame_duration_is_refused(test: unittest.TestCase, device: torch.device) -> None:
+    """Train a fitted model on a batch of another frame duration and expect an error that names both."""
+    nerd = make_nerd("arm", device)
+    batch = make_batch(nerd, WORLD_COUNT, FRAME_COUNT, device=device)
+    LossOneStep()(nerd, batch)
+    slower = TrajectoryBatch(batch.frames, batch.episode_start, 10.0 * batch.frame_dt)
+    with test.assertRaisesRegex(ValueError, rf"{batch.frame_dt} s.*{slower.frame_dt} s"):
+        LossOneStep()(nerd, slower)
+
+
 def test_unfitted_model_is_refused(test: unittest.TestCase, device: torch.device) -> None:
     """Train a model whose normalization was never fitted and expect an error that names the missing call."""
     fitted = make_nerd("arm", device)
@@ -668,6 +678,7 @@ for function in (
     test_labels_of_the_frame,
     test_single_frames_are_refused,
     test_short_windows_are_refused,
+    test_other_frame_duration_is_refused,
     test_unfitted_model_is_refused,
 ):
     add_function_test(TestLoss, function.__name__, function)

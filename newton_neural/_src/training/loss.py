@@ -15,6 +15,7 @@ from torch import Tensor
 from torch.nn.parallel import DistributedDataParallel
 
 from ..core.compilation import with_own_code
+from ..core.duration import same_duration
 from ..core.precision import tensor_float_products
 from ..core.signal import Frames
 from ..data.windows import TrajectoryBatch
@@ -89,6 +90,11 @@ class LossOneStep(LossBase):
             raise ValueError(
                 "the normalization of the model is not fitted, so features and labels would reach the network "
                 "unscaled. Call fit_normalization(windows.loader(batch_size)) on the model once before training"
+            )
+        if nerd.frame_dt is not None and not same_duration(batch.frame_dt, nerd.frame_dt):
+            raise ValueError(
+                f"the model steps frames of {nerd.frame_dt} s, and the batch holds frames of {batch.frame_dt} s. "
+                "Train a model on data of its own frame duration"
             )
         current, following = nerd.training_frames(batch.frames)
         frame_count = next(iter(current.values())).shape[1]
