@@ -69,7 +69,10 @@ class SolverNeRD(SolverBase):
 
         ``contact_f`` stores penalty-based **estimated** normal wrenches at ``state_in``: for ``gap < 0``,
         ``F = 0.5 * (ke0 + ke1) * gap * normal`` [N] (no friction) plus torque about body 0's CoM [N*m] in world
-        frame. Intended to keep contact sensors and RL contact rewards working, not for force control.
+        frame. The magnitude follows the contact stiffness ``ke`` of the two shapes, which has no part in the
+        dynamics the model learned, so it is not calibrated against the load. Read the estimate as an indicator of
+        contact and for its direction. It keeps contact sensors and RL contact rewards working and is not meant
+        for force control.
         """
 
         contact_row_overflow: wp.array[wp.int32] | None = SolverBase.Observables.field(  # noqa: RUF009

@@ -161,9 +161,13 @@ implicitly into the predicted motion. To keep Newton contact sensors and RL cont
 
 .. note::
 
-    ``CONTACT_F`` estimates are **not** the actual forces that drove the neural prediction. Do not use them for force
-    control or direct magnitude comparisons against a physics solver. Computing them also requires running collision
-    detection to supply ``contacts``, even if your model uses probes or no contact input.
+    ``CONTACT_F`` estimates are **not** the actual forces that drove the neural prediction. Their magnitude scales
+    with the contact stiffness of the two shapes (``shape_material_ke``), which plays no role in the dynamics the
+    model learned, so it is not calibrated against the load. With Newton's default stiffness of ``2.5e3`` N/m, a
+    penetration of 1 mm reads as about 2.5 N whatever the robot weighs. The estimate acts along the contact normal
+    only. Use it as an indicator of contact and for its direction, and do not use it for force control or direct
+    magnitude comparisons against a physics solver. Computing it also requires running collision detection to
+    supply ``contacts``, even if your model uses probes or no contact input.
 
 See :ref:`contact-observables` for usage code.
 
