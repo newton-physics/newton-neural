@@ -88,10 +88,13 @@ def audit_rest(simulation: SimulationBase, *, frame_count: int) -> AuditRest:
 def audit_paired(
     reference: SimulationBase, candidate: SimulationBase, *, commands: CommandBase | None = None, frame_count: int
 ) -> AuditPaired:
-    """Sync ``candidate`` to ``reference``'s state, step both under shared ``commands``, and track divergence.
+    """Restart both simulations from ``reference``'s state, step both under shared ``commands``, and track divergence.
+
+    The state is that of the system. What else a scene holds, such as a free object, starts where a restart puts
+    it in both simulations, so that neither begins with a scene the other does not have.
 
     Args:
-        reference: Reference simulation (starts from its current state without resetting).
+        reference: Reference simulation (its system starts from its current state).
         candidate: Candidate simulation with identical signals, ``world_count``, ``frame_dt``, and device.
         commands: Command generator (defaults to :class:`CommandHeld` over ``reference.command_bounds()``).
         frame_count: Number of frames to step (``>= 1``).
@@ -111,7 +114,9 @@ def audit_paired(
     next_command = start_commands(commands, reference)
     commands.reset(torch.ones(world_count, dtype=torch.bool, device=reference.device))
 
-    candidate.restart(_state(reference))
+    start = _state(reference)
+    reference.restart(start)
+    candidate.restart(start)
     errors = []
     for _ in range(frame_count):
         command = next_command(_state(reference))

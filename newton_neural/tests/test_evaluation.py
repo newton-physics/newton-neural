@@ -13,6 +13,7 @@ from unittest import mock
 import newton
 import numpy as np
 import torch
+import warp as wp
 
 from newton_neural import Frames
 from newton_neural._src.contacts.contact_input import ContactInputBase
@@ -451,6 +452,24 @@ def test_audit_paired(test: TestEvaluation, device: torch.device) -> None:
     test.assertLessEqual(default.max["joint_q"].max().item(), 1e-6)
 
 
+def test_audit_paired_starts_both_scenes_alike(test: TestEvaluation, device: torch.device) -> None:
+    """Audit identical solvers in a scene with a free box, after the box of the reference was moved onto the hand
+    of the arm, and expect no difference. Both simulations restart from the state of the arm, which puts the box
+    of each where a restart leaves it."""
+    simulations = []
+    for _ in range(2):
+        model = fixtures.arm_with_box_model(2, device)
+        system = SystemArticulation.from_model(model, "arm")
+        solver = newton.solvers.SolverMuJoCo(model)
+        simulations.append(SimulationNewton(model, solver, system, articulation="arm", frame_dt=FRAME_DT))
+    reference, candidate = simulations
+    hand = wp.to_torch(reference.state.body_q)[wp.to_torch(reference.binding.body_ids)[:, 6].long(), :3]
+    wp.to_torch(reference.state.joint_q).view(2, -1)[:, :3] = hand  # the box is first in every world
+    newton.eval_fk(reference.model, reference.state.joint_q, reference.state.joint_qd, reference.state)
+    audit = audit_paired(reference, candidate, frame_count=20)
+    test.assertLessEqual(audit.max["joint_q"].max().item(), 1e-5)
+
+
 def test_audit_paired_refuses_bad_arguments(test: TestEvaluation, device: torch.device) -> None:
     """Refuse simulations of other systems or world counts, no frames, and commands without finite bounds."""
     reference = make_arm_simulation(device, 4)
@@ -481,6 +500,7 @@ for _function in (
     test_audit_rest_free_fall,
     test_audit_rest_quaternion_sign,
     test_audit_paired,
+    test_audit_paired_starts_both_scenes_alike,
     test_audit_paired_refuses_bad_arguments,
 ):
     add_function_test(TestEvaluation, _function.__name__, _function)

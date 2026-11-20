@@ -139,9 +139,10 @@ side by side. Below, ``model``, ``system``, and ``reach`` come from :doc:`record
 Paired live audit
 -----------------
 
-:func:`audit_paired` resets the candidate simulation to the reference's current state, steps both live under the same
+:func:`audit_paired` restarts both simulations from the reference's current state, steps both live under the same
 command stream for ``frame_count`` frames, and returns per-frame ``mean`` and ``max`` state differences (shape
-``[frame_count]`` per signal):
+``[frame_count]`` per signal). The state is that of the robot, so other bodies of a scene, such as a free object,
+start where a restart puts them in both simulations:
 
 .. testcode::
 
