@@ -20,6 +20,7 @@ import torch
 import warp as wp
 from torch import Tensor, nn
 
+from ..core import rotation as rot
 from ..core.normalizer import FEATURE_LIMIT, Normalizer
 from ..core.signal import Frames, SignalRole, SignalSpec
 from ..core.stream import torch_on_warp_stream
@@ -174,8 +175,9 @@ class ContactInputProbes(ContactInputBase):
             articulation: Label pattern of the robot's articulation in ``model``.
 
         Raises:
-            ValueError: If any pattern matches no body, ``radius`` is missing when needed, or ``model`` does not
-                have exactly one static plane shape.
+            ValueError: If any pattern matches no body, ``radius`` is missing when needed, ``model`` does not
+                have exactly one static plane shape, or the plane lies elsewhere for the robot of one world than
+                for that of another.
         """
         binding = system.bind(model, articulation)
         labels = system.spec.body_labels
@@ -211,10 +213,22 @@ class ContactInputProbes(ContactInputBase):
                 f"the Newton model holds {len(planes)} static plane shapes. Probes sense exactly one ground plane. "
                 "For any other scene, give the plane to the constructor"
             )
-        anchor = wp.transform(*model.joint_X_p.numpy()[binding.root_joint_ids.numpy()[0]])
-        plane = wp.transform_inverse(anchor) * wp.transform(*shape_transform[planes[0]])
-        normal = wp.transform_vector(plane, wp.vec3(0.0, 0.0, 1.0))  # Newton planes face +Z locally
-        ground = {"normal": list(normal), "offset": wp.dot(normal, wp.transform_get_translation(plane))}
+        # The plane in the frame every world's robot is mounted in, which is where the probes sense it.
+        mounts = torch.as_tensor(model.joint_X_p.numpy()[binding.root_joint_ids.numpy()])
+        plane = torch.as_tensor(shape_transform[planes[0]])
+        up = rot.rotate(plane[3:], torch.tensor([0.0, 0.0, 1.0]))  # Newton planes face +Z locally
+        normals = rot.rotate_inverse(mounts[:, 3:], up)
+        offsets = (normals * rot.rotate_inverse(mounts[:, 3:], plane[:3] - mounts[:, :3])).sum(dim=-1)
+        elsewhere = ((normals - normals[0]).abs().amax(dim=-1) > 1e-4) | ((offsets - offsets[0]).abs() > 1e-4)
+        if elsewhere.any():
+            world = int(elsewhere.nonzero()[0])
+            raise ValueError(
+                f"the ground plane lies {offsets[world].item():.4g} m along {normals[world].tolist()} from the mount "
+                f"of the robot in world {world}, and {offsets[0].item():.4g} m along {normals[0].tolist()} from that "
+                "in world 0. Probes sense one plane, fixed in the frame the robot is mounted in, so mount the robot "
+                "of every world at one height and tilt over the plane"
+            )
+        ground = {"normal": normals[0].tolist(), "offset": offsets[0].item()}
         return cls(probes, ground=ground, touch_distance=touch_distance)
 
     def config(self) -> dict[str, Any]:

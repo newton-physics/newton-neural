@@ -303,6 +303,23 @@ def test_from_model_refusals(test: unittest.TestCase, device: torch.device) -> N
     with test.assertRaisesRegex(ValueError, "holds 0 static plane shapes"):
         ContactInputProbes.from_model(scene.finalize(device=str(device)), system, bodies="*_SHANK")
 
+    # Probes sense one plane in the frame of the mount, so a robot mounted higher than another is refused.
+    arm = newton.ModelBuilder()
+    fixtures.add_arm(arm)
+    for height, refusal in ((0.0, None), (2.0, "world 1.*one height and tilt")):
+        scene = newton.ModelBuilder()
+        scene.add_world(arm)
+        scene.add_world(arm, xform=wp.transform((2.0, 0.0, height), wp.quat_identity()))
+        scene.add_ground_plane()
+        model = scene.finalize(device=str(device))
+        system = SystemArticulation.from_model(model, "arm")
+        selection = {"bodies": "*_finger", "radius": 0.01, "articulation": "arm"}
+        if refusal is None:
+            ContactInputProbes.from_model(model, system, **selection)
+        else:
+            with test.assertRaisesRegex(ValueError, refusal):
+                ContactInputProbes.from_model(model, system, **selection)
+
 
 def test_config_round_trip(test: unittest.TestCase, device: torch.device) -> None:
     """Check that the registry rebuilds the contact input from its config, and that a copy senses alike."""
