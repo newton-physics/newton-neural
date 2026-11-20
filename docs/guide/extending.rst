@@ -88,7 +88,7 @@ stepping) using Newton's force-controlled cartpole and the helpers below:
 
     def record(nerd: NeRDBase, model: newton.Model, path: str) -> TrajectoryDataset:
         """Record a short dataset of all signals declared by ``nerd`` from MuJoCo Warp."""
-        mujoco = newton.solvers.SolverMuJoCo(model, njmax=128)
+        mujoco = newton.solvers.SolverMuJoCo(model, njmax=512)
         simulation = SimulationNewton(model, mujoco, nerd.system, frame_dt=0.02, substep_count=4)
         recorder = TrajectoryRecorder(simulation, nerd, episode_frames=(16, 32))
         return recorder.record(path, frame_count=64)
