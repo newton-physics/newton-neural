@@ -38,7 +38,7 @@ This preview focuses on **speed**. Differentiable rollout and real-data fine-tun
   arrays without host transfers (zero-copy views for replicated worlds). Contact sensing runs in Warp kernels, the
   network is compiled with `torch.compile`, and on CUDA the entire step replays from a CUDA graph.
 - **Isaac Lab support.** Isaac Lab invokes `newton-neural` through Newton's solver interface (for example, the
-  `physics=nerd` preset in Isaac Lab).
+  `physics=newton_nerd` preset in Isaac Lab).
 
 ## Models and FlashNeRD
 
@@ -63,8 +63,8 @@ A `FlashNeRD` model combines a `SystemArticulation` (describing the robot) with 
 
 ### Performance snapshot
 
-The chart below compares single-GPU PPO training for Isaac Lab's ANYmal C flat-terrain walking task (`physics=nerd`)
-using `FlashNeRD` versus MuJoCo Warp (reward evaluated on each policy's training physics):
+The chart below compares single-GPU PPO training for Isaac Lab's ANYmal C flat-terrain walking task
+(`physics=newton_nerd`) using `FlashNeRD` versus MuJoCo Warp (reward evaluated on each policy's training physics):
 
 ![PPO reward versus wall-clock time for ANYmal C walking on FlashNeRD and MuJoCo Warp](docs/_static/anymal_walk_reward.svg)
 
