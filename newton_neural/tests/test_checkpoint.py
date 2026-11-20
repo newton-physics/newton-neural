@@ -10,6 +10,7 @@ import unittest
 from pathlib import Path
 
 import newton
+import numpy as np
 import torch
 
 import newton_neural
@@ -252,6 +253,16 @@ class TestCheckpoint(FolderTestCase):
         _rewrite(path, parts=parts)
         with self.assertRaisesRegex(ValueError, "BackboneUnknown"):
             FlashNeRD.load(path)
+
+    def test_metadata_is_stored_as_plain_data(self) -> None:
+        """Save metadata that JSON accepts through a subclass of str or float and expect it back as plain data."""
+        nerd = make_nerd("arm", "cpu")
+        nerd.metadata = {"torch": torch.__version__, "precision": Precision.FP16, "loss": np.float64(0.5)}
+        path = _file(self)
+        nerd.save(path)
+        metadata = FlashNeRD.load(path).metadata
+        self.assertEqual(metadata, {"torch": str(torch.__version__), "precision": "fp16", "loss": 0.5})
+        self.assertEqual([type(value) for value in metadata.values()], [str, str, float])
 
     def test_metadata_must_be_plain_data(self) -> None:
         """Save a model whose metadata holds a tensor and expect a TypeError and no file."""

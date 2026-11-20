@@ -40,7 +40,9 @@ def write(path: str | Path, manifest: dict[str, Any], state: dict[str, Tensor]) 
     """
     manifest = {"format": FORMAT, "library": __version__, "newton": newton.__version__, **manifest}
     try:
-        json.dumps(manifest)
+        # Stored as the plain data of its JSON form. A subclass of str, int or float that JSON accepts, such as
+        # the version of PyTorch or an enumeration, would otherwise be saved as an object that :func:`read` refuses.
+        manifest = json.loads(json.dumps(manifest))
     except TypeError as error:
         raise TypeError(f"a checkpoint manifest holds plain data only, but {error}") from error
     path = Path(path)
