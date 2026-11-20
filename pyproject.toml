@@ -1,0 +1,199 @@
+[build-system]
+requires = ["uv_build>=0.11.0"]
+build-backend = "uv_build"
+
+[project]
+name = "newton-neural"
+version = "0.1.0.dev0"
+description = "Neural robot dynamics for the Newton physics engine. Learned models of how a robot moves, trained on data from a physics solver and run as Newton solvers."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE.md"]
+authors = [{ name = "Newton Developers", email = "developers@newton-physics.org" }]
+keywords = [
+    "robotics",
+    "simulation",
+    "neural robot dynamics",
+    "learned dynamics",
+    "reinforcement learning",
+    "newton",
+    "flashnerd",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3 :: Only",
+    "Environment :: GPU :: NVIDIA CUDA",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "newton[sim]>=1.9.0.dev0",  # the sim extra brings MuJoCo Warp, which recording and coupling use
+    "warp-lang>=1.17",
+    "torch>=2.11",
+    "numpy>=2",
+]
+
+[project.optional-dependencies]
+# What the OpenGL viewer of the examples needs, with the bounds of Newton's own examples extra.
+examples = [
+    "pyglet>=2.1.6,<3",  # the window and its rendering
+    "imgui-bundle>=1.92.0",  # the side panel
+]
+
+[dependency-groups]
+dev = ["ruff>=0.9", "import-linter>=2.1", "coverage[toml]>=7.8"]
+docs = [
+    "sphinx>=7.4.7",
+    "pydata_sphinx_theme>=0.16.1",
+    "sphinxcontrib-mermaid>=1.0.0",
+    "sphinx-copybutton>=0.5.0",
+    "sphinx-design>=0.5.0,<=0.6.1",
+]
+
+[tool.uv.build-backend]
+module-name = "newton_neural"
+module-root = ""
+
+[tool.uv]
+environments = [
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "sys_platform == 'linux' and platform_machine == 'aarch64'",
+]
+
+[tool.uv.sources]
+# The PyTorch wheels on PyPI are built with CUDA for x86-64 alone, so aarch64 takes PyTorch from the CUDA index.
+torch = { index = "pytorch-cu130", marker = "platform_machine == 'aarch64'" }
+# Newton between releases, at the commit that Isaac Lab pins.
+newton = { git = "https://github.com/newton-physics/newton.git", rev = "d31603ff5e8389d1d6b2a5daef6ea2cb074c26ff" }
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "I",      # isort
+    "F",      # pyflakes
+    "W",      # pycodestyle warnings
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "NPY",    # NumPy-specific rules
+    "PLC",    # pylint convention
+    "PLE",    # pylint error
+    "PLW",    # pylint warning
+    "UP",     # pyupgrade
+    "RUF",    # ruff-specific rules
+    "TID253", # banned module-level imports
+    "T201",   # print. Library code warns or raises instead
+]
+ignore = [
+    "E741",   # Warp kernels use l as a variable name
+    "UP018",  # Warp kernels use float(val) and int(val)
+    "RUF046", # Warp kernels use int(val)
+    "F811",   # Warp kernel and function overloads
+    "PLW2901",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"asv/**/*" = ["RUF012", "E402", "TID253"]
+"newton_neural/examples/**/*" = ["E402", "TID253", "T201"]
+"docs/**/*" = ["TID253"]
+"newton_neural/tests/**/*" = ["T201"]
+"scripts/**/*" = ["T201"]
+
+[tool.ruff.lint.flake8-tidy-imports]
+# Optional and heavy packages load inside functions, never at import of newton_neural.
+banned-module-level-imports = [
+    "pxr",
+    "matplotlib",
+    "mujoco",
+    "mujoco_warp",
+    "onnx",
+    "warp_nn",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.towncrier]
+directory = "changelog"
+filename = "CHANGELOG.md"
+start_string = "<!-- towncrier release notes start -->\n"
+title_format = "## [{version}] - {project_date}"
+issue_format = "[#{issue}](https://github.com/newton-physics/newton-neural/issues/{issue})"
+issue_pattern = "\\d+"
+ignore = ["*.skip", "README.md"]
+wrap = false
+
+[[tool.towncrier.type]]
+directory = "added"
+name = "Added"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changed"
+name = "Changed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "deprecated"
+name = "Deprecated"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "removed"
+name = "Removed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixed"
+name = "Fixed"
+showcontent = true
+
+[tool.coverage.run]
+source = ["newton_neural"]
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover", "@wp", "if __name__ == .__main__.:"]
+omit = ["*/newton_neural/examples/*", "*/newton_neural/tests/*"]
+
+[tool.typos.default.extend-words]
+# Joint names of legged robots and a PyTorch function, not misspellings.
+HAA = "HAA"
+arange = "arange"
+
+[tool.importlinter]
+root_package = "newton_neural"
+# An import that only a type checker follows names a type and loads nothing, so it may point up the layers.
+exclude_type_checking_imports = true
+
+[[tool.importlinter.contracts]]
+name = "Layers"
+type = "layers"
+layers = [
+    "newton_neural._src.testing",
+    "newton_neural._src.evaluation",
+    "newton_neural._src.solvers | newton_neural._src.training",
+    "newton_neural._src.models",
+    "newton_neural._src.contacts | newton_neural._src.predictions",
+    "newton_neural._src.backbones | newton_neural._src.data",
+    "newton_neural._src.systems",
+    "newton_neural._src.core",
+]

@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use newton-neural, please cite it using this metadata."
+title: "newton-neural: Neural robot dynamics for the Newton physics engine"
+type: software
+authors:
+  - name: "The Newton Contributors"
+url: "https://github.com/newton-physics/newton-neural"
+license: Apache-2.0

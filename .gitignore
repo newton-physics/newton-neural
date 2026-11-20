@@ -1,0 +1,45 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.venv-*/
+
+# Tool cache
+.cache/
+.ruff_cache/
+.import_linter_cache/
+
+# Coverage reports
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# IDEs and editors
+.vscode
+.history/
+.idea
+
+# Documentation
+docs/_build/
+docs/api/_generated/
+
+# Airspeed Velocity
+asv/env
+asv/results
+asv/html
+
+# Log files
+MUJOCO_LOG.TXT
+
+# Model weights and recorded data
+*.pt
+*.npy
+*.npz
+/data/

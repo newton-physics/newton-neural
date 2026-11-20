@@ -1,0 +1,18 @@
+/* Reduce spacing between the members of a class on the API pages. */
+.py-attribute, .py-method, .py-property, .py-class {
+    margin-top: 0.5em !important;
+    margin-bottom: 0.5em !important;
+}
+
+/* Reduce padding in parameter lists. */
+.field-list .field {
+    margin-bottom: 0.2em !important;
+    padding-bottom: 0.2em !important;
+}
+
+/* The theme moves the links of the top navigation bar into the navigation drawer, where they repeat the
+   table of contents as a flat list without its captions. No media query is needed, since the theme already
+   hides this section above 960px. The selector mirrors the theme's own specificity for this element. */
+.bd-sidebar-primary .sidebar-header-items .sidebar-header-items__center {
+    display: none;
+}
