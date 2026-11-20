@@ -24,13 +24,9 @@
 }
 
 /* From 960px to 1250px the header is too narrow for the logo, the name with its version, the navigation and
-   the search. The version gives way there and the logo is a little smaller, so the header keeps its rows. */
+   the search. The version gives way there, so the header keeps its rows. */
 @media (min-width: 960px) and (max-width: 1249.98px) {
     .bd-header .navbar-brand .title span {
         display: none;
-    }
-
-    .bd-header .navbar-brand img {
-        height: 2.6rem;
     }
 }

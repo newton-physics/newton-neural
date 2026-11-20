@@ -1,16 +1,18 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/_static/newton-neural-logo-dark.svg">
-    <img src="docs/_static/newton-neural-logo-light.svg" alt="newton-neural logo" width="440">
+    <img src="docs/_static/newton-neural-logo-light.svg" alt="newton-neural logo" width="360">
   </picture>
 </p>
 
-# newton-neural
+<h1 align="center">newton-neural</h1>
+
+<p align="center">
+  <b>Learned robot dynamics for the <a href="https://github.com/newton-physics/newton">Newton</a> physics engine.</b>
+</p>
 
 > [!WARNING]
 > **newton-neural is in preview.** APIs may change, and checkpoints saved by one version may not load in the next.
-
-**Learned robot dynamics for the [Newton](https://github.com/newton-physics/newton) physics engine.**
 
 `newton-neural` lets you train neural dynamics models on data from a physics solver and run them as drop-in Newton
 solvers across thousands of parallel worlds. The primary goal is accelerating reinforcement learning in Newton and
