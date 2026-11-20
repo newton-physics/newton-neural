@@ -20,6 +20,9 @@ from ..models.nerd import NeRDBase
 def load_nerd(nerd: NeRDBase | str | os.PathLike[str], device: torch.device | str) -> NeRDBase:
     """Load or move ``nerd`` onto ``device`` and verify that ``nerd.frame_dt`` is set.
 
+    A model read from a file is put into evaluation mode, since a solver runs inference and nobody else holds
+    the model. A model instance keeps the mode its owner set.
+
     Args:
         nerd: In-memory :class:`NeRDBase` instance or checkpoint file path.
         device: Target PyTorch device.
@@ -27,7 +30,7 @@ def load_nerd(nerd: NeRDBase | str | os.PathLike[str], device: torch.device | st
     Raises:
         ValueError: If ``nerd.frame_dt is None``.
     """
-    nerd = nerd.to(device) if isinstance(nerd, NeRDBase) else NeRDBase.load(nerd, device=device)
+    nerd = nerd.to(device) if isinstance(nerd, NeRDBase) else NeRDBase.load(nerd, device=device).eval()
     if nerd.frame_dt is None:
         raise ValueError(
             "the model has no frame duration, so a solver cannot tell whether it is stepped by the frame the model "

@@ -275,6 +275,9 @@ def test_checkpoint_path(test: unittest.TestCase, device: torch.device) -> None:
         solvers = [SolverNeRD(model, nerd=given, use_cuda_graph=False, compile=False) for given in (nerd, str(path))]
     test.assertIs(solvers[0].nerd, nerd)
     test.assertEqual(solvers[1].nerd.device, device)
+    # A model read from a file runs in evaluation mode. A model object keeps the mode its owner set.
+    test.assertTrue(nerd.training)
+    test.assertFalse(solvers[1].nerd.training)
     states = []
     for solver in solvers:
         state, control = model.state(), model.control()

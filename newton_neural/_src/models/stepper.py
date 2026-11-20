@@ -152,11 +152,16 @@ class NeRDStepper:
         error = ((prediction / std - expected).abs().max() / expected.abs().max().clamp_min(1.0)).item()
         tolerance = _TOLERANCES[self.precision]
         if not error <= tolerance:  # Fails on NaN as well
+            training = (
+                ", the model is in training mode and holds layers such as dropout (call nerd.eval() first)"
+                if nerd.training
+                else ""
+            )
             raise RuntimeError(
                 f"the deployed step of the model differs from its eager step in IEEE float32 by {error:.3g} "
                 f"of the normalized output, more than {tolerance:.3g}. The inputs are not finite, the model "
-                f"changed after the stepper was created, or the compiler or the {self.precision.value} "
-                "precision is at fault"
+                f"changed after the stepper was created{training}, or the compiler or the "
+                f"{self.precision.value} precision is at fault"
             )
         if nerd.prediction.integrates:
             # Both paths integrate the same FP32 prediction, so disagreement indicates a compiler fault.
