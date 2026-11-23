@@ -364,7 +364,8 @@ def test_writer_stores_the_frames_byte_for_byte(test: TestTrajectoryDataset, dev
         test.assertEqual(files, stored)
 
     generation = {"seed": 3}
-    with _slow_disk():
+    # Staging must use host memory even when the caller's default device is CUDA.
+    with _slow_disk(), torch.device(device):
         with TrajectoryWriter(test.folder / "whole", SIGNALS, FRAME_DT, generation=generation) as whole:
             _write(whole, shards)
         interrupted = TrajectoryWriter(test.folder / "interrupted", SIGNALS, FRAME_DT, generation=generation)

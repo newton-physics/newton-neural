@@ -17,6 +17,7 @@ from torch import Tensor
 
 from ..core.graph import GraphedWork
 from ..core.precision import Precision
+from ..core.stream import torch_on_warp_stream
 from ..models.nerd import NeRDBase
 from ..models.stepper import NeRDStepper
 from ..predictions.prediction import PredictionFreeMotion
@@ -134,8 +135,9 @@ class SolverNeRDMuJoCo(SolverMuJoCo):
         authored. To start from a custom state, call this method first and then write the joint coordinates, or
         use :meth:`SimulationNewton.restart <newton_neural.data.SimulationNewton.restart>`.
         """
-        super().reset(state, world_mask, flags)
-        self.stepper.reset(None if world_mask is None else wp.to_torch(world_mask)[: self.binding.world_count])
+        with torch_on_warp_stream(self.stepper.device):
+            super().reset(state, world_mask, flags)
+            self.stepper.reset(None if world_mask is None else wp.to_torch(world_mask)[: self.binding.world_count])
 
     def notify_model_changed(self, flags: newton.ModelFlags | int) -> None:
         """Forward updates to MuJoCo Warp and warn once per :attr:`UNSEEN_MODEL_CHANGES` flag."""

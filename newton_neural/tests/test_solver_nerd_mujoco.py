@@ -27,7 +27,7 @@ from newton_neural.predictions import PredictionFreeMotion
 from newton_neural.systems import SystemArticulation
 from newton_neural.tests import fixtures, helpers
 from newton_neural.tests.extensions import ContactInputRootHeight
-from newton_neural.tests.unittest_utils import add_function_test
+from newton_neural.tests.unittest_utils import add_function_test, get_cuda_test_devices
 
 FRAME_DT = 0.005
 WORLD_COUNT = 2
@@ -326,6 +326,36 @@ def test_reset_forgets_masked_worlds(test: TestSolverNeRDMuJoCo, device: torch.d
     np.testing.assert_allclose(again.joint_qd.numpy(), fresh.joint_qd.numpy(), rtol=1e-4, atol=1e-5)
 
 
+def test_reset_on_caller_stream(test: TestSolverNeRDMuJoCo, device: torch.device, torch_caller: bool) -> None:
+    """MuJoCo and neural history must consume the same mask when either library runs on a non-default stream."""
+    model = fixtures.arm_with_box_model(WORLD_COUNT, device)
+    nerd = _nerd(device)
+    solver = SolverNeRDMuJoCo(model, nerd, articulation="arm", compile=False, use_cuda_graph=False)
+    state = _run(solver, _random_state(model, nerd.system), 3)
+    before = _joints(state).clone()
+    test.assertFalse(torch.equal(before[0], _joints(model)[0]))
+    mask = torch.zeros(WORLD_COUNT + 1, dtype=torch.bool, device=device)
+    warp_mask = wp.from_torch(mask, dtype=wp.bool)
+    stream = torch.cuda.Stream(device)
+    torch.cuda.synchronize(device)
+    caller_stream = torch.cuda.stream(stream) if torch_caller else wp.ScopedStream(wp.stream_from_torch(stream))
+    with caller_stream:
+        # Warm up both the mask producer and the reset before checking their ordering.
+        with torch.cuda.stream(stream):
+            torch.cuda._sleep(1)
+            mask[:1].fill_(False)
+        solver.reset(state, warp_mask)
+        torch.cuda.synchronize(device)
+        with torch.cuda.stream(stream):
+            torch.cuda._sleep(100_000_000)  # leave the mask update queued while the other stream can run
+            mask[:1].fill_(True)
+        solver.reset(state, warp_mask)
+    torch.cuda.synchronize(device)
+    test.assertEqual(solver.stepper.export_history()["step"].tolist(), [0, 3])
+    test.assertTrue(torch.equal(_joints(state)[0], _joints(model)[0]))
+    test.assertTrue(torch.equal(_joints(state)[1], before[1]))
+
+
 def test_restart_order(test: TestSolverNeRDMuJoCo, device: torch.device) -> None:
     """Keep a state written after a reset and lose one written before, unless the reset restores nothing."""
     model = fixtures.arm_with_box_model(WORLD_COUNT, device)
@@ -573,6 +603,15 @@ for _function in (
     test_labels_are_free_accelerations,
 ):
     add_function_test(TestSolverNeRDMuJoCo, _function.__name__, _function)
+
+for _caller in ("torch", "warp"):
+    add_function_test(
+        TestSolverNeRDMuJoCo,
+        f"test_reset_on_{_caller}_stream",
+        test_reset_on_caller_stream,
+        devices=get_cuda_test_devices(),
+        torch_caller=_caller == "torch",
+    )
 
 
 if __name__ == "__main__":

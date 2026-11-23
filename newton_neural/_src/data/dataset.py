@@ -211,7 +211,7 @@ class TrajectoryWriter:
         for name, value in values.items():
             if name not in buffers or buffers[name].numel() < value.numel():
                 # Pre-fault host pages with zeros before copying from CUDA.
-                buffers[name] = torch.zeros(value.numel(), dtype=value.dtype)
+                buffers[name] = torch.zeros(value.numel(), dtype=value.dtype, device="cpu")
             # Synchronous copy into host staging buffer so caller may immediately overwrite inputs.
             arrays[name] = buffers[name][: value.numel()].view(value.shape).copy_(value.detach()).numpy()
         folder = f"shard-{len(shards):05d}"
