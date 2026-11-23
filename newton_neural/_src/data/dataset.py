@@ -116,7 +116,9 @@ class TrajectoryWriter:
 
     Copies each shard into recycled host buffers synchronously in :meth:`write` (so caller tensors can be reused
     immediately) and writes ``.npy`` files on a background thread pool (at most 4 shards queued). Use as a context
-    manager; exiting flushes completed shards and writes ``meta.json`` even on exception.
+    manager; exiting flushes completed shards and writes ``meta.json`` even on exception. The writer reserves the
+    directory with ``.meta.json.pending`` until it publishes the shard index. A process killed during recording
+    can leave this reservation alongside any shards it wrote.
 
     .. code-block:: python
 
@@ -125,7 +127,7 @@ class TrajectoryWriter:
         dataset = TrajectoryDataset(path)
 
     Args:
-        path: Output directory (must not already contain ``meta.json`` or ``shard-*``; unrelated files allowed).
+        path: Output directory. Existing recordings and active writers are refused. Unrelated files are allowed.
         signals: Signal specifications keyed by name.
         frame_dt: Frame duration [s].
         generation: Optional JSON-serializable metadata stored in ``meta.json`` (writer adds ``complete``).
@@ -153,11 +155,24 @@ class TrajectoryWriter:
         }
         json.dumps(self._meta)  # Fail fast on non-JSON-serializable metadata before recording
         self._layout = array_layout(self.signals)
-        # Check only dataset files so extra files (e.g., an untrained checkpoint) can coexist in the folder.
-        if (self.path / "meta.json").exists() or any(self.path.glob("shard-*")):
-            raise FileExistsError(f"{self.path} holds a dataset. Record into a new folder, or delete this one")
+        meta_path = self.path / "meta.json"
+        occupied = f"{self.path} holds a dataset. Record into a new folder"
+        if meta_path.exists() or any(self.path.glob("shard-*")):
+            raise FileExistsError(occupied)
         self.path.mkdir(parents=True, exist_ok=True)
-        self._pool = ThreadPoolExecutor(max_workers=2)
+        self._pending_meta: Path | None = self.path / ".meta.json.pending"
+        try:
+            self._pending_meta.touch(exist_ok=False)
+        except FileExistsError as error:
+            raise FileExistsError(f"{self.path} is reserved for a recording. Record into a new folder") from error
+        try:
+            # Another writer may have published its index between our first check and our reservation.
+            if meta_path.exists():
+                raise FileExistsError(occupied)
+            self._pool = ThreadPoolExecutor(max_workers=2)
+        except BaseException:
+            self._pending_meta.unlink()
+            raise
         self._saves: list[Future[None]] = []  # Futures in shard order
         # Recycled pre-faulted host buffers avoid slow GPU->unfaulted-page copies on every shard.
         self._buffers: list[dict[str, Tensor]] = []
@@ -215,7 +230,10 @@ class TrajectoryWriter:
         written = next((i for i, failure in enumerate(failures) if failure is not None), len(failures))
         self._meta["shards"] = self._meta["shards"][:written]
         self._meta["generation"]["complete"] = complete and written == len(failures)
-        (self.path / "meta.json").write_text(json.dumps(self._meta, indent=2))
+        if self._pending_meta is not None:
+            self._pending_meta.write_text(json.dumps(self._meta, indent=2))
+            self._pending_meta.replace(self.path / "meta.json")
+            self._pending_meta = None
         if complete and written < len(failures):
             raise failures[written]
         return TrajectoryDataset(self.path)

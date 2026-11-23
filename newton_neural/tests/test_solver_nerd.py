@@ -354,6 +354,30 @@ def test_reset(test: unittest.TestCase, device: torch.device) -> None:
         solver.reset(state, wp.zeros(WORLD_COUNT, dtype=wp.bool, device=model.device))
 
 
+def test_reset_on_a_stream_of_the_caller(test: unittest.TestCase, device: torch.device) -> None:
+    """A direct reset on a busy PyTorch stream returns body poses matching the restored joint coordinates."""
+    model = _robot_model("arm", device)
+    solver = SolverNeRD(model, _nerd(model, "arm"), compile=False, use_cuda_graph=False)
+    state = model.state()
+    stream = torch.cuda.Stream(device)
+    with torch.cuda.stream(stream):
+        solver.reset(state)  # warm up kernels and allocations on the caller's stream
+    torch.cuda.synchronize(device)
+    newton.eval_fk(model, model.joint_q, model.joint_qd, state)
+    expected = state.body_q.numpy().copy()
+    wp.to_torch(state.joint_q).add_(0.5)
+    newton.eval_fk(model, state.joint_q, state.joint_qd, state)
+    test.assertFalse(np.allclose(state.body_q.numpy(), expected))
+
+    with torch.cuda.stream(stream):
+        torch.cuda._sleep(100_000_000)  # keep the joint writes queued while Warp can run
+        solver.reset(state)
+        poses = wp.to_torch(state.body_q).clone()
+    stream.synchronize()
+    np.testing.assert_array_equal(state.joint_q.numpy(), model.joint_q.numpy())
+    np.testing.assert_allclose(poses.cpu().numpy(), expected, atol=1e-6)
+
+
 def test_reset_restores_whole_worlds(test: unittest.TestCase, device: torch.device) -> None:
     """Restore every joint of the masked worlds, the boxes beside the arm among them, in worlds of unequal size."""
     model = _robot_model("arm_with_uneven_boxes", device)
@@ -755,6 +779,9 @@ for function in (
 ):
     add_function_test(TestSolverNeRD, function.__name__, function)
 add_function_test(TestSolverNeRD, "test_new_objects_every_step", test_new_objects_every_step, devices=cuda_devices)
+add_function_test(
+    TestSolverNeRD, "test_reset_on_a_stream_of_the_caller", test_reset_on_a_stream_of_the_caller, devices=cuda_devices
+)
 for capture_name, relaxed_capture in (("thread_local", False), ("relaxed", True)):
     for mode_name, use_graph in (("eager", False), ("graphed", True)):
         add_function_test(

@@ -218,6 +218,39 @@ class TestTrajectoryDataset(FolderTestCase):
         self.assertEqual(dataset.generation, {"complete": False})
         self.assertEqual(dataset.frame_count, 4)
 
+    def test_writer_claims_folder_before_first_shard(self) -> None:
+        """A second recorder opening the same empty folder must leave the first recorder's dataset intact."""
+        path = self.folder / "data"
+        frames = _frames(torch.arange(2), torch.arange(4))
+        with TrajectoryWriter(path, SIGNALS, FRAME_DT) as writer:
+            with self.assertRaises(FileExistsError), TrajectoryWriter(path, SIGNALS, FRAME_DT):
+                pass
+            self.assertFalse((path / "meta.json").exists())
+            writer.write(frames, *_one_episode(2, 4))
+        dataset = TrajectoryDataset(path)
+        self.assertEqual(dataset.generation, {"complete": True})
+        np.testing.assert_array_equal(dataset.arrays(0)["joint_q"], frames["joint_q"].numpy())
+        self.assertEqual({entry.name for entry in path.iterdir()}, {"meta.json", "shard-00000"})
+
+    def test_writer_refuses_dataset_published_during_open(self) -> None:
+        """Keep the winner's manifest if it finishes while the second writer is claiming the folder."""
+        path = self.folder / "data"
+        with TrajectoryWriter(path, SIGNALS, FRAME_DT, generation={"seed": 3}) as first:
+            touch = Path.touch
+
+            def finish_then_claim(pending: Path, *, exist_ok: bool) -> None:
+                first.close()
+                touch(pending, exist_ok=exist_ok)
+
+            with (
+                mock.patch.object(Path, "touch", finish_then_claim),
+                self.assertRaises(FileExistsError),
+                TrajectoryWriter(path, SIGNALS, FRAME_DT),
+            ):
+                pass
+        self.assertEqual(TrajectoryDataset(path).generation, {"seed": 3, "complete": True})
+        self.assertEqual({entry.name for entry in path.iterdir()}, {"meta.json"})
+
     def test_foreign_file_in_the_folder(self) -> None:
         """Write into a folder that holds a file of another kind, read the dataset beside it, and leave it be."""
         path = self.folder / "data"

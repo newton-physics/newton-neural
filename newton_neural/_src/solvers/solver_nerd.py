@@ -19,6 +19,7 @@ from newton.solvers import SolverBase
 from ..contacts.kinematics import contact_gap
 from ..core.graph import GraphedWork
 from ..core.precision import Precision
+from ..core.stream import torch_on_warp_stream
 from ..models.nerd import NeRDBase
 from ..models.stepper import NeRDStepper
 from ..systems.articulation_binding import Pattern, reset_mask_entries
@@ -291,28 +292,29 @@ class SolverNeRD(SolverBase):
                 global world (all worlds if ``None``). A model built without worlds is world ``0``.
             flags: Optional :class:`newton.StateFlags` bitmask of the joint state to restore (all if ``None``).
         """
-        super().reset(state, world_mask, flags)
-        model = self.model
-        if world_mask is None:
-            worlds = torch.ones(model.world_count + 1, dtype=torch.bool, device=self.stepper.device)
-        else:
-            worlds = wp.to_torch(world_mask)
-        self.stepper.reset(worlds[: self.binding.world_count])
+        with torch_on_warp_stream(self.stepper.device):
+            super().reset(state, world_mask, flags)
+            model = self.model
+            if world_mask is None:
+                worlds = torch.ones(model.world_count + 1, dtype=torch.bool, device=self.stepper.device)
+            else:
+                worlds = wp.to_torch(world_mask)
+            self.stepper.reset(worlds[: self.binding.world_count])
 
-        flags = int(newton.StateFlags.ALL if flags is None else flags)
-        restored = False
-        for flag, name, entry in (
-            (newton.StateFlags.JOINT_Q, "joint_q", self._coord_entry),
-            (newton.StateFlags.JOINT_QD, "joint_qd", self._dof_entry),
-        ):
-            if flags & flag:
-                value = wp.to_torch(getattr(state, name), requires_grad=False)
-                default = wp.to_torch(getattr(model, name), requires_grad=False)
-                value.copy_(torch.where(worlds[entry], default, value))
-                restored = True
-        if restored:
-            articulations = wp.from_torch(worlds[self._articulation_entry], dtype=wp.bool)
-            newton.eval_fk(model, state.joint_q, state.joint_qd, state, mask=articulations)
+            flags = int(newton.StateFlags.ALL if flags is None else flags)
+            restored = False
+            for flag, name, entry in (
+                (newton.StateFlags.JOINT_Q, "joint_q", self._coord_entry),
+                (newton.StateFlags.JOINT_QD, "joint_qd", self._dof_entry),
+            ):
+                if flags & flag:
+                    value = wp.to_torch(getattr(state, name), requires_grad=False)
+                    default = wp.to_torch(getattr(model, name), requires_grad=False)
+                    value.copy_(torch.where(worlds[entry], default, value))
+                    restored = True
+            if restored:
+                articulations = wp.from_torch(worlds[self._articulation_entry], dtype=wp.bool)
+                newton.eval_fk(model, state.joint_q, state.joint_qd, state, mask=articulations)
 
     def notify_model_changed(self, flags: newton.ModelFlags | int) -> None:
         """Emit one-time :class:`NewtonNeuralWarning` for any changed :attr:`UNSEEN_MODEL_CHANGES` flags."""
