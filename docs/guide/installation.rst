@@ -28,7 +28,7 @@ All Python dependencies are declared in ``pyproject.toml`` and installed automat
      - NVIDIA GPU supported by Warp and PyTorch
      - Optional. CPU execution is supported for tests, doctests, and small models.
    * - Newton
-     - ``>=1.9.0.dev0`` with ``sim`` extra
+     - ``>=1.8.0`` with ``sim`` extra
      - The ``sim`` extra provides MuJoCo and MuJoCo Warp, required for recording from
        :class:`newton.solvers.SolverMuJoCo` and for :class:`~newton_neural.solvers.SolverNeRDMuJoCo`.
        See :doc:`recording` and :doc:`coupling`.
@@ -105,7 +105,7 @@ The test suite is verified against the versions locked in ``uv.lock`` on Linux (
    * - Python
      - 3.12
    * - Newton
-     - 1.9.0.dev0 (pinned git revision in ``uv.lock``)
+     - 1.8.0
    * - Warp
      - 1.19.0
    * - MuJoCo / MuJoCo Warp

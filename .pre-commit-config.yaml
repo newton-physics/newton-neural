@@ -6,7 +6,7 @@ ci:
   autoupdate_commit_msg: "[pre-commit.ci] pre-commit autoupdate"
   autoupdate_schedule: quarterly
   # pre-commit.ci has no network access, but uv-lock needs to resolve
-  # dependencies from remote indexes (PyPI, nvidia, pytorch).
+  # dependencies from the PyPI and PyTorch indexes.
   skip:
     - uv-lock
   submodules: false

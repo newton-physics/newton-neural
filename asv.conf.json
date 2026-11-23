@@ -16,7 +16,7 @@
   "build_command": ["python -m build --wheel -o {build_cache_dir} {build_dir}"],
   "install_command": [
     "in-dir={env_dir} python -m pip install torch==2.14.1+cu130 --index-url https://download.pytorch.org/whl/cu130",
-    "in-dir={env_dir} python -m pip install warp-lang==1.19.0 mujoco==3.17.0 mujoco-warp==3.17.0 'newton @ git+https://github.com/newton-physics/newton.git@d31603ff5e8389d1d6b2a5daef6ea2cb074c26ff'",
+    "in-dir={env_dir} python -m pip install warp-lang==1.19.0 mujoco==3.17.0 mujoco-warp==3.17.0 'newton[sim]==1.8.0'",
     "in-dir={env_dir} python -m pip install {wheel_file}",
     "python -m pip install 'asv_runner<0.3.0'"
   ]

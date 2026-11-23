@@ -115,7 +115,7 @@ the same controls and `frame_dt`.
 ## Installation
 
 `newton-neural` uses [uv](https://docs.astral.sh/uv/) and requires Linux (`x86_64` or `aarch64`), Python 3.11+,
-Newton 1.9.0.dev0+ (with the `sim` extra), Warp 1.17+, PyTorch 2.11+, and NumPy 2+. A GPU is optional for tests and
+Newton 1.8.0+ (with the `sim` extra), Warp 1.17+, PyTorch 2.11+, and NumPy 2+. A GPU is optional for tests and
 small runs.
 
 Install from source:

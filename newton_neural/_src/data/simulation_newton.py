@@ -68,7 +68,7 @@ class SimulationNewton(SimulationBase):
             raise ValueError("the solver steps another model than the one given")
         if substep_count < 1:
             raise ValueError(f"a frame holds at least one solver step, got substep_count {substep_count}")
-        if model.actuators or model.batteries:
+        if model.actuators:
             raise ValueError(
                 f"the model holds external actuators ({len(model.actuators)} in model.actuators), which Newton leaves "
                 "to the caller of the solver to step. This simulation does not step them, so their forces would "

@@ -6,8 +6,9 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import ClassVar
+from typing import ClassVar, cast
 
 import newton
 import numpy as np
@@ -150,6 +151,28 @@ class SolverNeRD(SolverBase):
         if self._sensor is not None and self._sensor.overflow is not None:
             return self.SUPPORTED_OBSERVABLES
         return frozenset({self.ObservableKind.CONTACT_F})
+
+    def observables(
+        self,
+        kinds: Iterable[str],
+        *,
+        contacts: newton.Contacts | None = None,
+        requires_grad: bool | None = None,
+    ) -> SolverNeRD.Observables:
+        """Allocate requested buffers with a global-world entry in the contact overflow counts."""
+        observables = cast(
+            SolverNeRD.Observables, super().observables(kinds, contacts=contacts, requires_grad=requires_grad)
+        )
+        overflow = observables.contact_row_overflow
+        # Newton 1.8's WORLD-frequency allocator counts only local worlds.
+        if overflow is not None and overflow.shape[0] == self.model.world_count:
+            observables.contact_row_overflow = wp.zeros(
+                self.model.world_count + 1,
+                dtype=overflow.dtype,
+                device=overflow.device,
+                requires_grad=overflow.requires_grad,
+            )
+        return observables
 
     def step(
         self,
