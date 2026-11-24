@@ -1,0 +1,111 @@
+name: Deploy dev documentation
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Ensure only one deployment runs at a time
+concurrency:
+  group: docs-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43  # v2.22.3
+        with:
+          egress-policy: audit
+
+      - name: Checkout repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
+        with:
+          fetch-depth: 1
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e  # v10.3.2
+        with:
+          version: "0.13.5"
+          prune-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405  # v6.2.0
+        with:
+          python-version-file: ".python-version"
+
+      - name: Build Sphinx documentation
+        # `-d docs/_build/doctrees` keeps Sphinx's pickled doctree cache out of
+        # the published html/ tree. It is build-only state that no browser loads.
+        run: uv run --group docs sphinx-build -j auto -d docs/_build/doctrees -b html docs docs/_build/html
+
+      - name: Deploy to gh-pages /latest/
+        run: |
+          set -e  # Exit on any error
+
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+
+          # Save built docs and 404 template outside the repo before switching branches
+          mv docs/_build/html /tmp/docs-latest
+          cp docs/_static/gh-pages-404.html /tmp/gh-pages-404.html
+
+          # Switch to gh-pages branch (check existence first to avoid masking other fetch errors)
+          # Distinguish "branch not found" (exit 2) from fatal errors (exit 128)
+          # to prevent a transient failure from creating an orphan that overwrites
+          # the existing site on the force push below.
+          ls_remote_rc=0
+          git ls-remote --exit-code --heads origin gh-pages > /dev/null 2>&1 || ls_remote_rc=$?
+
+          if [ "$ls_remote_rc" -eq 0 ]; then
+            git fetch --depth=1 origin gh-pages:gh-pages
+            git checkout gh-pages
+          elif [ "$ls_remote_rc" -eq 2 ]; then
+            echo "Creating new gh-pages branch"
+            git checkout --orphan gh-pages
+            git rm -rf . || true
+          else
+            echo "::error::git ls-remote failed with exit code $ls_remote_rc, aborting to prevent data loss"
+            exit 1
+          fi
+
+          # Remove old /latest/ and replace with new build
+          rm -rf latest
+          mv /tmp/docs-latest latest
+
+          # The site root has no page of its own, so it sends visitors to /latest/
+          {
+            echo '<!DOCTYPE html>'
+            echo '<html>'
+            echo '<head>'
+            echo '  <meta charset="utf-8">'
+            echo '  <title>Redirecting to the newton-neural documentation</title>'
+            echo '  <meta http-equiv="refresh" content="0; url=latest/">'
+            echo '  <link rel="canonical" href="https://newton-physics.github.io/newton-neural/latest/">'
+            echo '</head>'
+            echo '<body>'
+            echo '  <p>Redirecting to the <a href="latest/">newton-neural documentation</a>...</p>'
+            echo '</body>'
+            echo '</html>'
+          } > index.html
+
+          # Deploy custom 404 page for redirecting non-versioned URLs
+          cp /tmp/gh-pages-404.html 404.html
+
+          # Ensure .nojekyll exists
+          touch .nojekyll
+
+          # Stage new/modified files. git checkout --orphan below preserves the
+          # full index from gh-pages, so all previously tracked files are also
+          # included in the deploy commit.
+          git add latest index.html 404.html .nojekyll
+
+          # Reset to an orphan commit to prevent unbounded history growth.
+          # gh-pages is a deployment target, not a historical record.
+          git checkout --orphan gh-pages-deploy
+          git commit -m "Deploy dev docs from main@${GITHUB_SHA::8}"
+          git push origin HEAD:gh-pages --force

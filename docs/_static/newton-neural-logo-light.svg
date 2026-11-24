@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 653 359.81" width="653" height="359.81" role="img" aria-label="newton-neural logo">
+<title>newton-neural</title>
+<circle cx="121.15" cy="254.08" r="2.6" fill="#2d4e90"/>
+<circle cx="108.7" cy="251.78" r="2.6" fill="#2d4e90"/>
+<circle cx="96.38" cy="248.82" r="2.6" fill="#2d4e90"/>
+<circle cx="84.24" cy="245.22" r="2.6" fill="#2d4e90"/>
+<circle cx="72.31" cy="240.99" r="2.6" fill="#2d4e90"/>
+<circle cx="531.85" cy="254.08" r="2.6" fill="#a1e887"/>
+<circle cx="544.3" cy="251.78" r="2.6" fill="#a1e887"/>
+<circle cx="556.62" cy="248.82" r="2.6" fill="#a1e887"/>
+<circle cx="568.76" cy="245.22" r="2.6" fill="#a1e887"/>
+<circle cx="580.69" cy="240.99" r="2.6" fill="#a1e887"/>
+<path d="M242.5 224.85L326.5 192.69" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M242.5 224.85L326.5 257" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M242.5 224.85L326.5 321.31" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M242.5 289.15L326.5 192.69" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M242.5 289.15L326.5 257" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M242.5 289.15L326.5 321.31" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M326.5 192.69L410.5 224.85" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M326.5 192.69L410.5 289.15" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M326.5 257L410.5 224.85" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M326.5 257L410.5 289.15" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M326.5 321.31L410.5 224.85" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M326.5 321.31L410.5 289.15" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M181.75 248.1L242.5 224.85" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M181.75 265.9L242.5 289.15" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M410.5 224.85L471.25 248.1" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M410.5 289.15L471.25 265.9" fill="none" stroke="#c5cad3" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M132 17L521 17" fill="none" stroke="#111111" stroke-width="10" stroke-linecap="round"/>
+<path d="M158.5 17L38.5 224.85" fill="none" stroke="#111111" stroke-width="6" stroke-linecap="round"/>
+<path d="M494.5 17L614.5 224.85" fill="none" stroke="#111111" stroke-width="6" stroke-linecap="round"/>
+<path d="M242.5 17L242.5 224.85" fill="none" stroke="#111111" stroke-width="6" stroke-linecap="round"/>
+<path d="M326.5 17L326.5 192.69" fill="none" stroke="#111111" stroke-width="6" stroke-linecap="round"/>
+<path d="M410.5 17L410.5 224.85" fill="none" stroke="#111111" stroke-width="6" stroke-linecap="round"/>
+<circle cx="158.5" cy="257" r="24.9" fill="none" stroke="#2d4e90" stroke-width="3.2"/>
+<circle cx="494.5" cy="257" r="24.9" fill="none" stroke="#a1e887" stroke-width="3.2"/>
+<circle cx="38.5" cy="224.85" r="26.5" fill="#2d4e90"/>
+<circle cx="242.5" cy="224.85" r="26.5" fill="#57868c"/>
+<circle cx="242.5" cy="289.15" r="26.5" fill="#57868c"/>
+<circle cx="326.5" cy="192.69" r="26.5" fill="#80b192"/>
+<circle cx="326.5" cy="257" r="26.5" fill="#80b192"/>
+<circle cx="326.5" cy="321.31" r="26.5" fill="#80b192"/>
+<circle cx="410.5" cy="224.85" r="26.5" fill="#8fd088"/>
+<circle cx="410.5" cy="289.15" r="26.5" fill="#8fd088"/>
+<circle cx="614.5" cy="224.85" r="26.5" fill="#a1e887"/>
+</svg>
