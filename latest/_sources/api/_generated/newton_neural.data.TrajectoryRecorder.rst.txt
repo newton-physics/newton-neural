@@ -1,0 +1,5 @@
+﻿newton\_neural.data.TrajectoryRecorder
+======================================
+
+.. autoclass:: newton_neural.data.TrajectoryRecorder
+   :show-inheritance:

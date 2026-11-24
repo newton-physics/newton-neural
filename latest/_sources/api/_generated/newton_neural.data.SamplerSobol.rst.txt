@@ -1,0 +1,5 @@
+﻿newton\_neural.data.SamplerSobol
+================================
+
+.. autoclass:: newton_neural.data.SamplerSobol
+   :show-inheritance:

@@ -1,0 +1,6 @@
+﻿newton\_neural.systems.SystemBase
+=================================
+
+.. autoclass:: newton_neural.systems.SystemBase
+   :show-inheritance:
+   :inherited-members: Module

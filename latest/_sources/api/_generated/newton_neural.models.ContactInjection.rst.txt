@@ -1,0 +1,5 @@
+﻿newton\_neural.models.ContactInjection
+======================================
+
+.. autoclass:: newton_neural.models.ContactInjection
+   :show-inheritance:

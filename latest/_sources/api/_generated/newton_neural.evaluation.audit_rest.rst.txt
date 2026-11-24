@@ -1,0 +1,6 @@
+﻿newton\_neural.evaluation.audit\_rest
+=====================================
+
+.. currentmodule:: newton_neural.evaluation
+
+.. autofunction:: audit_rest

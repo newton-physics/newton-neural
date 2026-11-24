@@ -1,0 +1,5 @@
+﻿newton\_neural.training.OptimizerMuon
+=====================================
+
+.. autoclass:: newton_neural.training.OptimizerMuon
+   :show-inheritance:

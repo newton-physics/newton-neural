@@ -1,0 +1,5 @@
+﻿newton\_neural.data.CommandSmooth
+=================================
+
+.. autoclass:: newton_neural.data.CommandSmooth
+   :show-inheritance:

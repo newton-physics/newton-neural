@@ -1,0 +1,5 @@
+﻿newton\_neural.data.CommandBase
+===============================
+
+.. autoclass:: newton_neural.data.CommandBase
+   :show-inheritance:

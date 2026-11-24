@@ -1,0 +1,6 @@
+﻿newton\_neural.testing.check\_nerd\_streaming
+=============================================
+
+.. currentmodule:: newton_neural.testing
+
+.. autofunction:: check_nerd_streaming

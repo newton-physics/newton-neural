@@ -1,0 +1,5 @@
+﻿newton\_neural.data.SamplerMixture
+==================================
+
+.. autoclass:: newton_neural.data.SamplerMixture
+   :show-inheritance:

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Page Not Found - newton-neural Documentation</title>
+  <script>
+    (function() {
+      var path = window.location.pathname;
+      var base = '/newton-neural/';
+      if (path.startsWith(base)) {
+        var subpath = path.substring(base.length);
+        // If not already under the latest/ prefix, redirect to /latest/
+        if (subpath && !subpath.match(/^latest(\/|$)/)) {
+          var newUrl = base + 'latest/' + subpath + window.location.search + window.location.hash;
+          window.location.replace(newUrl);
+          return;
+        }
+      }
+    })();
+  </script>
+</head>
+<body>
+  <h1>Page Not Found</h1>
+  <p>The page you requested does not exist.
+     Visit the <a href="/newton-neural/latest/">newton-neural documentation</a>.</p>
+</body>
+</html>

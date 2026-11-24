@@ -1,0 +1,5 @@
+﻿newton\_neural.SignalSpec
+=========================
+
+.. autoclass:: newton_neural.SignalSpec
+   :show-inheritance:

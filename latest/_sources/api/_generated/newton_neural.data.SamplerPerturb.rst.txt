@@ -1,0 +1,5 @@
+﻿newton\_neural.data.SamplerPerturb
+==================================
+
+.. autoclass:: newton_neural.data.SamplerPerturb
+   :show-inheritance:

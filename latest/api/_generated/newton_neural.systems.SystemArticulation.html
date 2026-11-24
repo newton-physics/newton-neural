@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>newton_neural.systems.SystemArticulation &#8212; newton-neural</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=a105fe31" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../../_static/documentation_options.js?v=965fac30"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/_generated/newton_neural.systems.SystemArticulation';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="newton_neural.systems.SystemBase" href="newton_neural.systems.SystemBase.html" />
+    <link rel="prev" title="newton_neural.systems.BindingBase" href="newton_neural.systems.BindingBase.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/newton-neural-logo-light.svg" class="logo__image only-light" alt="newton-neural logo"/>
+    <img src="../../_static/newton-neural-logo-dark.svg" class="logo__image only-dark pst-js-only" alt="newton-neural logo"/>
+  
+  
+    <p class="title logo__title">newton-neural <span style='font-size: 0.8em; color: #888;'>(0.1.0.dev0)</span></p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/overview.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/models.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/recording.html">
+    Recording
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../guide/training.html">
+    Training
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../guide/evaluation.html">
+    Evaluation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../guide/solvers.html">
+    Solvers
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../guide/contact.html">
+    Contact Input
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../guide/coupling.html">
+    Coupling
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../guide/performance.html">
+    Performance
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../newton_neural.html">
+    newton_neural
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../newton_neural_backbones.html">
+    newton_neural.backbones
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../newton_neural_contacts.html">
+    newton_neural.contacts
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../newton_neural_data.html">
+    newton_neural.data
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../newton_neural_evaluation.html">
+    newton_neural.evaluation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../newton_neural_models.html">
+    newton_neural.models
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../newton_neural_predictions.html">
+    newton_neural.predictions
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../newton_neural_solvers.html">
+    newton_neural.solvers
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="../newton_neural_systems.html">
+    newton_neural.systems
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../newton_neural_testing.html">
+    newton_neural.testing
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../newton_neural_training.html">
+    newton_neural.training
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../guide/extending.html">
+    Extending
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../guide/development.html">
+    Development
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/newton-physics/newton-neural">
+    GitHub
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/newton-physics/newton-neural" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/overview.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/models.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/recording.html">
+    Recording
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/training.html">
+    Training
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/evaluation.html">
+    Evaluation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/solvers.html">
+    Solvers
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/contact.html">
+    Contact Input
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/coupling.html">
+    Coupling
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/performance.html">
+    Performance
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../newton_neural.html">
+    newton_neural
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../newton_neural_backbones.html">
+    newton_neural.backbones
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../newton_neural_contacts.html">
+    newton_neural.contacts
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../newton_neural_data.html">
+    newton_neural.data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../newton_neural_evaluation.html">
+    newton_neural.evaluation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../newton_neural_models.html">
+    newton_neural.models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../newton_neural_predictions.html">
+    newton_neural.predictions
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../newton_neural_solvers.html">
+    newton_neural.solvers
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../newton_neural_systems.html">
+    newton_neural.systems
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../newton_neural_testing.html">
+    newton_neural.testing
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../newton_neural_training.html">
+    newton_neural.training
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/extending.html">
+    Extending
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/development.html">
+    Development
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/newton-physics/newton-neural">
+    GitHub
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/newton-physics/newton-neural" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../guide/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/recording.html">Recording</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/training.html">Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/solvers.html">Solvers</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Concepts</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../guide/contact.html">Contact Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/coupling.html">Coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/performance.html">Performance</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../newton_neural.html">newton_neural</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../newton_neural_backbones.html">newton_neural.backbones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../newton_neural_contacts.html">newton_neural.contacts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../newton_neural_data.html">newton_neural.data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../newton_neural_evaluation.html">newton_neural.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../newton_neural_models.html">newton_neural.models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../newton_neural_predictions.html">newton_neural.predictions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../newton_neural_solvers.html">newton_neural.solvers</a></li>
+<li class="toctree-l1 current active"><a class="reference internal" href="../newton_neural_systems.html">newton_neural.systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../newton_neural_testing.html">newton_neural.testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../newton_neural_training.html">newton_neural.training</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../guide/extending.html">Extending</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/development.html">Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/newton-physics/newton-neural">GitHub</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../newton_neural_systems.html" class="nav-link">newton_neural.systems</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">newton_neural.systems.SystemArticulation</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="newton-neural-systems-systemarticulation">
+<h1>newton_neural.systems.SystemArticulation<a class="headerlink" href="#newton-neural-systems-systemarticulation" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">newton_neural.systems.</span></span><span class="sig-name descname"><span class="pre">SystemArticulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L100"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase" title="newton_neural._src.systems.system.SystemBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemBase</span></code></a></p>
+<p>Generalized-coordinate articulated robot (one articulation per world, fixed or floating base).</p>
+<p>Supports <code class="docutils literal notranslate"><span class="pre">free</span></code> (root only), <code class="docutils literal notranslate"><span class="pre">revolute</span></code>, <code class="docutils literal notranslate"><span class="pre">prismatic</span></code>, and <code class="docutils literal notranslate"><span class="pre">fixed</span></code> joints.</p>
+<p><strong>Signals:</strong> <code class="docutils literal notranslate"><span class="pre">joint_q</span></code> <code class="docutils literal notranslate"><span class="pre">[joint_coord_count]</span></code> [m or rad, <code class="docutils literal notranslate"><span class="pre">xyzw</span></code> unit quaternion for floating base] and
+<code class="docutils literal notranslate"><span class="pre">joint_qd</span></code> <code class="docutils literal notranslate"><span class="pre">[joint_dof_count]</span></code> [m/s or rad/s] in Newton’s layout, followed by one <code class="docutils literal notranslate"><span class="pre">[actuated_count]</span></code>
+control tensor per name in <code class="docutils literal notranslate"><span class="pre">spec.control</span></code> (revolute and prismatic joints only).</p>
+<p><strong>Robot frame:</strong> For a floating base with <code class="docutils literal notranslate"><span class="pre">up</span> <span class="pre">=</span> <span class="pre">-gravity</span> <span class="pre">/</span> <span class="pre">|gravity|</span></code>, origin is <code class="docutils literal notranslate"><span class="pre">joint_q[0:3]</span></code> and rotation
+is heading <code class="docutils literal notranslate"><span class="pre">R_h</span> <span class="pre">=</span> <span class="pre">twist(joint_q[3:7],</span> <span class="pre">up)</span></code>. For a fixed base, features use raw joint coordinates directly while
+Warp sensors (<a class="reference internal" href="newton_neural.systems.robot_frame.html#newton_neural.systems.robot_frame" title="newton_neural.systems.robot_frame"><code class="xref py py-func docutils literal notranslate"><span class="pre">robot_frame()</span></code></a>) use the world’s root anchor transform <code class="docutils literal notranslate"><span class="pre">model.joint_X_p[root_joint]</span></code>.</p>
+<p><strong>Features:</strong> Fixed base: <code class="docutils literal notranslate"><span class="pre">[joint_q,</span> <span class="pre">joint_qd,</span> <span class="pre">controls]</span></code>. Floating base (with base rotation <code class="docutils literal notranslate"><span class="pre">R_b</span></code>):
+<code class="docutils literal notranslate"><span class="pre">[joint_q[7:],</span> <span class="pre">R_h^T</span> <span class="pre">v_base</span> <span class="pre">(3),</span> <span class="pre">R_h^T</span> <span class="pre">w_base</span> <span class="pre">(3),</span> <span class="pre">joint_qd[6:],</span> <span class="pre">R_b^T</span> <span class="pre">(gravity</span> <span class="pre">/</span> <span class="pre">|gravity|)</span> <span class="pre">(3),</span> <span class="pre">controls]</span></code>,
+omitting global base position and heading for horizontal translation/yaw invariance.</p>
+<p><strong>Increments:</strong> Fixed base: <code class="docutils literal notranslate"><span class="pre">[dq,</span> <span class="pre">dqd]</span></code>. Floating base: <code class="docutils literal notranslate"><span class="pre">[R_h^T</span> <span class="pre">dp_base</span> <span class="pre">(3),</span> <span class="pre">R_h^T</span> <span class="pre">r</span> <span class="pre">(3),</span> <span class="pre">dq[7:],</span>
+<span class="pre">R_h^T</span> <span class="pre">dv_base</span> <span class="pre">(3),</span> <span class="pre">R_h^T</span> <span class="pre">dw_base</span> <span class="pre">(3),</span> <span class="pre">dqd[6:]]</span></code>, where <code class="docutils literal notranslate"><span class="pre">r</span></code> is the rotation vector of
+<code class="docutils literal notranslate"><span class="pre">q_following</span> <span class="pre">*</span> <span class="pre">q_current^-1</span></code> [rad] and <code class="docutils literal notranslate"><span class="pre">R_h</span></code> is the heading at <code class="docutils literal notranslate"><span class="pre">current</span></code>. <a class="reference internal" href="#newton_neural.systems.SystemArticulation.integrate" title="newton_neural.systems.SystemArticulation.integrate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate()</span></code></a> returns a
+normalized canonical quaternion (<code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>spec</strong> (<a class="reference internal" href="#newton_neural.systems.SystemArticulation.Spec" title="newton_neural.systems.SystemArticulation.Spec"><em>Spec</em></a>) – Kinematic tree and control specification (<a class="reference internal" href="#newton_neural.systems.SystemArticulation.Spec" title="newton_neural.systems.SystemArticulation.Spec"><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemArticulation.Spec</span></code></a>).</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError" title="(in Python v3.15)"><strong>ValueError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">spec</span></code> has unsupported joint/control types, duplicate body or actuated-joint labels, or
+    inconsistent topology.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.spec">
+<span class="sig-name descname"><span class="pre">spec</span></span><a class="headerlink" href="#newton_neural.systems.SystemArticulation.spec" title="Link to this definition">#</a></dt>
+<dd><p>Underlying <a class="reference internal" href="#newton_neural.systems.SystemArticulation.Spec" title="newton_neural.systems.SystemArticulation.Spec"><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemArticulation.Spec</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.floating_base">
+<span class="sig-name descname"><span class="pre">floating_base</span></span><a class="headerlink" href="#newton_neural.systems.SystemArticulation.floating_base" title="Link to this definition">#</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the root joint is a free joint.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.joint_coord_count">
+<span class="sig-name descname"><span class="pre">joint_coord_count</span></span><a class="headerlink" href="#newton_neural.systems.SystemArticulation.joint_coord_count" title="Link to this definition">#</a></dt>
+<dd><p>Width of <code class="docutils literal notranslate"><span class="pre">joint_q</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.joint_dof_count">
+<span class="sig-name descname"><span class="pre">joint_dof_count</span></span><a class="headerlink" href="#newton_neural.systems.SystemArticulation.joint_dof_count" title="Link to this definition">#</a></dt>
+<dd><p>Width of <code class="docutils literal notranslate"><span class="pre">joint_qd</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.actuated_count">
+<span class="sig-name descname"><span class="pre">actuated_count</span></span><a class="headerlink" href="#newton_neural.systems.SystemArticulation.actuated_count" title="Link to this definition">#</a></dt>
+<dd><p>Number of actuated (revolute + prismatic) joints.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.includes_actuators">
+<span class="sig-name descname"><span class="pre">includes_actuators</span></span><a class="headerlink" href="#newton_neural.systems.SystemArticulation.includes_actuators" title="Link to this definition">#</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> when driven by targets rather than direct forces (<code class="docutils literal notranslate"><span class="pre">joint_f</span></code>, <code class="docutils literal notranslate"><span class="pre">joint_act</span></code>),
+meaning actuator dynamics are learned inside the model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.root_body">
+<span class="sig-name descname"><span class="pre">root_body</span></span><a class="headerlink" href="#newton_neural.systems.SystemArticulation.root_body" title="Link to this definition">#</a></dt>
+<dd><p>Index of the root body in <code class="docutils literal notranslate"><span class="pre">spec.body_labels</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.anchor">
+<span class="sig-name descname"><span class="pre">anchor</span></span><a class="headerlink" href="#newton_neural.systems.SystemArticulation.anchor" title="Link to this definition">#</a></dt>
+<dd><p>Root joint parent transform <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">qx,</span> <span class="pre">qy,</span> <span class="pre">qz,</span> <span class="pre">qw)</span></code> [m].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.up">
+<span class="sig-name descname"><span class="pre">up</span></span><a class="headerlink" href="#newton_neural.systems.SystemArticulation.up" title="Link to this definition">#</a></dt>
+<dd><p>Unit vector opposite gravity <code class="docutils literal notranslate"><span class="pre">[3]</span></code> (zeros if gravity is zero).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.down">
+<span class="sig-name descname"><span class="pre">down</span></span><a class="headerlink" href="#newton_neural.systems.SystemArticulation.down" title="Link to this definition">#</a></dt>
+<dd><p>Unit vector along gravity <code class="docutils literal notranslate"><span class="pre">[3]</span></code> (zeros if gravity is zero).</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Joint">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Joint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_xform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child_xform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0)</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L146"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Joint" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Kinematic definition of a single joint.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Joint.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></em><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Joint.type" title="Link to this definition">#</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">&quot;free&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;revolute&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;prismatic&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;fixed&quot;</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Lowercase <a class="reference external" href="https://newton-physics.github.io/newton/stable/api/_generated/newton.JointType.html#newton.JointType" title="(in Newton Physics)"><code class="xref py py-class docutils literal notranslate"><span class="pre">newton.JointType</span></code></a> name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Joint.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><span class="pre">int</span></a></em><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Joint.parent" title="Link to this definition">#</a></dt>
+<dd><p>Parent body index in <code class="docutils literal notranslate"><span class="pre">Spec.body_labels</span></code>, or <code class="docutils literal notranslate"><span class="pre">-1</span></code> for the world.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Joint.child">
+<span class="sig-name descname"><span class="pre">child</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><span class="pre">int</span></a></em><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Joint.child" title="Link to this definition">#</a></dt>
+<dd><p>Child body index in <code class="docutils literal notranslate"><span class="pre">Spec.body_labels</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Joint.parent_xform">
+<span class="sig-name descname"><span class="pre">parent_xform</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0)</span></em><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Joint.parent_xform" title="Link to this definition">#</a></dt>
+<dd><p>Joint transform in parent body frame <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">qx,</span> <span class="pre">qy,</span> <span class="pre">qz,</span> <span class="pre">qw)</span></code> [m].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Joint.child_xform">
+<span class="sig-name descname"><span class="pre">child_xform</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0)</span></em><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Joint.child_xform" title="Link to this definition">#</a></dt>
+<dd><p>Joint transform in child body frame <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">qx,</span> <span class="pre">qy,</span> <span class="pre">qz,</span> <span class="pre">qw)</span></code> [m].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Joint.axis">
+<span class="sig-name descname"><span class="pre">axis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0)</span></em><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Joint.axis" title="Link to this definition">#</a></dt>
+<dd><p>Unit motion axis in joint frame for revolute/prismatic joints (zeros otherwise).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Joint.actuated">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">actuated</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><span class="pre">bool</span></a></em><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L173"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Joint.actuated" title="Link to this definition">#</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> for revolute and prismatic joints.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Spec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">control</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gravity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body_com</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L178"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Plain-data kinematic specification of an articulated robot.</p>
+<p>Body labels and actuated-joint labels must each be unique within the articulation (fixed joints may share
+labels).</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec.control">
+<span class="sig-name descname"><span class="pre">control</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec.control" title="Link to this definition">#</a></dt>
+<dd><p>Names of <a class="reference external" href="https://newton-physics.github.io/newton/stable/api/_generated/newton.Control.html#newton.Control" title="(in Newton Physics)"><code class="xref py py-class docutils literal notranslate"><span class="pre">newton.Control</span></code></a> arrays consumed (subset of <code class="docutils literal notranslate"><span class="pre">joint_target_q</span></code>, <code class="docutils literal notranslate"><span class="pre">joint_target_qd</span></code>,
+<code class="docutils literal notranslate"><span class="pre">joint_f</span></code>, <code class="docutils literal notranslate"><span class="pre">joint_act</span></code>).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec.gravity">
+<span class="sig-name descname"><span class="pre">gravity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec.gravity" title="Link to this definition">#</a></dt>
+<dd><p>World-frame gravity vector [m/s^2].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec.body_labels">
+<span class="sig-name descname"><span class="pre">body_labels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec.body_labels" title="Link to this definition">#</a></dt>
+<dd><p>Leaf label of each body in model order.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec.joint_labels">
+<span class="sig-name descname"><span class="pre">joint_labels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec.joint_labels" title="Link to this definition">#</a></dt>
+<dd><p>Leaf label of each joint in model order.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec.joints">
+<span class="sig-name descname"><span class="pre">joints</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#newton_neural.systems.SystemArticulation.Joint" title="newton_neural._src.systems.articulation.SystemArticulation.Joint"><span class="pre">Joint</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec.joints" title="Link to this definition">#</a></dt>
+<dd><p>Joint tree in topological order (parents before children, root joint first).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec.body_com">
+<span class="sig-name descname"><span class="pre">body_com</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec.body_com" title="Link to this definition">#</a></dt>
+<dd><p>Center of mass of each body in its body frame [m].</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec.joint_coord_count">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">joint_coord_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><span class="pre">int</span></a></em><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L219"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec.joint_coord_count" title="Link to this definition">#</a></dt>
+<dd><p>Total coordinate count (width of <code class="docutils literal notranslate"><span class="pre">joint_q</span></code>).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec.joint_dof_count">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">joint_dof_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><span class="pre">int</span></a></em><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L224"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec.joint_dof_count" title="Link to this definition">#</a></dt>
+<dd><p>Total degree-of-freedom count (width of <code class="docutils literal notranslate"><span class="pre">joint_qd</span></code>).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec.floating_base">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">floating_base</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><span class="pre">bool</span></a></em><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L229"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec.floating_base" title="Link to this definition">#</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the root joint is a free joint.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec.actuated_joint_labels">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">actuated_joint_labels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L234"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec.actuated_joint_labels" title="Link to this definition">#</a></dt>
+<dd><p>Labels of actuated joints in control-column order.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L239"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Serialize to JSON-compatible plain data.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.Spec.from_dict">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L243"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.Spec.from_dict" title="Link to this definition">#</a></dt>
+<dd><p>Reconstruct a <code class="xref py py-class docutils literal notranslate"><span class="pre">Spec</span></code> from <a class="reference internal" href="#newton_neural.systems.SystemArticulation.Spec.to_dict" title="newton_neural.systems.SystemArticulation.Spec.to_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">to_dict()</span></code></a> output.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.from_model">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">articulation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'*'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">control</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('joint_target_q',)</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L278"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.from_model" title="Link to this definition">#</a></dt>
+<dd><p>Build a <a class="reference internal" href="#newton_neural.systems.SystemArticulation" title="newton_neural.systems.SystemArticulation"><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemArticulation</span></code></a> from <code class="docutils literal notranslate"><span class="pre">model</span></code> using world 0 as the template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference external" href="https://newton-physics.github.io/newton/stable/api/_generated/newton.Model.html#newton.Model" title="(in Newton Physics)"><em>Model</em></a>) – Source Newton model.</p></li>
+<li><p><strong>articulation</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/re.html#re.Pattern" title="(in Python v3.15)"><em>Pattern</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a><em>]</em>) – Label pattern matched against full articulation labels (must select one articulation per
+world).</p></li>
+<li><p><strong>control</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em>, </em><em>...</em><em>]</em>) – Name or tuple of <a class="reference external" href="https://newton-physics.github.io/newton/stable/api/_generated/newton.Control.html#newton.Control" title="(in Newton Physics)"><code class="xref py py-class docutils literal notranslate"><span class="pre">newton.Control</span></code></a> arrays driving the robot.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#KeyError" title="(in Python v3.15)"><strong>KeyError</strong></a> – If no articulation matches <code class="docutils literal notranslate"><span class="pre">articulation</span></code>.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError" title="(in Python v3.15)"><strong>ValueError</strong></a> – If any world has != 1 match, gravity varies across worlds, or a joint type is unsupported.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.config">
+<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L337"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.config" title="Link to this definition">#</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">{&quot;spec&quot;:</span> <span class="pre">spec.to_dict()}</span></code> for checkpoint serialization.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.from_config">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L341"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.from_config" title="Link to this definition">#</a></dt>
+<dd><p>Reconstruct from <a class="reference internal" href="#newton_neural.systems.SystemArticulation.config" title="newton_neural.systems.SystemArticulation.config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">config()</span></code></a>.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.extra_repr">
+<span class="sig-name descname"><span class="pre">extra_repr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L346"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.extra_repr" title="Link to this definition">#</a></dt>
+<dd><p>Summary string showing base type, coordinate/DOF counts, and control signals.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.bind">
+<span class="sig-name descname"><span class="pre">bind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">articulation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'*'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L353"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.bind" title="Link to this definition">#</a></dt>
+<dd><p>Bind this system to <code class="docutils literal notranslate"><span class="pre">model</span></code> and validate every world against <a class="reference internal" href="#newton_neural.systems.SystemArticulation.spec" title="newton_neural.systems.SystemArticulation.spec"><code class="xref py py-attr docutils literal notranslate"><span class="pre">spec</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference external" href="https://newton-physics.github.io/newton/stable/api/_generated/newton.Model.html#newton.Model" title="(in Newton Physics)"><em>Model</em></a>) – Target Newton model.</p></li>
+<li><p><strong>articulation</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/re.html#re.Pattern" title="(in Python v3.15)"><em>Pattern</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a><em>]</em>) – Label pattern matched against full articulation labels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation" title="newton_neural.systems.BindingArticulation"><code class="xref py py-class docutils literal notranslate"><span class="pre">BindingArticulation</span></code></a> exposing per-world state/control tensors and bounds.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#KeyError" title="(in Python v3.15)"><strong>KeyError</strong></a> – If no articulation matches <code class="docutils literal notranslate"><span class="pre">articulation</span></code>.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError" title="(in Python v3.15)"><strong>ValueError</strong></a> – If any world’s articulation or gravity disagrees with <a class="reference internal" href="#newton_neural.systems.SystemArticulation.spec" title="newton_neural.systems.SystemArticulation.spec"><code class="xref py py-attr docutils literal notranslate"><span class="pre">spec</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation" title="newton_neural._src.systems.articulation_binding.BindingArticulation"><em>BindingArticulation</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.kinematic_model">
+<span class="sig-name descname"><span class="pre">kinematic_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">world_count</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L369"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.kinematic_model" title="Link to this definition">#</a></dt>
+<dd><p>Build a minimal shape-free <a class="reference external" href="https://newton-physics.github.io/newton/stable/api/_generated/newton.Model.html#newton.Model" title="(in Newton Physics)"><code class="xref py py-class docutils literal notranslate"><span class="pre">newton.Model</span></code></a> of this articulation for standalone forward kinematics.</p>
+<p>Running <code class="docutils literal notranslate"><span class="pre">newton.eval_fk</span></code> reproduces the original body poses and CoM-referenced velocities without needing
+the full scene. Bodies have dummy unit mass/inertia and original <code class="docutils literal notranslate"><span class="pre">body_com</span></code>; fixed bases sit at
+<a class="reference internal" href="#newton_neural.systems.SystemArticulation.anchor" title="newton_neural.systems.SystemArticulation.anchor"><code class="xref py py-attr docutils literal notranslate"><span class="pre">anchor</span></code></a>. Compatible with <a class="reference internal" href="#newton_neural.systems.SystemArticulation.bind" title="newton_neural.systems.SystemArticulation.bind"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bind()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>world_count</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – Number of replicated worlds.</p></li>
+<li><p><strong>device</strong> (<a class="reference external" href="https://nvidia.github.io/warp/stable/api_reference/_generated/warp.Device.html#warp.Device" title="(in Warp v1.19.0)"><em>Device</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em> | </em><em>None</em><em> | </em><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v2.15)"><em>device</em></a>) – Target Warp or PyTorch device.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Finalized Newton model with one articulation labeled <code class="docutils literal notranslate"><span class="pre">&quot;robot&quot;</span></code> per world.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://newton-physics.github.io/newton/stable/api/_generated/newton.Model.html#newton.Model" title="(in Newton Physics)"><em>Model</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.features">
+<span class="sig-name descname"><span class="pre">features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frames</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L407"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.features" title="Link to this definition">#</a></dt>
+<dd><p>Extract network features <code class="docutils literal notranslate"><span class="pre">[...,</span> <span class="pre">feature_count]</span></code> from <code class="docutils literal notranslate"><span class="pre">joint_q</span></code>, <code class="docutils literal notranslate"><span class="pre">joint_qd</span></code>, and controls.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.increment">
+<span class="sig-name descname"><span class="pre">increment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">following</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L420"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.increment" title="Link to this definition">#</a></dt>
+<dd><p>Compute heading-frame state increments <code class="docutils literal notranslate"><span class="pre">[...,</span> <span class="pre">increment_count]</span></code> from <code class="docutils literal notranslate"><span class="pre">current</span></code> to <code class="docutils literal notranslate"><span class="pre">following</span></code>.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.integrate">
+<span class="sig-name descname"><span class="pre">integrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increment</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L443"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.integrate" title="Link to this definition">#</a></dt>
+<dd><p>Apply <code class="docutils literal notranslate"><span class="pre">increment</span></code> to <code class="docutils literal notranslate"><span class="pre">current</span></code> <code class="docutils literal notranslate"><span class="pre">joint_q</span></code> and <code class="docutils literal notranslate"><span class="pre">joint_qd</span></code> (inverts <a class="reference internal" href="#newton_neural.systems.SystemArticulation.increment" title="newton_neural.systems.SystemArticulation.increment"><code class="xref py py-meth docutils literal notranslate"><span class="pre">increment()</span></code></a>).</p>
+<p>For floating bases, returns a normalized canonical quaternion (<code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code>).</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="newton_neural.systems.SystemArticulation.error">
+<span class="sig-name descname"><span class="pre">error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/_src/systems/articulation.py#L472"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#newton_neural.systems.SystemArticulation.error" title="Link to this definition">#</a></dt>
+<dd><p>Compute per-coordinate absolute state errors.</p>
+<p>For floating bases, collapses the 4D base quaternion difference into a single geodesic rotation angle in
+<code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">pi]</span></code> rad, yielding <code class="docutils literal notranslate"><span class="pre">joint_q</span></code> shape <code class="docutils literal notranslate"><span class="pre">[...,</span> <span class="pre">joint_coord_count</span> <span class="pre">-</span> <span class="pre">3]</span></code>: base position (3) [m],
+orientation angle (1) [rad], and actuated joint coordinates [m or rad].</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation"><code class="docutils literal notranslate"><span class="pre">SystemArticulation</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.spec"><code class="docutils literal notranslate"><span class="pre">spec</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.floating_base"><code class="docutils literal notranslate"><span class="pre">floating_base</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.joint_coord_count"><code class="docutils literal notranslate"><span class="pre">joint_coord_count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.joint_dof_count"><code class="docutils literal notranslate"><span class="pre">joint_dof_count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.actuated_count"><code class="docutils literal notranslate"><span class="pre">actuated_count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.includes_actuators"><code class="docutils literal notranslate"><span class="pre">includes_actuators</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.root_body"><code class="docutils literal notranslate"><span class="pre">root_body</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.anchor"><code class="docutils literal notranslate"><span class="pre">anchor</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.up"><code class="docutils literal notranslate"><span class="pre">up</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.down"><code class="docutils literal notranslate"><span class="pre">down</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Joint"><code class="docutils literal notranslate"><span class="pre">Joint</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Joint.type"><code class="docutils literal notranslate"><span class="pre">type</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Joint.parent"><code class="docutils literal notranslate"><span class="pre">parent</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Joint.child"><code class="docutils literal notranslate"><span class="pre">child</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Joint.parent_xform"><code class="docutils literal notranslate"><span class="pre">parent_xform</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Joint.child_xform"><code class="docutils literal notranslate"><span class="pre">child_xform</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Joint.axis"><code class="docutils literal notranslate"><span class="pre">axis</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Joint.actuated"><code class="docutils literal notranslate"><span class="pre">actuated</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec"><code class="docutils literal notranslate"><span class="pre">Spec</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec.control"><code class="docutils literal notranslate"><span class="pre">control</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec.gravity"><code class="docutils literal notranslate"><span class="pre">gravity</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec.body_labels"><code class="docutils literal notranslate"><span class="pre">body_labels</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec.joint_labels"><code class="docutils literal notranslate"><span class="pre">joint_labels</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec.joints"><code class="docutils literal notranslate"><span class="pre">joints</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec.body_com"><code class="docutils literal notranslate"><span class="pre">body_com</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec.joint_coord_count"><code class="docutils literal notranslate"><span class="pre">joint_coord_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec.joint_dof_count"><code class="docutils literal notranslate"><span class="pre">joint_dof_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec.floating_base"><code class="docutils literal notranslate"><span class="pre">floating_base</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec.actuated_joint_labels"><code class="docutils literal notranslate"><span class="pre">actuated_joint_labels</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.Spec.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.from_model"><code class="docutils literal notranslate"><span class="pre">from_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.config"><code class="docutils literal notranslate"><span class="pre">config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.from_config"><code class="docutils literal notranslate"><span class="pre">from_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.extra_repr"><code class="docutils literal notranslate"><span class="pre">extra_repr()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.bind"><code class="docutils literal notranslate"><span class="pre">bind()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.kinematic_model"><code class="docutils literal notranslate"><span class="pre">kinematic_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.features"><code class="docutils literal notranslate"><span class="pre">features()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.increment"><code class="docutils literal notranslate"><span class="pre">increment()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.integrate"><code class="docutils literal notranslate"><span class="pre">integrate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton_neural.systems.SystemArticulation.error"><code class="docutils literal notranslate"><span class="pre">error()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, The Newton Developers. Documentation licensed under CC-BY-4.0.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

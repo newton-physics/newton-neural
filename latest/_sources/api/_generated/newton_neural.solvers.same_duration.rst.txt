@@ -1,0 +1,6 @@
+﻿newton\_neural.solvers.same\_duration
+=====================================
+
+.. currentmodule:: newton_neural.solvers
+
+.. autofunction:: same_duration

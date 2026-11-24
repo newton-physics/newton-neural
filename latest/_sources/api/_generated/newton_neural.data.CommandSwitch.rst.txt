@@ -1,0 +1,5 @@
+﻿newton\_neural.data.CommandSwitch
+=================================
+
+.. autoclass:: newton_neural.data.CommandSwitch
+   :show-inheritance:

@@ -1,0 +1,5 @@
+﻿newton\_neural.systems.BindingArticulation
+==========================================
+
+.. autoclass:: newton_neural.systems.BindingArticulation
+   :show-inheritance:

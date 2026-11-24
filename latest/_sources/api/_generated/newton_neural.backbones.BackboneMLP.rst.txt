@@ -1,0 +1,5 @@
+﻿newton\_neural.backbones.BackboneMLP
+====================================
+
+.. autoclass:: newton_neural.backbones.BackboneMLP
+   :show-inheritance:

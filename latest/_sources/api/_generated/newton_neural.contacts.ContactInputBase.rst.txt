@@ -1,0 +1,6 @@
+﻿newton\_neural.contacts.ContactInputBase
+========================================
+
+.. autoclass:: newton_neural.contacts.ContactInputBase
+   :show-inheritance:
+   :inherited-members: Module

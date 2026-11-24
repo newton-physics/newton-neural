@@ -1,0 +1,5 @@
+﻿newton\_neural.data.CommandSweep
+================================
+
+.. autoclass:: newton_neural.data.CommandSweep
+   :show-inheritance:

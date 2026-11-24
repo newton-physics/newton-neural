@@ -1,0 +1,5 @@
+﻿newton\_neural.predictions.PredictionFreeMotion
+===============================================
+
+.. autoclass:: newton_neural.predictions.PredictionFreeMotion
+   :show-inheritance:

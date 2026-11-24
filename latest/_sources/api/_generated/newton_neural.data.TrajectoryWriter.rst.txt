@@ -1,0 +1,5 @@
+﻿newton\_neural.data.TrajectoryWriter
+====================================
+
+.. autoclass:: newton_neural.data.TrajectoryWriter
+   :show-inheritance:

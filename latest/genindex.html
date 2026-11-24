@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; newton-neural</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=a105fe31" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="_static/documentation_options.js?v=965fac30"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = "pre.mermaid {\n    /* Same as .mermaid-container > pre */\n    display: block;\n    width: 100%;\n}\n\npre.mermaid > svg {\n    /* Same as .mermaid-container > pre > svg */\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}";
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = ".mermaid-container {\n    position: relative;\n    display: flex;\n    flex-direction: row;\n    width: 100%;\n}\n\n.mermaid-container > pre {\n    display: block;\n    width: 100%;\n}\n\n.mermaid-container > pre > svg {\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}\n\n.mermaid-fullscreen-btn {\n    position: absolute;\n    width: 28px;\n    height: 28px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.3);\n    border-radius: 4px;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.2s;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);\n    font-size: 14px;\n    line-height: 1;\n    padding: 0;\n    color: #333;\n}\n\n.mermaid-fullscreen-btn:hover {\n    opacity: 100% !important;\n    background: rgba(255, 255, 255, 1);\n    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-btn.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.3);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-btn.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal {\n    display: none;\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 95vw;\n    height: 100vh;\n    background: rgba(255, 255, 255, 0.98);\n    z-index: 9999;\n    padding: 20px;\n    overflow: auto;\n}\n\n.mermaid-fullscreen-modal.dark-theme {\n    background: rgba(0, 0, 0, 0.98);\n}\n\n.mermaid-fullscreen-modal.active {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen {\n    position: relative;\n    width: 95vw;\n    height: 90vh;\n    max-width: 95vw;\n    max-height: 90vh;\n    background: white;\n    border-radius: 8px;\n    padding: 20px;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);\n    overflow: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen.dark-theme {\n    background: #1a1a1a;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);\n}\n\n.mermaid-container-fullscreen pre.mermaid {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen .mermaid svg {\n    height: 100% !important;\n    width: 100% !important;\n    cursor: grab;\n}\n\n.mermaid-fullscreen-close {\n    position: fixed !important;\n    top: 20px !important;\n    right: 20px !important;\n    width: 40px;\n    height: 40px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    border-radius: 50%;\n    cursor: pointer;\n    z-index: 10000;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);\n    transition: all 0.2s;\n    font-size: 24px;\n    line-height: 1;\n    color: #333;\n}\n\n.mermaid-fullscreen-close:hover {\n    background: white;\n    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-close.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-close.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal .mermaid-fullscreen-btn {\n    display: none !important;\n}";
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+let _lazyObserver = null;
+let _renderQueue = Promise.resolve();
+let closeModal = () => {};
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+        closeModal();
+    }
+});
+
+// Apply d3 zoom to each SVG. Idempotent: an SVG already wrapped is skipped,
+// so this is safe to call both for the initial batch and for diagrams that
+// render lazily once they become visible.
+const addZoomToSvgs = (svgs) => {
+    svgs.each(function() {
+        if (this.getAttribute('data-zoom-applied') === 'true') return;
+        var svg = d3.select(this);
+        svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+        var inner = svg.select("g");
+        var zoom = d3.zoom().on("zoom", function(event) {
+            inner.attr("transform", event.transform);
+        });
+        svg.call(zoom);
+        this.setAttribute('data-zoom-applied', 'true');
+    });
+};
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        // Disconnect any previous lazy rendering observer
+        if (_lazyObserver) {
+            _lazyObserver.disconnect();
+            _lazyObserver = null;
+        }
+
+        all_mermaids.forEach((el) => {
+            el.removeAttribute('data-mermaid-deferred');
+            el.removeAttribute('data-mermaid-render-failed');
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+
+        // Separate visible and hidden elements. Mermaid's layout engine measures
+        // text dimensions via the DOM, which fails for elements hidden by a parent
+        // (e.g., Reveal.js non-active slides, sphinx-design unopened tabs),
+        // producing broken SVGs. Render visible elements now, defer hidden ones.
+        const visible = [];
+        const hidden = [];
+        all_mermaids.forEach((el) => {
+            // offsetParent is null for display:none ancestors.
+            // getClientRects().length > 0 catches position:fixed elements
+            // (which also have null offsetParent but are still visible).
+            if (el.offsetParent !== null || el.getClientRects().length > 0) {
+                visible.push(el);
+            } else {
+                hidden.push(el);
+                el.setAttribute('data-mermaid-deferred', 'true');
+            }
+        });
+
+        if (visible.length > 0) {
+            try {
+                await mermaid.run({ nodes: visible });
+            } catch (e) {
+                console.error("Mermaid rendering failed:", e);
+            }
+        }
+
+        // Lazily render hidden elements when they become visible.
+        // Uses a promise chain (_renderQueue) to serialize rendering,
+        // since IntersectionObserver may report multiple entries at once
+        // and mermaid.run() is not safe to call concurrently.
+        if (hidden.length > 0) {
+            if (typeof IntersectionObserver === 'undefined') {
+                console.warn("IntersectionObserver not available; hidden mermaid diagrams will not render.");
+            } else {
+                _renderQueue = Promise.resolve();
+                _lazyObserver = new IntersectionObserver((entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting && entry.target.getAttribute("data-processed") !== "true") {
+                            _lazyObserver.unobserve(entry.target);
+                            const el = entry.target;
+                            _renderQueue = _renderQueue.then(async () => {
+                                try {
+                                    await mermaid.run({ nodes: [el] });
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    // Apply zoom to the now-rendered diagram, matching
+                                    // the decoration visible diagrams receive.
+                                    if (false) {
+                                        addZoomToSvgs(d3.selectAll("").select(function() {
+                                            return this.querySelector("svg");
+                                        }));
+                                    }
+                                } catch (e) {
+                                    console.error("Mermaid deferred rendering failed:", e);
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    el.setAttribute('data-mermaid-render-failed', 'true');
+                                }
+                            });
+                        }
+                    }
+                });
+                hidden.forEach((el) => _lazyObserver.observe(el));
+            }
+        }
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    // Exclude deferred (hidden) and render-failed elements from completion checks
+    const mermaids_active = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])");
+    const mermaids_processed = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])[data-processed='true']");
+
+    if (false) {
+        const mermaids_to_add_zoom = 0 === -1 ? mermaids_active.length : 0;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("").select(function() {
+                return this.querySelector("svg");
+            });
+            // Wait until every active (visible) diagram has rendered. Deferred
+            // diagrams are excluded, so a fixed d3_node_count that counts a
+            // hidden diagram no longer loops forever waiting for its SVG.
+            if(mermaids_active.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            }
+            addZoomToSvgs(svgs);
+        }
+    } else if(mermaids_active.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if (!true) return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = "\u26f6";
+        fullscreenBtn.style.opacity = "50%";
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scrollX, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.display = 'block';
+
+                if (false) {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+
+
+const load = async () => {
+    initStyles();
+
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...{"startOnLoad": false},
+                ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...{"startOnLoad": false},
+    ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/newton-neural-logo-light.svg" class="logo__image only-light" alt="newton-neural logo"/>
+    <img src="_static/newton-neural-logo-dark.svg" class="logo__image only-dark pst-js-only" alt="newton-neural logo"/>
+  
+  
+    <p class="title logo__title">newton-neural <span style='font-size: 0.8em; color: #888;'>(0.1.0.dev0)</span></p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/overview.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/models.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/recording.html">
+    Recording
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="guide/training.html">
+    Training
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="guide/evaluation.html">
+    Evaluation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="guide/solvers.html">
+    Solvers
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="guide/contact.html">
+    Contact Input
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="guide/coupling.html">
+    Coupling
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="guide/performance.html">
+    Performance
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/newton_neural.html">
+    newton_neural
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/newton_neural_backbones.html">
+    newton_neural.backbones
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/newton_neural_contacts.html">
+    newton_neural.contacts
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/newton_neural_data.html">
+    newton_neural.data
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/newton_neural_evaluation.html">
+    newton_neural.evaluation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/newton_neural_models.html">
+    newton_neural.models
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/newton_neural_predictions.html">
+    newton_neural.predictions
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/newton_neural_solvers.html">
+    newton_neural.solvers
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/newton_neural_systems.html">
+    newton_neural.systems
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/newton_neural_testing.html">
+    newton_neural.testing
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/newton_neural_training.html">
+    newton_neural.training
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="guide/extending.html">
+    Extending
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="guide/development.html">
+    Development
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/newton-physics/newton-neural">
+    GitHub
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/newton-physics/newton-neural" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/overview.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/models.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/recording.html">
+    Recording
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/training.html">
+    Training
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/evaluation.html">
+    Evaluation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/solvers.html">
+    Solvers
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/contact.html">
+    Contact Input
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/coupling.html">
+    Coupling
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/performance.html">
+    Performance
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/newton_neural.html">
+    newton_neural
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/newton_neural_backbones.html">
+    newton_neural.backbones
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/newton_neural_contacts.html">
+    newton_neural.contacts
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/newton_neural_data.html">
+    newton_neural.data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/newton_neural_evaluation.html">
+    newton_neural.evaluation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/newton_neural_models.html">
+    newton_neural.models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/newton_neural_predictions.html">
+    newton_neural.predictions
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/newton_neural_solvers.html">
+    newton_neural.solvers
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/newton_neural_systems.html">
+    newton_neural.systems
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/newton_neural_testing.html">
+    newton_neural.testing
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/newton_neural_training.html">
+    newton_neural.training
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/extending.html">
+    Extending
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="guide/development.html">
+    Development
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/newton-physics/newton-neural">
+    GitHub
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/newton-physics/newton-neural" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ 
+</div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.training.ErrorKind.html#newton_neural.training.ErrorKind.ABSOLUTE">ABSOLUTE (newton_neural.training.ErrorKind attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Joint.actuated">actuated (newton_neural.systems.SystemArticulation.Joint property)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.actuated_count">actuated_count (newton_neural.systems.SystemArticulation attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec.actuated_joint_labels">actuated_joint_labels (newton_neural.systems.SystemArticulation.Spec property)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SignalSource.html#newton_neural.data.SignalSource.after_step">after_step (newton_neural.data.SignalSource attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandBase.html#newton_neural.data.CommandBase.allocate">allocate() (newton_neural.data.CommandBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.data.CommandHeld.html#newton_neural.data.CommandHeld.allocate">(newton_neural.data.CommandHeld method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.CommandNearState.html#newton_neural.data.CommandNearState.allocate">(newton_neural.data.CommandNearState method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.CommandSmooth.html#newton_neural.data.CommandSmooth.allocate">(newton_neural.data.CommandSmooth method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.CommandSweep.html#newton_neural.data.CommandSweep.allocate">(newton_neural.data.CommandSweep method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.CommandSwitch.html#newton_neural.data.CommandSwitch.allocate">(newton_neural.data.CommandSwitch method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.anchor">anchor (newton_neural.systems.SystemArticulation attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryDataset.html#newton_neural.data.TrajectoryDataset.arrays">arrays() (newton_neural.data.TrajectoryDataset method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.evaluation.audit_paired.html#newton_neural.evaluation.audit_paired">audit_paired() (in module newton_neural.evaluation)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.evaluation.audit_rest.html#newton_neural.evaluation.audit_rest">audit_rest() (in module newton_neural.evaluation)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.evaluation.AuditPaired.html#newton_neural.evaluation.AuditPaired">AuditPaired (class in newton_neural.evaluation)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.evaluation.AuditRest.html#newton_neural.evaluation.AuditRest">AuditRest (class in newton_neural.evaluation)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Joint.axis">axis (newton_neural.systems.SystemArticulation.Joint attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.backbone">backbone (newton_neural.models.FlashNeRD property)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase">BackboneBase (class in newton_neural.backbones)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneFlash.html#newton_neural.backbones.BackboneFlash">BackboneFlash (class in newton_neural.backbones)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneMLP.html#newton_neural.backbones.BackboneMLP">BackboneMLP (class in newton_neural.backbones)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneTransformer.html#newton_neural.backbones.BackboneTransformer">BackboneTransformer (class in newton_neural.backbones)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryWindows.html#newton_neural.data.TrajectoryWindows.batch">batch() (newton_neural.data.TrajectoryWindows method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.Precision.html#newton_neural.models.Precision.BF16">BF16 (newton_neural.models.Precision attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.bind">bind() (newton_neural.systems.SystemArticulation method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.bind">(newton_neural.systems.SystemBase method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.binding">binding (newton_neural.data.SimulationBase attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.binding">(newton_neural.solvers.SolverNeRD attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation">BindingArticulation (class in newton_neural.systems)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.BindingBase.html#newton_neural.systems.BindingBase">BindingBase (class in newton_neural.systems)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec.body_com">body_com (newton_neural.systems.SystemArticulation.Spec attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.body_ids">body_ids (newton_neural.systems.BindingArticulation attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec.body_labels">body_labels (newton_neural.systems.SystemArticulation.Spec attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandBase.html#newton_neural.data.CommandBase.bounded">bounded (newton_neural.data.CommandBase property)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.data.CommandSwitch.html#newton_neural.data.CommandSwitch.bounded">(newton_neural.data.CommandSwitch property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.testing.check_backbone_streaming.html#newton_neural.testing.check_backbone_streaming">check_backbone_streaming() (in module newton_neural.testing)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.testing.check_contact_input_recompute.html#newton_neural.testing.check_contact_input_recompute">check_contact_input_recompute() (in module newton_neural.testing)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.testing.check_nerd_streaming.html#newton_neural.testing.check_nerd_streaming">check_nerd_streaming() (in module newton_neural.testing)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Joint.child">child (newton_neural.systems.SystemArticulation.Joint attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Joint.child_xform">child_xform (newton_neural.systems.SystemArticulation.Joint attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper.clone">clone() (newton_neural.models.NeRDStepper method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryWriter.html#newton_neural.data.TrajectoryWriter.close">close() (newton_neural.data.TrajectoryWriter method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase.code_count">code_count (newton_neural.contacts.ContactInputBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.command_bounds">command_bounds() (newton_neural.data.SimulationBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.command_bounds">(newton_neural.systems.BindingArticulation method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.BindingBase.html#newton_neural.systems.BindingBase.command_bounds">(newton_neural.systems.BindingBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.data.CommandBase.html#newton_neural.data.CommandBase">CommandBase (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandHeld.html#newton_neural.data.CommandHeld">CommandHeld (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandNearState.html#newton_neural.data.CommandNearState">CommandNearState (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandSmooth.html#newton_neural.data.CommandSmooth">CommandSmooth (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandSweep.html#newton_neural.data.CommandSweep">CommandSweep (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandSwitch.html#newton_neural.data.CommandSwitch">CommandSwitch (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.training.LossOneStep.html#newton_neural.training.LossOneStep.compile">compile() (newton_neural.training.LossOneStep method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper.compiled">compiled (newton_neural.models.NeRDStepper attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase.config">config() (newton_neural.backbones.BackboneBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.backbones.BackboneFlash.html#newton_neural.backbones.BackboneFlash.config">(newton_neural.backbones.BackboneFlash method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.backbones.BackboneMLP.html#newton_neural.backbones.BackboneMLP.config">(newton_neural.backbones.BackboneMLP method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.backbones.BackboneTransformer.html#newton_neural.backbones.BackboneTransformer.config">(newton_neural.backbones.BackboneTransformer method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase.config">(newton_neural.contacts.ContactInputBase method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes.config">(newton_neural.contacts.ContactInputProbes method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet.config">(newton_neural.contacts.ContactInputSet method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionBase.html#newton_neural.predictions.PredictionBase.config">(newton_neural.predictions.PredictionBase method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.config">(newton_neural.systems.SystemArticulation method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.config">(newton_neural.systems.SystemBase method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.SignalRole.html#newton_neural.SignalRole.CONTACT">CONTACT (newton_neural.SignalRole attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.contact_encoder">contact_encoder (newton_neural.models.FlashNeRD attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.contact_injections">contact_injections (newton_neural.models.FlashNeRD property)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.contact_input">contact_input (newton_neural.models.NeRDBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.ObservableKind.CONTACT_ROW_OVERFLOW">CONTACT_ROW_OVERFLOW (newton_neural.solvers.SolverNeRD.ObservableKind attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.Observables.contact_row_overflow">contact_row_overflow (newton_neural.solvers.SolverNeRD.Observables attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.ContactInjection.html#newton_neural.models.ContactInjection">ContactInjection (class in newton_neural.models)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase">ContactInputBase (class in newton_neural.contacts)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes">ContactInputProbes (class in newton_neural.contacts)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet">ContactInputSet (class in newton_neural.contacts)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.contacts">contacts (newton_neural.data.SimulationBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactSensorBase.html#newton_neural.contacts.ContactSensorBase">ContactSensorBase (class in newton_neural.contacts)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.control">control (newton_neural.data.SimulationBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.SignalRole.html#newton_neural.SignalRole.CONTROL">CONTROL (newton_neural.SignalRole attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec.control">control (newton_neural.systems.SystemArticulation.Spec attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.Normalizer.html#newton_neural.Normalizer.count">count (newton_neural.Normalizer attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase.create">create() (newton_neural.backbones.BackboneBase class method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase.create">(newton_neural.contacts.ContactInputBase class method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionBase.html#newton_neural.predictions.PredictionBase.create">(newton_neural.predictions.PredictionBase class method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.create">(newton_neural.systems.SystemBase class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.training.create_optimizer.html#newton_neural.training.create_optimizer">create_optimizer() (in module newton_neural.training)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.Normalizer.html#newton_neural.Normalizer.denormalize">denormalize() (newton_neural.Normalizer method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.device">device (newton_neural.data.SimulationBase attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.device">(newton_neural.models.FlashNeRD property)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.device">(newton_neural.models.NeRDBase property)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper.device">(newton_neural.models.NeRDStepper attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.down">down (newton_neural.systems.SystemArticulation attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.evaluation.AuditRest.html#newton_neural.evaluation.AuditRest.drift_max">drift_max (newton_neural.evaluation.AuditRest attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.evaluation.AuditRest.html#newton_neural.evaluation.AuditRest.drift_mean">drift_mean (newton_neural.evaluation.AuditRest attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.SignalSpec.html#newton_neural.SignalSpec.dtype">dtype (newton_neural.SignalSpec attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.models.ContactInjection.html#newton_neural.models.ContactInjection.EMBEDDING">EMBEDDING (newton_neural.models.ContactInjection attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase.encoder">encoder() (newton_neural.contacts.ContactInputBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes.encoder">(newton_neural.contacts.ContactInputProbes method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet.encoder">(newton_neural.contacts.ContactInputSet method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryBatch.html#newton_neural.data.TrajectoryBatch.episode_start">episode_start (newton_neural.data.TrajectoryBatch attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.data.TrajectoryWindows.html#newton_neural.data.TrajectoryWindows.episode_start">(newton_neural.data.TrajectoryWindows property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.error">error() (newton_neural.systems.SystemArticulation method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.error">(newton_neural.systems.SystemBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.training.ErrorKind.html#newton_neural.training.ErrorKind">ErrorKind (class in newton_neural.training)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase.evaluate">evaluate() (newton_neural.contacts.ContactInputBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes.evaluate">(newton_neural.contacts.ContactInputProbes method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper.export_history">export_history() (newton_neural.models.NeRDStepper method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.extra_repr">extra_repr() (newton_neural.systems.SystemArticulation method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.feature_count">feature_count (newton_neural.systems.SystemBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.feature_normalizer">feature_normalizer (newton_neural.models.FlashNeRD attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.features">features() (newton_neural.systems.SystemArticulation method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.features">(newton_neural.systems.SystemBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.fit_inputs">fit_inputs() (newton_neural.models.FlashNeRD method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.fit_inputs">(newton_neural.models.NeRDBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.fit_normalization">fit_normalization() (newton_neural.models.FlashNeRD method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.fit_normalization">(newton_neural.models.NeRDBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.fitted">fitted (newton_neural.models.FlashNeRD property)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.fitted">(newton_neural.models.NeRDBase property)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.Normalizer.html#newton_neural.Normalizer.fitted">(newton_neural.Normalizer property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD">FlashNeRD (class in newton_neural.models)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.floating_base">floating_base (newton_neural.systems.SystemArticulation attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec.floating_base">(newton_neural.systems.SystemArticulation.Spec property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase.forward">forward() (newton_neural.backbones.BackboneBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.backbones.BackboneMLP.html#newton_neural.backbones.BackboneMLP.forward">(newton_neural.backbones.BackboneMLP method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.forward">(newton_neural.models.FlashNeRD method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.forward">(newton_neural.models.NeRDBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.Precision.html#newton_neural.models.Precision.FP16">FP16 (newton_neural.models.Precision attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.models.Precision.html#newton_neural.models.Precision.FP32">FP32 (newton_neural.models.Precision attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryDataset.html#newton_neural.data.TrajectoryDataset.frame_count">frame_count (newton_neural.data.TrajectoryDataset property)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandBase.html#newton_neural.data.CommandBase.frame_dt">frame_dt (newton_neural.data.CommandBase attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.frame_dt">(newton_neural.data.SimulationBase attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.TrajectoryBatch.html#newton_neural.data.TrajectoryBatch.frame_dt">(newton_neural.data.TrajectoryBatch attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.TrajectoryDataset.html#newton_neural.data.TrajectoryDataset.frame_dt">(newton_neural.data.TrajectoryDataset attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.frame_dt">(newton_neural.models.NeRDBase attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/newton_neural.html#newton_neural.Frames">Frames (in module newton_neural)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryBatch.html#newton_neural.data.TrajectoryBatch.frames">frames (newton_neural.data.TrajectoryBatch attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase.from_config">from_config() (newton_neural.backbones.BackboneBase class method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase.from_config">(newton_neural.contacts.ContactInputBase class method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionBase.html#newton_neural.predictions.PredictionBase.from_config">(newton_neural.predictions.PredictionBase class method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.from_config">(newton_neural.systems.SystemArticulation class method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.from_config">(newton_neural.systems.SystemBase class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.SignalSpec.html#newton_neural.SignalSpec.from_dict">from_dict() (newton_neural.SignalSpec class method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec.from_dict">(newton_neural.systems.SystemArticulation.Spec class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes.from_model">from_model() (newton_neural.contacts.ContactInputProbes class method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.from_model">(newton_neural.systems.SystemArticulation class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet.from_system">from_system() (newton_neural.contacts.ContactInputSet class method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase.gated">gated (newton_neural.contacts.ContactInputBase attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes.gated">(newton_neural.contacts.ContactInputProbes attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet.gated">(newton_neural.contacts.ContactInputSet attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryDataset.html#newton_neural.data.TrajectoryDataset.generation">generation (newton_neural.data.TrajectoryDataset attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandBase.html#newton_neural.data.CommandBase.generator">generator (newton_neural.data.CommandBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec.gravity">gravity (newton_neural.systems.SystemArticulation.Spec attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryDataset.html#newton_neural.data.TrajectoryDataset.held_out_worlds">held_out_worlds() (newton_neural.data.TrajectoryDataset method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase.hidden_weights">hidden_weights() (newton_neural.backbones.BackboneBase method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandBase.html#newton_neural.data.CommandBase.high">high (newton_neural.data.CommandBase attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase.history">history() (newton_neural.backbones.BackboneBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.backbones.BackboneMLP.html#newton_neural.backbones.BackboneMLP.history">(newton_neural.backbones.BackboneMLP method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.history">(newton_neural.models.FlashNeRD method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.history">(newton_neural.models.NeRDBase method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper.import_history">import_history() (newton_neural.models.NeRDStepper method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.includes_actuators">includes_actuators (newton_neural.systems.SystemArticulation attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.ContactInjection.html#newton_neural.models.ContactInjection.INCREMENT">INCREMENT (newton_neural.models.ContactInjection attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.increment">increment() (newton_neural.systems.SystemArticulation method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.increment">(newton_neural.systems.SystemBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.increment_count">increment_count (newton_neural.systems.SystemBase attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.inputs">inputs() (newton_neural.models.FlashNeRD method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.integrate">integrate() (newton_neural.systems.SystemArticulation method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.integrate">(newton_neural.systems.SystemBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.predictions.PredictionBase.html#newton_neural.predictions.PredictionBase.integrates">integrates (newton_neural.predictions.PredictionBase attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionFreeMotion.html#newton_neural.predictions.PredictionFreeMotion.integrates">(newton_neural.predictions.PredictionFreeMotion attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionStateIncrement.html#newton_neural.predictions.PredictionStateIncrement.integrates">(newton_neural.predictions.PredictionStateIncrement attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.joint_coord_count">joint_coord_count (newton_neural.systems.SystemArticulation attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec.joint_coord_count">(newton_neural.systems.SystemArticulation.Spec property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.joint_coord_ids">joint_coord_ids (newton_neural.systems.BindingArticulation attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.joint_dof_count">joint_dof_count (newton_neural.systems.SystemArticulation attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec.joint_dof_count">(newton_neural.systems.SystemArticulation.Spec property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.joint_dof_ids">joint_dof_ids (newton_neural.systems.BindingArticulation attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec.joint_labels">joint_labels (newton_neural.systems.SystemArticulation.Spec attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec.joints">joints (newton_neural.systems.SystemArticulation.Spec attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.kinematic_model">kinematic_model() (newton_neural.systems.SystemArticulation method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.SignalRole.html#newton_neural.SignalRole.LABEL">LABEL (newton_neural.SignalRole attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.predictions.PredictionBase.html#newton_neural.predictions.PredictionBase.label">label() (newton_neural.predictions.PredictionBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionFreeMotion.html#newton_neural.predictions.PredictionFreeMotion.label">(newton_neural.predictions.PredictionFreeMotion method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionStateIncrement.html#newton_neural.predictions.PredictionStateIncrement.label">(newton_neural.predictions.PredictionStateIncrement method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.labels">labels() (newton_neural.models.FlashNeRD method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.labels">(newton_neural.models.NeRDBase method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.load">load() (newton_neural.models.FlashNeRD class method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.load">(newton_neural.models.NeRDBase class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.solvers.load_nerd.html#newton_neural.solvers.load_nerd">load_nerd() (in module newton_neural.solvers)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryWindows.html#newton_neural.data.TrajectoryWindows.loader">loader() (newton_neural.data.TrajectoryWindows method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.training.LossBase.html#newton_neural.training.LossBase">LossBase (class in newton_neural.training)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.training.LossOneStep.html#newton_neural.training.LossOneStep">LossOneStep (class in newton_neural.training)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandBase.html#newton_neural.data.CommandBase.low">low (newton_neural.data.CommandBase attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.evaluation.AuditPaired.html#newton_neural.evaluation.AuditPaired.max">max (newton_neural.evaluation.AuditPaired attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.evaluation.AuditPaired.html#newton_neural.evaluation.AuditPaired.mean">mean (newton_neural.evaluation.AuditPaired attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.evaluation.RolloutStatistics.html#newton_neural.evaluation.RolloutStatistics.mean">(newton_neural.evaluation.RolloutStatistics attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.Normalizer.html#newton_neural.Normalizer.mean">(newton_neural.Normalizer attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryWindows.html#newton_neural.data.TrajectoryWindows.measure">measure() (newton_neural.data.TrajectoryWindows method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.metadata">metadata (newton_neural.models.NeRDBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.model">model (newton_neural.data.SimulationBase attribute)</a>
+</li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="api/newton_neural.html#module-newton_neural">newton_neural</a>
+</li>
+        <li><a href="api/newton_neural_backbones.html#module-newton_neural.backbones">newton_neural.backbones</a>
+</li>
+        <li><a href="api/newton_neural_contacts.html#module-newton_neural.contacts">newton_neural.contacts</a>
+</li>
+        <li><a href="api/newton_neural_data.html#module-newton_neural.data">newton_neural.data</a>
+</li>
+        <li><a href="api/newton_neural_evaluation.html#module-newton_neural.evaluation">newton_neural.evaluation</a>
+</li>
+        <li><a href="api/newton_neural_models.html#module-newton_neural.models">newton_neural.models</a>
+</li>
+        <li><a href="api/newton_neural_predictions.html#module-newton_neural.predictions">newton_neural.predictions</a>
+</li>
+        <li><a href="api/newton_neural_solvers.html#module-newton_neural.solvers">newton_neural.solvers</a>
+</li>
+        <li><a href="api/newton_neural_systems.html#module-newton_neural.systems">newton_neural.systems</a>
+</li>
+        <li><a href="api/newton_neural_testing.html#module-newton_neural.testing">newton_neural.testing</a>
+</li>
+        <li><a href="api/newton_neural_training.html#module-newton_neural.training">newton_neural.training</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.SignalSpec.html#newton_neural.SignalSpec.name">name (newton_neural.SignalSpec attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper.nerd">nerd (newton_neural.models.NeRDStepper attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.nerd">(newton_neural.solvers.SolverNeRD attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase">NeRDBase (class in newton_neural.models)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper">NeRDStepper (class in newton_neural.models)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.network">network (newton_neural.models.FlashNeRD attribute)</a>
+</li>
+      <li>
+    newton_neural
+
+      <ul>
+        <li><a href="api/newton_neural.html#module-newton_neural">module</a>
+</li>
+      </ul></li>
+      <li>
+    newton_neural.backbones
+
+      <ul>
+        <li><a href="api/newton_neural_backbones.html#module-newton_neural.backbones">module</a>
+</li>
+      </ul></li>
+      <li>
+    newton_neural.contacts
+
+      <ul>
+        <li><a href="api/newton_neural_contacts.html#module-newton_neural.contacts">module</a>
+</li>
+      </ul></li>
+      <li>
+    newton_neural.data
+
+      <ul>
+        <li><a href="api/newton_neural_data.html#module-newton_neural.data">module</a>
+</li>
+      </ul></li>
+      <li>
+    newton_neural.evaluation
+
+      <ul>
+        <li><a href="api/newton_neural_evaluation.html#module-newton_neural.evaluation">module</a>
+</li>
+      </ul></li>
+      <li>
+    newton_neural.models
+
+      <ul>
+        <li><a href="api/newton_neural_models.html#module-newton_neural.models">module</a>
+</li>
+      </ul></li>
+      <li>
+    newton_neural.predictions
+
+      <ul>
+        <li><a href="api/newton_neural_predictions.html#module-newton_neural.predictions">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    newton_neural.solvers
+
+      <ul>
+        <li><a href="api/newton_neural_solvers.html#module-newton_neural.solvers">module</a>
+</li>
+      </ul></li>
+      <li>
+    newton_neural.systems
+
+      <ul>
+        <li><a href="api/newton_neural_systems.html#module-newton_neural.systems">module</a>
+</li>
+      </ul></li>
+      <li>
+    newton_neural.testing
+
+      <ul>
+        <li><a href="api/newton_neural_testing.html#module-newton_neural.testing">module</a>
+</li>
+      </ul></li>
+      <li>
+    newton_neural.training
+
+      <ul>
+        <li><a href="api/newton_neural_training.html#module-newton_neural.training">module</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.NewtonNeuralWarning.html#newton_neural.NewtonNeuralWarning">NewtonNeuralWarning</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandBase.html#newton_neural.data.CommandBase.next">next() (newton_neural.data.CommandBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.data.CommandHeld.html#newton_neural.data.CommandHeld.next">(newton_neural.data.CommandHeld method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.CommandNearState.html#newton_neural.data.CommandNearState.next">(newton_neural.data.CommandNearState method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.CommandSmooth.html#newton_neural.data.CommandSmooth.next">(newton_neural.data.CommandSmooth method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.CommandSweep.html#newton_neural.data.CommandSweep.next">(newton_neural.data.CommandSweep method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.CommandSwitch.html#newton_neural.data.CommandSwitch.next">(newton_neural.data.CommandSwitch method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.Normalizer.html#newton_neural.Normalizer.normalize">normalize() (newton_neural.Normalizer method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.Normalizer.html#newton_neural.Normalizer">Normalizer (class in newton_neural)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.notify_model_changed">notify_model_changed() (newton_neural.solvers.SolverNeRD method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.solvers.SolverNeRDMuJoCo.html#newton_neural.solvers.SolverNeRDMuJoCo.notify_model_changed">(newton_neural.solvers.SolverNeRDMuJoCo method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.evaluation.RolloutStatistics.html#newton_neural.evaluation.RolloutStatistics.nrmse">nrmse (newton_neural.evaluation.RolloutStatistics attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.observables">observables() (newton_neural.solvers.SolverNeRD method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.training.OptimizerMuon.html#newton_neural.training.OptimizerMuon">OptimizerMuon (class in newton_neural.training)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.predictions.PredictionBase.html#newton_neural.predictions.PredictionBase.output_count">output_count() (newton_neural.predictions.PredictionBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionFreeMotion.html#newton_neural.predictions.PredictionFreeMotion.output_count">(newton_neural.predictions.PredictionFreeMotion method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionStateIncrement.html#newton_neural.predictions.PredictionStateIncrement.output_count">(newton_neural.predictions.PredictionStateIncrement method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.output_normalizer">output_normalizer (newton_neural.models.NeRDBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactSensorBase.html#newton_neural.contacts.ContactSensorBase.overflow">overflow (newton_neural.contacts.ContactSensorBase attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.evaluation.RolloutStatistics.html#newton_neural.evaluation.RolloutStatistics.p50">p50 (newton_neural.evaluation.RolloutStatistics attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.evaluation.RolloutStatistics.html#newton_neural.evaluation.RolloutStatistics.p90">p90 (newton_neural.evaluation.RolloutStatistics attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.evaluation.RolloutStatistics.html#newton_neural.evaluation.RolloutStatistics.p99">p99 (newton_neural.evaluation.RolloutStatistics attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Joint.parent">parent (newton_neural.systems.SystemArticulation.Joint attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Joint.parent_xform">parent_xform (newton_neural.systems.SystemArticulation.Joint attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.part_kinds">part_kinds (newton_neural.models.FlashNeRD attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.part_kinds">(newton_neural.models.NeRDBase attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryDataset.html#newton_neural.data.TrajectoryDataset.path">path (newton_neural.data.TrajectoryDataset attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.perturb">perturb() (newton_neural.systems.SystemBase method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.place">place() (newton_neural.systems.BindingArticulation method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.BindingBase.html#newton_neural.systems.BindingBase.place">(newton_neural.systems.BindingBase method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.models.Precision.html#newton_neural.models.Precision">Precision (class in newton_neural.models)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.precision">precision (newton_neural.models.NeRDBase attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper.precision">(newton_neural.models.NeRDStepper attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.predict">predict() (newton_neural.models.FlashNeRD method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.predict">(newton_neural.models.NeRDBase method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper.predict">(newton_neural.models.NeRDStepper method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.prediction">prediction (newton_neural.models.NeRDBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.predictions.PredictionBase.html#newton_neural.predictions.PredictionBase">PredictionBase (class in newton_neural.predictions)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.predictions.PredictionFreeMotion.html#newton_neural.predictions.PredictionFreeMotion">PredictionFreeMotion (class in newton_neural.predictions)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.predictions.PredictionStateIncrement.html#newton_neural.predictions.PredictionStateIncrement">PredictionStateIncrement (class in newton_neural.predictions)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.data.SignalSource.html#newton_neural.data.SignalSource.read">read (newton_neural.data.SignalSource attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.read_control">read_control() (newton_neural.systems.BindingArticulation method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.BindingBase.html#newton_neural.systems.BindingBase.read_control">(newton_neural.systems.BindingBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.read_state">read_state() (newton_neural.systems.BindingArticulation method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.BindingBase.html#newton_neural.systems.BindingBase.read_state">(newton_neural.systems.BindingBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.ContactInjection.html#newton_neural.models.ContactInjection.READOUT">READOUT (newton_neural.models.ContactInjection attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase.reads_contacts">reads_contacts (newton_neural.contacts.ContactInputBase attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes.reads_contacts">(newton_neural.contacts.ContactInputProbes attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet.reads_contacts">(newton_neural.contacts.ContactInputSet attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase.receptive_field">receptive_field (newton_neural.backbones.BackboneBase attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.receptive_field">(newton_neural.models.FlashNeRD property)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.receptive_field">(newton_neural.models.NeRDBase property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase.recomputable">recomputable (newton_neural.contacts.ContactInputBase attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes.recomputable">(newton_neural.contacts.ContactInputProbes attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet.recomputable">(newton_neural.contacts.ContactInputSet attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryRecorder.html#newton_neural.data.TrajectoryRecorder.record">record() (newton_neural.data.TrajectoryRecorder method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase.registered">registered() (newton_neural.backbones.BackboneBase class method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase.registered">(newton_neural.contacts.ContactInputBase class method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.registered">(newton_neural.models.FlashNeRD class method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.registered">(newton_neural.models.NeRDBase class method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionBase.html#newton_neural.predictions.PredictionBase.registered">(newton_neural.predictions.PredictionBase class method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.registered">(newton_neural.systems.SystemBase class method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.data.CommandBase.html#newton_neural.data.CommandBase.reset">reset() (newton_neural.data.CommandBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.data.CommandHeld.html#newton_neural.data.CommandHeld.reset">(newton_neural.data.CommandHeld method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.CommandSmooth.html#newton_neural.data.CommandSmooth.reset">(newton_neural.data.CommandSmooth method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.CommandSweep.html#newton_neural.data.CommandSweep.reset">(newton_neural.data.CommandSweep method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.CommandSwitch.html#newton_neural.data.CommandSwitch.reset">(newton_neural.data.CommandSwitch method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper.reset">(newton_neural.models.NeRDStepper method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.reset">(newton_neural.solvers.SolverNeRD method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.solvers.SolverNeRDMuJoCo.html#newton_neural.solvers.SolverNeRDMuJoCo.reset">(newton_neural.solvers.SolverNeRDMuJoCo method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase.reset_history">reset_history() (newton_neural.backbones.BackboneBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.reset_history">(newton_neural.models.FlashNeRD method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.reset_history">(newton_neural.models.NeRDBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.restart">restart() (newton_neural.data.SimulationBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.data.SimulationNewton.html#newton_neural.data.SimulationNewton.restart">(newton_neural.data.SimulationNewton method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.systems.robot_frame.html#newton_neural.systems.robot_frame">robot_frame (in module newton_neural.systems)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.robot_frame_floating.html#newton_neural.systems.robot_frame_floating">robot_frame_floating (in module newton_neural.systems)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.SignalSpec.html#newton_neural.SignalSpec.role">role (newton_neural.SignalSpec attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.evaluation.rollout_error.html#newton_neural.evaluation.rollout_error">rollout_error() (in module newton_neural.evaluation)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.evaluation.RolloutStatistics.html#newton_neural.evaluation.RolloutStatistics">RolloutStatistics (class in newton_neural.evaluation)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.root_body">root_body (newton_neural.systems.SystemArticulation attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.root_joint_ids">root_joint_ids (newton_neural.systems.BindingArticulation attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.solvers.same_duration.html#newton_neural.solvers.same_duration">same_duration() (in module newton_neural.solvers)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SamplerBase.html#newton_neural.data.SamplerBase.sample">sample() (newton_neural.data.SamplerBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.data.SamplerFloatingBase.html#newton_neural.data.SamplerFloatingBase.sample">(newton_neural.data.SamplerFloatingBase method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.SamplerMixture.html#newton_neural.data.SamplerMixture.sample">(newton_neural.data.SamplerMixture method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.SamplerPerturb.html#newton_neural.data.SamplerPerturb.sample">(newton_neural.data.SamplerPerturb method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.SamplerSobol.html#newton_neural.data.SamplerSobol.sample">(newton_neural.data.SamplerSobol method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.SamplerUniform.html#newton_neural.data.SamplerUniform.sample">(newton_neural.data.SamplerUniform method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.data.SamplerBase.html#newton_neural.data.SamplerBase">SamplerBase (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SamplerFloatingBase.html#newton_neural.data.SamplerFloatingBase">SamplerFloatingBase (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SamplerMixture.html#newton_neural.data.SamplerMixture">SamplerMixture (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SamplerPerturb.html#newton_neural.data.SamplerPerturb">SamplerPerturb (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SamplerSobol.html#newton_neural.data.SamplerSobol">SamplerSobol (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SamplerUniform.html#newton_neural.data.SamplerUniform">SamplerUniform (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.save">save() (newton_neural.models.FlashNeRD method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.save">(newton_neural.models.NeRDBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase.sensor">sensor() (newton_neural.contacts.ContactInputBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes.sensor">(newton_neural.contacts.ContactInputProbes method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet.sensor">(newton_neural.contacts.ContactInputSet method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.settings">settings() (newton_neural.models.FlashNeRD method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.settings">(newton_neural.models.NeRDBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.SignalSpec.html#newton_neural.SignalSpec.shape">shape (newton_neural.SignalSpec attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryDataset.html#newton_neural.data.TrajectoryDataset.shards">shards (newton_neural.data.TrajectoryDataset attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.SignalRole.html#newton_neural.SignalRole">SignalRole (class in newton_neural)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase.signals">signals (newton_neural.contacts.ContactInputBase attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.data.SignalSource.html#newton_neural.data.SignalSource.signals">(newton_neural.data.SignalSource attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.TrajectoryDataset.html#newton_neural.data.TrajectoryDataset.signals">(newton_neural.data.TrajectoryDataset attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.signals">(newton_neural.models.NeRDBase attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase.signals">(newton_neural.systems.SystemBase attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.predictions.PredictionBase.html#newton_neural.predictions.PredictionBase.signals">signals() (newton_neural.predictions.PredictionBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionFreeMotion.html#newton_neural.predictions.PredictionFreeMotion.signals">(newton_neural.predictions.PredictionFreeMotion method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionStateIncrement.html#newton_neural.predictions.PredictionStateIncrement.signals">(newton_neural.predictions.PredictionStateIncrement method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.data.SignalSource.html#newton_neural.data.SignalSource">SignalSource (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.SignalSpec.html#newton_neural.SignalSpec">SignalSpec (class in newton_neural)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase">SimulationBase (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SimulationNewton.html#newton_neural.data.SimulationNewton">SimulationNewton (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandBase.html#newton_neural.data.CommandBase.sizes">sizes (newton_neural.data.CommandBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.solver">solver (newton_neural.data.SimulationBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD">SolverNeRD (class in newton_neural.solvers)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.ObservableKind">SolverNeRD.ObservableKind (class in newton_neural.solvers)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.Observables">SolverNeRD.Observables (class in newton_neural.solvers)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRDMuJoCo.html#newton_neural.solvers.SolverNeRDMuJoCo">SolverNeRDMuJoCo (class in newton_neural.solvers)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.predictions.PredictionBase.html#newton_neural.predictions.PredictionBase.source">source() (newton_neural.predictions.PredictionBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.predictions.PredictionFreeMotion.html#newton_neural.predictions.PredictionFreeMotion.source">(newton_neural.predictions.PredictionFreeMotion method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.sources">sources() (newton_neural.models.FlashNeRD method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.sources">(newton_neural.models.NeRDBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.spec">spec (newton_neural.systems.SystemArticulation attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryWindows.html#newton_neural.data.TrajectoryWindows.split">split() (newton_neural.data.TrajectoryWindows method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.training.ErrorKind.html#newton_neural.training.ErrorKind.SQUARED">SQUARED (newton_neural.training.ErrorKind attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandBase.html#newton_neural.data.CommandBase.start">start() (newton_neural.data.CommandBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.data.SamplerBase.html#newton_neural.data.SamplerBase.start">(newton_neural.data.SamplerBase method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.SamplerMixture.html#newton_neural.data.SamplerMixture.start">(newton_neural.data.SamplerMixture method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.SamplerPerturb.html#newton_neural.data.SamplerPerturb.start">(newton_neural.data.SamplerPerturb method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.state">state (newton_neural.data.SimulationBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.SignalRole.html#newton_neural.SignalRole.STATE">STATE (newton_neural.SignalRole attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.state_bounds">state_bounds() (newton_neural.data.SimulationBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.state_bounds">(newton_neural.systems.BindingArticulation method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.BindingBase.html#newton_neural.systems.BindingBase.state_bounds">(newton_neural.systems.BindingBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.Normalizer.html#newton_neural.Normalizer.std">std (newton_neural.Normalizer attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase.step">step() (newton_neural.backbones.BackboneBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.backbones.BackboneMLP.html#newton_neural.backbones.BackboneMLP.step">(newton_neural.backbones.BackboneMLP method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.step">(newton_neural.data.SimulationBase method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.SimulationNewton.html#newton_neural.data.SimulationNewton.step">(newton_neural.data.SimulationNewton method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.step">(newton_neural.models.FlashNeRD method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.step">(newton_neural.models.NeRDBase method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper.step">(newton_neural.models.NeRDStepper method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.step">(newton_neural.solvers.SolverNeRD method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.solvers.SolverNeRDMuJoCo.html#newton_neural.solvers.SolverNeRDMuJoCo.step">(newton_neural.solvers.SolverNeRDMuJoCo method)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.training.OptimizerMuon.html#newton_neural.training.OptimizerMuon.step">(newton_neural.training.OptimizerMuon method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.stepper">stepper (newton_neural.solvers.SolverNeRD attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.substep_count">substep_count (newton_neural.data.SimulationBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.SUPPORTED_OBSERVABLES">SUPPORTED_OBSERVABLES (newton_neural.solvers.SolverNeRD attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.supported_observables">supported_observables (newton_neural.solvers.SolverNeRD property)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.supports_body_pair_reduced_contacts">supports_body_pair_reduced_contacts (newton_neural.solvers.SolverNeRD attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.system">system (newton_neural.data.SimulationBase property)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.system">(newton_neural.models.NeRDBase attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.system">(newton_neural.systems.BindingArticulation attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.BindingBase.html#newton_neural.systems.BindingBase.system">(newton_neural.systems.BindingBase attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation">SystemArticulation (class in newton_neural.systems)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Joint">SystemArticulation.Joint (class in newton_neural.systems)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec">SystemArticulation.Spec (class in newton_neural.systems)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase">SystemBase (class in newton_neural.systems)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.models.Precision.html#newton_neural.models.Precision.TF32">TF32 (newton_neural.models.Precision attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryBatch.html#newton_neural.data.TrajectoryBatch.to">to() (newton_neural.data.TrajectoryBatch method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.SignalSpec.html#newton_neural.SignalSpec.to_dict">to_dict() (newton_neural.SignalSpec method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Spec.to_dict">(newton_neural.systems.SystemArticulation.Spec method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.SignalSpec.html#newton_neural.SignalSpec.torch_dtype">torch_dtype (newton_neural.SignalSpec property)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD.training_frames">training_frames() (newton_neural.models.FlashNeRD method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.training_frames">(newton_neural.models.NeRDBase method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryBatch.html#newton_neural.data.TrajectoryBatch">TrajectoryBatch (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryDataset.html#newton_neural.data.TrajectoryDataset">TrajectoryDataset (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryRecorder.html#newton_neural.data.TrajectoryRecorder">TrajectoryRecorder (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryWindows.html#newton_neural.data.TrajectoryWindows">TrajectoryWindows (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryWriter.html#newton_neural.data.TrajectoryWriter">TrajectoryWriter (class in newton_neural.data)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.Joint.type">type (newton_neural.systems.SystemArticulation.Joint attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.SignalSpec.html#newton_neural.SignalSpec.unit">unit (newton_neural.SignalSpec attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.UNSEEN_MODEL_CHANGES">UNSEEN_MODEL_CHANGES (newton_neural.solvers.SolverNeRD attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.solvers.SolverNeRDMuJoCo.html#newton_neural.solvers.SolverNeRDMuJoCo.UNSEEN_MODEL_CHANGES">(newton_neural.solvers.SolverNeRDMuJoCo attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation.up">up (newton_neural.systems.SystemArticulation attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.contacts.ContactSensorBase.html#newton_neural.contacts.ContactSensorBase.update">update() (newton_neural.contacts.ContactSensorBase method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.Normalizer.html#newton_neural.Normalizer.update">(newton_neural.Normalizer method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.use_cuda_graph">use_cuda_graph (newton_neural.solvers.SolverNeRD attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.evaluation.AuditRest.html#newton_neural.evaluation.AuditRest.vibration_max">vibration_max (newton_neural.evaluation.AuditRest attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.evaluation.AuditRest.html#newton_neural.evaluation.AuditRest.vibration_mean">vibration_mean (newton_neural.evaluation.AuditRest attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.view">view (newton_neural.systems.BindingArticulation attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase.width">width (newton_neural.backbones.BackboneBase attribute)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryWindows.html#newton_neural.data.TrajectoryWindows.with_length">with_length() (newton_neural.data.TrajectoryWindows method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.CommandBase.html#newton_neural.data.CommandBase.world_count">world_count (newton_neural.data.CommandBase attribute)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase.world_count">(newton_neural.data.SimulationBase attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.data.TrajectoryDataset.html#newton_neural.data.TrajectoryDataset.world_count">(newton_neural.data.TrajectoryDataset property)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper.world_count">(newton_neural.models.NeRDStepper attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.world_count">(newton_neural.systems.BindingArticulation attribute)</a>
+</li>
+        <li><a href="api/_generated/newton_neural.systems.BindingBase.html#newton_neural.systems.BindingBase.world_count">(newton_neural.systems.BindingBase attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryWindows.html#newton_neural.data.TrajectoryWindows.world_ids">world_ids (newton_neural.data.TrajectoryWindows property)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.data.TrajectoryWriter.html#newton_neural.data.TrajectoryWriter.write">write() (newton_neural.data.TrajectoryWriter method)</a>
+</li>
+      <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.write_control">write_control() (newton_neural.systems.BindingArticulation method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.BindingBase.html#newton_neural.systems.BindingBase.write_control">(newton_neural.systems.BindingBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation.write_state">write_state() (newton_neural.systems.BindingArticulation method)</a>
+
+      <ul>
+        <li><a href="api/_generated/newton_neural.systems.BindingBase.html#newton_neural.systems.BindingBase.write_state">(newton_neural.systems.BindingBase method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, The Newton Developers. Documentation licensed under CC-BY-4.0.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

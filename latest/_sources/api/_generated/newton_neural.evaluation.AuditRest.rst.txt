@@ -1,0 +1,5 @@
+﻿newton\_neural.evaluation.AuditRest
+===================================
+
+.. autoclass:: newton_neural.evaluation.AuditRest
+   :show-inheritance:

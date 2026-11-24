@@ -1,0 +1,5 @@
+﻿newton\_neural.evaluation.AuditPaired
+=====================================
+
+.. autoclass:: newton_neural.evaluation.AuditPaired
+   :show-inheritance:

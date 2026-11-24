@@ -1,0 +1,5 @@
+﻿newton\_neural.data.TrajectoryWindows
+=====================================
+
+.. autoclass:: newton_neural.data.TrajectoryWindows
+   :show-inheritance:

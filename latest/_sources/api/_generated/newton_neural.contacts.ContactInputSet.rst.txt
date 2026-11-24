@@ -1,0 +1,5 @@
+﻿newton\_neural.contacts.ContactInputSet
+=======================================
+
+.. autoclass:: newton_neural.contacts.ContactInputSet
+   :show-inheritance:

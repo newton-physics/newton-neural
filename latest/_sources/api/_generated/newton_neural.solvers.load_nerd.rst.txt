@@ -1,0 +1,6 @@
+﻿newton\_neural.solvers.load\_nerd
+=================================
+
+.. currentmodule:: newton_neural.solvers
+
+.. autofunction:: load_nerd

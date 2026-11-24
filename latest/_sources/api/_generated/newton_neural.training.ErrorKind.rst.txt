@@ -1,0 +1,5 @@
+﻿newton\_neural.training.ErrorKind
+=================================
+
+.. autoclass:: newton_neural.training.ErrorKind
+   :show-inheritance:

@@ -1,0 +1,5 @@
+﻿newton\_neural.backbones.BackboneTransformer
+============================================
+
+.. autoclass:: newton_neural.backbones.BackboneTransformer
+   :show-inheritance:

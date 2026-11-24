@@ -1,0 +1,5 @@
+﻿newton\_neural.systems.BindingBase
+==================================
+
+.. autoclass:: newton_neural.systems.BindingBase
+   :show-inheritance:

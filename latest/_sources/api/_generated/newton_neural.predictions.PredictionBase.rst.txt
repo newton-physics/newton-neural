@@ -1,0 +1,6 @@
+﻿newton\_neural.predictions.PredictionBase
+=========================================
+
+.. autoclass:: newton_neural.predictions.PredictionBase
+   :show-inheritance:
+   :inherited-members: Module

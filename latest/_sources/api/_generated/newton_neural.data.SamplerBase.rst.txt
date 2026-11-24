@@ -1,0 +1,5 @@
+﻿newton\_neural.data.SamplerBase
+===============================
+
+.. autoclass:: newton_neural.data.SamplerBase
+   :show-inheritance:

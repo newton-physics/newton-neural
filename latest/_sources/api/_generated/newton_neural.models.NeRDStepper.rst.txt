@@ -1,0 +1,5 @@
+﻿newton\_neural.models.NeRDStepper
+=================================
+
+.. autoclass:: newton_neural.models.NeRDStepper
+   :show-inheritance:

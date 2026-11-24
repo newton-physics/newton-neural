@@ -1,0 +1,6 @@
+﻿newton\_neural.training.create\_optimizer
+=========================================
+
+.. currentmodule:: newton_neural.training
+
+.. autofunction:: create_optimizer

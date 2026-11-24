@@ -1,0 +1,6 @@
+﻿newton\_neural.NewtonNeuralWarning
+==================================
+
+.. currentmodule:: newton_neural
+
+.. autoexception:: NewtonNeuralWarning

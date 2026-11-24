@@ -1,0 +1,6 @@
+﻿newton\_neural.testing.check\_contact\_input\_recompute
+=======================================================
+
+.. currentmodule:: newton_neural.testing
+
+.. autofunction:: check_contact_input_recompute

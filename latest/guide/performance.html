@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Performance &#8212; newton-neural</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a105fe31" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../_static/documentation_options.js?v=965fac30"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/performance';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="newton_neural" href="../api/newton_neural.html" />
+    <link rel="prev" title="Coupling" href="coupling.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/newton-neural-logo-light.svg" class="logo__image only-light" alt="newton-neural logo"/>
+    <img src="../_static/newton-neural-logo-dark.svg" class="logo__image only-dark pst-js-only" alt="newton-neural logo"/>
+  
+  
+    <p class="title logo__title">newton-neural <span style='font-size: 0.8em; color: #888;'>(0.1.0.dev0)</span></p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="overview.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="models.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="recording.html">
+    Recording
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="training.html">
+    Training
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="evaluation.html">
+    Evaluation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="solvers.html">
+    Solvers
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contact.html">
+    Contact Input
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="coupling.html">
+    Coupling
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="#" aria-current="page">
+    Performance
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural.html">
+    newton_neural
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_backbones.html">
+    newton_neural.backbones
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_contacts.html">
+    newton_neural.contacts
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_data.html">
+    newton_neural.data
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_evaluation.html">
+    newton_neural.evaluation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_models.html">
+    newton_neural.models
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_predictions.html">
+    newton_neural.predictions
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_solvers.html">
+    newton_neural.solvers
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_systems.html">
+    newton_neural.systems
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_testing.html">
+    newton_neural.testing
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_training.html">
+    newton_neural.training
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="extending.html">
+    Extending
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="development.html">
+    Development
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/newton-physics/newton-neural">
+    GitHub
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/newton-physics/newton-neural" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="overview.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="models.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="recording.html">
+    Recording
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="training.html">
+    Training
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="evaluation.html">
+    Evaluation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="solvers.html">
+    Solvers
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contact.html">
+    Contact Input
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="coupling.html">
+    Coupling
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#" aria-current="page">
+    Performance
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural.html">
+    newton_neural
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_backbones.html">
+    newton_neural.backbones
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_contacts.html">
+    newton_neural.contacts
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_data.html">
+    newton_neural.data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_evaluation.html">
+    newton_neural.evaluation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_models.html">
+    newton_neural.models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_predictions.html">
+    newton_neural.predictions
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_solvers.html">
+    newton_neural.solvers
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_systems.html">
+    newton_neural.systems
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_testing.html">
+    newton_neural.testing
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_training.html">
+    newton_neural.training
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="extending.html">
+    Extending
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="development.html">
+    Development
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/newton-physics/newton-neural">
+    GitHub
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/newton-physics/newton-neural" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recording.html">Recording</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solvers.html">Solvers</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Concepts</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="contact.html">Contact Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coupling.html">Coupling</a></li>
+<li class="toctree-l1 current active"><a aria-current="page" class="current reference internal" href="#">Performance</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural.html">newton_neural</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_backbones.html">newton_neural.backbones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_contacts.html">newton_neural.contacts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_data.html">newton_neural.data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_evaluation.html">newton_neural.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_models.html">newton_neural.models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_predictions.html">newton_neural.predictions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_solvers.html">newton_neural.solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_systems.html">newton_neural.systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_testing.html">newton_neural.testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_training.html">newton_neural.training</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="extending.html">Extending</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/newton-physics/newton-neural">GitHub</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Performance</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="performance">
+<h1>Performance<a class="headerlink" href="#performance" title="Link to this heading">#</a></h1>
+<p>This page covers why learned dynamics run fast, the runtime options that control throughput and numerical
+precision, how to validate reduced precision on your own model, and how to benchmark accurately.</p>
+<section id="why-inference-is-fast">
+<h2>Why inference is fast<a class="headerlink" href="#why-inference-is-fast" title="Link to this heading">#</a></h2>
+<p>Two architectural properties account for most of the speedup over a physics solver:</p>
+<ul class="simple">
+<li><p><strong>One step per frame.</strong> Physics solvers split a control period into multiple substeps (often 4–8) for numerical
+stability. A learned model is trained on full frames and advances the entire frame in one forward pass.</p></li>
+<li><p><strong>Fixed cost independent of contact complexity.</strong> Runtime scales with world count and network size, not with
+contact count, joint stiffness, or actuator complexity.</p></li>
+</ul>
+<p>Accordingly, speedups are largest on contact-rich robots with many substeps and complex drives (such as legged
+locomotion), and smallest on tiny free-space systems where a physics solver is already cheap.</p>
+<p>At the implementation level, every deployed step combines six optimizations (streaming and parallel blocks apply to
+<a class="reference internal" href="../api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD" title="newton_neural.models.FlashNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlashNeRD</span></code></a> backbones; the rest apply to any <a class="reference internal" href="../api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase" title="newton_neural.models.NeRDBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeRDBase</span></code></a> family):</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 24.0%" />
+<col style="width: 76.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Optimization</p></th>
+<th class="head"><p>How it works</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Streaming history</p></td>
+<td><p>Each step embeds only the newest frame. Attention backbones store past keys and values in a fixed-size
+per-world ring buffer updated in place, keeping step cost <span class="math notranslate nohighlight">\(O(1)\)</span> with episode length.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Parallel Flash blocks</p></td>
+<td><p><a class="reference internal" href="../api/_generated/newton_neural.backbones.BackboneFlash.html#newton_neural.backbones.BackboneFlash" title="newton_neural.backbones.BackboneFlash"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackboneFlash</span></code></a> computes attention and SwiGLU FFN in parallel from one packed
+input projection and merges them with one output projection (2 linear layers per block instead of 4), with
+multi-query attention (1 shared KV head) to minimize ring-buffer traffic.</p></td>
+</tr>
+<tr class="row-even"><td><p>Tensor cores</p></td>
+<td><p>On CUDA, linear-layer matmuls execute on tensor cores (TF32 by default, or FP16/BF16 when selected). Pure
+IEEE FP32 disables tensor cores and is typically several times slower.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">torch.compile</span></code></p></td>
+<td><p>Compiles the streaming step for fixed static shapes (<code class="docutils literal notranslate"><span class="pre">fullgraph=True,</span> <span class="pre">dynamic=False</span></code>) on CUDA.</p></td>
+</tr>
+<tr class="row-even"><td><p>CUDA graph replay</p></td>
+<td><p>Captures the entire solver step (contact sensing, network inference, state write, forward kinematics) into one
+CUDA graph launch.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Zero host sync / copies</p></td>
+<td><p>After the first warm-up step, stepping performs zero allocations and zero device-to-host syncs. For replicated
+worlds, PyTorch accesses Newton’s Warp state/control arrays directly as zero-copy views.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>On CPU, tensor cores, compilation, and CUDA graphs are disabled automatically and steps run as eager PyTorch and
+Warp.</p>
+</section>
+<section id="runtime-and-training-options">
+<h2>Runtime and training options<a class="headerlink" href="#runtime-and-training-options" title="Link to this heading">#</a></h2>
+<p>Three options govern deployed inference and one governs training. With all defaults enabled on CUDA, a solver runs
+compiled, CUDA-graphed, and tensor-core accelerated.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 30.0%" />
+<col style="width: 16.0%" />
+<col style="width: 25.0%" />
+<col style="width: 14.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Controls</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Where set</p></th>
+<th class="head"><p>Disable with</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">precision</span></code></p></td>
+<td><p>Inference numeric mode (see <a class="reference internal" href="#precision-modes">Precision modes</a>).</p></td>
+<td><p>Checkpoint precision (<code class="docutils literal notranslate"><span class="pre">&quot;tf32&quot;</span></code> for new models)</p></td>
+<td><p><a class="reference internal" href="../api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper" title="newton_neural.models.NeRDStepper"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeRDStepper</span></code></a>, <a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD" title="newton_neural.solvers.SolverNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRD</span></code></a>,
+<a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRDMuJoCo.html#newton_neural.solvers.SolverNeRDMuJoCo" title="newton_neural.solvers.SolverNeRDMuJoCo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRDMuJoCo</span></code></a>,
+<a class="reference internal" href="../api/_generated/newton_neural.evaluation.rollout_error.html#newton_neural.evaluation.rollout_error" title="newton_neural.evaluation.rollout_error"><code class="xref py py-func docutils literal notranslate"><span class="pre">rollout_error()</span></code></a>, and <a class="reference internal" href="../api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.precision" title="newton_neural.models.NeRDBase.precision"><code class="xref py py-attr docutils literal notranslate"><span class="pre">NeRDBase.precision</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">precision=&quot;fp32&quot;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">compile</span></code></p></td>
+<td><p>Compile model step via <code class="docutils literal notranslate"><span class="pre">torch.compile</span></code>.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on CUDA</p></td>
+<td><p>Same calls as <code class="docutils literal notranslate"><span class="pre">precision</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">compile=False</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">use_cuda_graph</span></code></p></td>
+<td><p>Replay solver step from a CUDA graph (for <a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRDMuJoCo.html#newton_neural.solvers.SolverNeRDMuJoCo" title="newton_neural.solvers.SolverNeRDMuJoCo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRDMuJoCo</span></code></a>, the neural
+prediction stage only).</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on CUDA</p></td>
+<td><p><a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD" title="newton_neural.solvers.SolverNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRD</span></code></a>, <a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRDMuJoCo.html#newton_neural.solvers.SolverNeRDMuJoCo" title="newton_neural.solvers.SolverNeRDMuJoCo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRDMuJoCo</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">use_cuda_graph=False</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">loss.compile()</span></code></p></td>
+<td><p>Compile training loss with <code class="docutils literal notranslate"><span class="pre">torch.compile</span></code> (<a class="reference internal" href="training.html"><span class="doc">Training</span></a>).</p></td>
+<td><p>Off</p></td>
+<td><p><a class="reference internal" href="../api/_generated/newton_neural.training.LossOneStep.html#newton_neural.training.LossOneStep" title="newton_neural.training.LossOneStep"><code class="xref py py-class docutils literal notranslate"><span class="pre">LossOneStep</span></code></a></p></td>
+<td><p>Omit call</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Notes on CUDA graph boundaries:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper" title="newton_neural.models.NeRDStepper"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeRDStepper</span></code></a> does not manage its own CUDA graph, making it safe to capture inside your own outer graph.</p></li>
+<li><p><a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRDMuJoCo.html#newton_neural.solvers.SolverNeRDMuJoCo" title="newton_neural.solvers.SolverNeRDMuJoCo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRDMuJoCo</span></code></a> graphs only its neural prediction kernel; MuJoCo Warp stages
+launch normally unless you capture the surrounding loop with <code class="docutils literal notranslate"><span class="pre">wp.ScopedCapture()</span></code> (<a class="reference internal" href="solvers.html"><span class="doc">Solvers</span></a>).</p></li>
+</ul>
+<p>Override options as keyword arguments at construction:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.solvers</span><span class="w"> </span><span class="kn">import</span> <span class="n">SolverNeRD</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">SolverNeRD</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">"cartpole.pt"</span><span class="p">)</span>  <span class="c1"># All defaults</span>
+<span class="n">plain</span> <span class="o">=</span> <span class="n">SolverNeRD</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">"cartpole.pt"</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="s2">"fp32"</span><span class="p">,</span> <span class="nb">compile</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_cuda_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Precision is saved inside the checkpoint. Set <code class="docutils literal notranslate"><span class="pre">nerd.precision</span></code> before saving so all downstream solvers, steppers,
+and rollout evaluations inherit it automatically:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">NeRDBase</span>
+
+<span class="n">saved</span> <span class="o">=</span> <span class="n">NeRDBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">"cartpole.pt"</span><span class="p">)</span>
+<span class="n">saved</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="s2">"fp16"</span>
+<span class="n">saved</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"cartpole_fp16.pt"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">SolverNeRD</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">"cartpole_fp16.pt"</span><span class="p">)</span><span class="o">.</span><span class="n">stepper</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fp16
+</pre></div>
+</div>
+<p>For debugging, you can force eager execution process-wide via <code class="docutils literal notranslate"><span class="pre">torch.compiler.set_stance(&quot;force_eager&quot;)</span></code> (note
+that <code class="docutils literal notranslate"><span class="pre">stepper.compiled</span></code> still reflects how the stepper was constructed).</p>
+</section>
+<section id="inspecting-active-settings">
+<h2>Inspecting active settings<a class="headerlink" href="#inspecting-active-settings" title="Link to this heading">#</a></h2>
+<p>Printing a solver or stepper reports its resolved runtime configuration:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>SolverNeRD(NeRDStepper(FlashNeRD, world_count=32, device='cuda:0', precision='tf32', compiled=True), use_cuda_graph=True)
+</pre></div>
+</div>
+<p>On CPU, this resolves to <code class="docutils literal notranslate"><span class="pre">precision='fp32'</span></code>, <code class="docutils literal notranslate"><span class="pre">compiled=False</span></code>, and <code class="docutils literal notranslate"><span class="pre">use_cuda_graph=False</span></code>. The individual
+fields are also exposed as <code class="docutils literal notranslate"><span class="pre">solver.stepper.precision</span></code>, <code class="docutils literal notranslate"><span class="pre">solver.stepper.compiled</span></code>, and <code class="docutils literal notranslate"><span class="pre">solver.use_cuda_graph</span></code>.</p>
+</section>
+<section id="precision-modes">
+<h2>Precision modes<a class="headerlink" href="#precision-modes" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">precision</span></code> accepts a <a class="reference internal" href="../api/_generated/newton_neural.models.Precision.html#newton_neural.models.Precision" title="newton_neural.models.Precision"><code class="xref py py-class docutils literal notranslate"><span class="pre">Precision</span></code></a> enum value or its lowercase string:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 12.0%" />
+<col style="width: 88.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Mode</p></th>
+<th class="head"><p>Behavior</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;fp32&quot;</span></code></p></td>
+<td><p>Strict IEEE FP32 throughout (TF32 disabled regardless of global PyTorch settings). Accuracy reference; slowest
+on GPU because matmuls cannot use tensor cores.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;tf32&quot;</span></code></p></td>
+<td><p>FP32 tensors throughout; CUDA matmuls round inputs to TF32 (10-bit mantissa, 8-bit exponent) on tensor cores.
+Resolves to <code class="docutils literal notranslate"><span class="pre">&quot;fp32&quot;</span></code> on CPU. <strong>Default for new models.</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;fp16&quot;</span></code></p></td>
+<td><p>Linear layers store weights and compute in FP16 under <code class="docutils literal notranslate"><span class="pre">torch.autocast</span></code>. Fastest option at large world
+counts.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;bf16&quot;</span></code></p></td>
+<td><p>Same as <code class="docutils literal notranslate"><span class="pre">&quot;fp16&quot;</span></code> using BF16 (FP32 dynamic range, 7-bit mantissa).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Start with the default <code class="docutils literal notranslate"><span class="pre">&quot;tf32&quot;</span></code>. Switch to <code class="docutils literal notranslate"><span class="pre">&quot;fp16&quot;</span></code> when stepping thousands of worlds and the checks in
+<a class="reference internal" href="#validating-precision-on-your-model">Validating precision on your model</a> confirm equivalent accuracy to <code class="docutils literal notranslate"><span class="pre">&quot;fp32&quot;</span></code>.</p>
+<p>In every mode except <code class="docutils literal notranslate"><span class="pre">&quot;fp32&quot;</span></code>, remaining FP32 matmuls on CUDA (such as <a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet" title="newton_neural.contacts.ContactInputSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactInputSet</span></code></a>
+pooling) may execute in TF32.</p>
+<section id="what-runs-in-16-bit-vs-fp32">
+<h3>What runs in 16-bit vs. FP32<a class="headerlink" href="#what-runs-in-16-bit-vs-fp32" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>``”tf32”``</strong> keeps all tensors in FP32 and accumulates matmuls in FP32; only matmul inputs round to a 10-bit
+mantissa, so overflow behavior matches IEEE FP32.</p></li>
+<li><p><strong>``”fp16”`` and ``”bf16”``</strong> create a deployment copy with 16-bit <code class="docutils literal notranslate"><span class="pre">nn.Linear</span></code> weights and run under
+<code class="docutils literal notranslate"><span class="pre">torch.autocast</span></code>. For <a class="reference internal" href="../api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD" title="newton_neural.models.FlashNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlashNeRD</span></code></a> with built-in backbones:</p>
+<ul>
+<li><p><strong>16-bit:</strong> <code class="docutils literal notranslate"><span class="pre">nn.Linear</span></code> weights and outputs, activations and SwiGLU products between linear layers, injected
+contact sums, readout/skip additions, and attention output values.</p></li>
+<li><p><strong>FP32:</strong> input frames, output state, per-world history buffers, feature extraction, contact codes,
+normalization, attention scores/softmax, residual stream, denormalized prediction, and state integration.</p></li>
+</ul>
+</li>
+</ul>
+<p>Because the network predicts normalized <em>increments</em> rather than absolute coordinates, 16-bit rounding applies to
+the one-frame delta rather than the full state magnitude. Custom model families follow standard <code class="docutils literal notranslate"><span class="pre">torch.autocast</span></code>
+rules while keeping system feature extraction, normalization, and integration in FP32.</p>
+</section>
+<section id="empirical-accuracy-notes">
+<h3>Empirical accuracy notes<a class="headerlink" href="#empirical-accuracy-notes" title="Link to this heading">#</a></h3>
+<p>Across trained models of a robot arm, a walking quadruped, and a dexterous hand:</p>
+<ul class="simple">
+<li><p><strong>``”tf32”`` and ``”fp16”``</strong> behaved comparably (both use a 10-bit mantissa): one-frame divergence from <code class="docutils literal notranslate"><span class="pre">&quot;fp32&quot;</span></code>
+was smaller than the models’ own prediction error, with <code class="docutils literal notranslate"><span class="pre">&quot;tf32&quot;</span></code> slightly closer.</p></li>
+<li><p><strong>``”bf16”``</strong> degraded noticeably on the highest-precision models (7-bit mantissa), exceeding single-step model
+error on two of three robots.</p></li>
+<li><p><strong>Downstream RL:</strong> Quadruped and hand policies achieved matching returns across all four precisions.</p></li>
+<li><p><strong>FP16 overflow risk:</strong> Values exceeding FP16 range (<code class="docutils literal notranslate"><span class="pre">~65504</span></code>) become <code class="docutils literal notranslate"><span class="pre">inf</span></code> and permanently corrupt that
+world. Although no overflows occurred in internal benchmarks, always validate <code class="docutils literal notranslate"><span class="pre">&quot;fp16&quot;</span></code> on your model before
+enabling it by default.</p></li>
+</ul>
+</section>
+<section id="validating-precision-on-your-model">
+<h3>Validating precision on your model<a class="headerlink" href="#validating-precision-on-your-model" title="Link to this heading">#</a></h3>
+<p>Verify a candidate precision against <code class="docutils literal notranslate"><span class="pre">&quot;fp32&quot;</span></code> at three levels:</p>
+<ol class="arabic simple">
+<li><p><strong>Automatic first-step sanity check:</strong> On its first call, every <a class="reference internal" href="../api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper" title="newton_neural.models.NeRDStepper"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeRDStepper</span></code></a> also executes the eager
+model in IEEE FP32 and raises <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code> if the max relative normalized output difference exceeds the mode
+tolerance (<code class="docutils literal notranslate"><span class="pre">1e-4</span></code> for <code class="docutils literal notranslate"><span class="pre">fp32</span></code>, <code class="docutils literal notranslate"><span class="pre">2e-2</span></code> for <code class="docutils literal notranslate"><span class="pre">tf32</span></code>/<code class="docutils literal notranslate"><span class="pre">fp16</span></code>, <code class="docutils literal notranslate"><span class="pre">1e-1</span></code> for <code class="docutils literal notranslate"><span class="pre">bf16</span></code>). This catches compiler
+bugs or severe quantization failures immediately, though it does not test multi-step rollouts.</p></li>
+<li><p><strong>Open-loop rollout error:</strong> Run <a class="reference internal" href="../api/_generated/newton_neural.evaluation.rollout_error.html#newton_neural.evaluation.rollout_error" title="newton_neural.evaluation.rollout_error"><code class="xref py py-func docutils literal notranslate"><span class="pre">rollout_error()</span></code></a> across precisions on held-out
+data and compare <code class="docutils literal notranslate"><span class="pre">nrmse</span></code> and percentiles against <code class="docutils literal notranslate"><span class="pre">&quot;fp32&quot;</span></code>.</p></li>
+<li><p><strong>Live audits:</strong> Run <a class="reference internal" href="../api/_generated/newton_neural.evaluation.audit_rest.html#newton_neural.evaluation.audit_rest" title="newton_neural.evaluation.audit_rest"><code class="xref py py-func docutils literal notranslate"><span class="pre">audit_rest()</span></code></a> and
+<a class="reference internal" href="../api/_generated/newton_neural.evaluation.audit_paired.html#newton_neural.evaluation.audit_paired" title="newton_neural.evaluation.audit_paired"><code class="xref py py-func docutils literal notranslate"><span class="pre">audit_paired()</span></code></a> (<a class="reference internal" href="evaluation.html"><span class="doc">Evaluation</span></a>) using a solver constructed with the candidate
+<code class="docutils literal notranslate"><span class="pre">precision</span></code>.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="n">rollout_error</span>
+
+<span class="k">for</span> <span class="n">precision</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"fp32"</span><span class="p">,</span> <span class="s2">"tf32"</span><span class="p">,</span> <span class="s2">"fp16"</span><span class="p">):</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">rollout_error</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">held_out</span><span class="p">,</span> <span class="n">horizons</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,),</span> <span class="n">precision</span><span class="o">=</span><span class="n">precision</span><span class="p">)[</span><span class="mi">16</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">error</span><span class="o">.</span><span class="n">nrmse</span><span class="p">,</span> <span class="n">error</span><span class="o">.</span><span class="n">p50</span><span class="p">[</span><span class="s2">"joint_q"</span><span class="p">],</span> <span class="n">error</span><span class="o">.</span><span class="n">p99</span><span class="p">[</span><span class="s2">"joint_q"</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="interaction-with-pytorch-s-global-tf32-flag">
+<h2>Interaction with PyTorch’s global TF32 flag<a class="headerlink" href="#interaction-with-pytorch-s-global-tf32-flag" title="Link to this heading">#</a></h2>
+<p>On CUDA, PyTorch controls TF32 via a process-global flag (<code class="docutils literal notranslate"><span class="pre">torch.backends.cuda.matmul.fp32_precision</span></code>, also set by
+<code class="docutils literal notranslate"><span class="pre">torch.set_float32_matmul_precision</span></code>). Deployed steps isolate themselves from that flag:</p>
+<ul class="simple">
+<li><p>During a step, <a class="reference internal" href="../api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper" title="newton_neural.models.NeRDStepper"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeRDStepper</span></code></a> acquires a lock, sets the flag required by its <code class="docutils literal notranslate"><span class="pre">precision</span></code>, and restores the
+previous value on exit (even if an exception occurs).</p></li>
+<li><p>Captured CUDA graphs bake in the precision recorded during capture and do not touch the global flag at replay.</p></li>
+<li><p>If multiple threads run neural steps concurrently with other PyTorch FP32 matmuls, the other thread’s matmuls
+issued during an ungraphed step will observe the temporarily active flag.</p></li>
+<li><p><strong>``max_autotune`` caveat:</strong> If you enable <code class="docutils literal notranslate"><span class="pre">torch.compile</span></code> autotuning (<code class="docutils literal notranslate"><span class="pre">mode=&quot;max-autotune&quot;</span></code>), call
+<code class="docutils literal notranslate"><span class="pre">torch.set_float32_matmul_precision(&quot;high&quot;)</span></code> before the first step (or pass <code class="docutils literal notranslate"><span class="pre">compile=False</span></code>) so PyTorch’s
+autotuner does not clash with the temporarily toggled flag.</p></li>
+</ul>
+<p>Training losses (<a class="reference internal" href="../api/_generated/newton_neural.training.LossOneStep.html#newton_neural.training.LossOneStep" title="newton_neural.training.LossOneStep"><code class="xref py py-class docutils literal notranslate"><span class="pre">LossOneStep</span></code></a>) are <em>not</em> deployed steps and follow your process’s
+global matmul precision setting (see <a class="reference internal" href="training.html"><span class="doc">Training</span></a>).</p>
+</section>
+<section id="benchmarking-guidelines">
+<h2>Benchmarking guidelines<a class="headerlink" href="#benchmarking-guidelines" title="Link to this heading">#</a></h2>
+<p>When measuring speedups:</p>
+<ul class="simple">
+<li><p><strong>Compare frames, not solver steps:</strong> Time 1 neural step against all physics substeps (plus collision detection)
+required to advance the same <code class="docutils literal notranslate"><span class="pre">frame_dt</span></code>.</p></li>
+<li><p><strong>Benchmark realistic setups:</strong> Match your production world count, precision, and contact input. Random weights
+have identical step latency to trained weights.</p></li>
+<li><p><strong>Measure end-to-end training:</strong> Once physics stepping is fast, RL wall-clock speedup is bounded by observations,
+rewards, resets, and policy updates.</p></li>
+<li><p><strong>Warm up and synchronize:</strong> Run several warm-up steps to complete compilation and CUDA graph capture, then call
+<code class="docutils literal notranslate"><span class="pre">wp.synchronize()</span></code> before starting and stopping the timer:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">warp</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">wp</span>
+
+<span class="n">state</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">state</span><span class="p">(),</span> <span class="n">model</span><span class="o">.</span><span class="n">control</span><span class="p">()</span>
+<span class="n">frame_dt</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">nerd</span><span class="o">.</span><span class="n">frame_dt</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>  <span class="c1"># Warm up: compile, validate, and capture CUDA graph</span>
+    <span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">frame_dt</span><span class="p">)</span>
+
+<span class="n">step_count</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">wp</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">step_count</span><span class="p">):</span>
+    <span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">frame_dt</span><span class="p">)</span>
+<span class="n">wp</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+<span class="n">step_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="n">step_count</span>
+
+<span class="n">world_count</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">binding</span><span class="o">.</span><span class="n">world_count</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="mf">1e6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">step_time</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> us per step, </span><span class="si">{</span><span class="n">world_count</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">step_time</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2"> world steps per second"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="development.html"><span class="doc">Development</span></a> for the repository’s built-in benchmark suite under <code class="docutils literal notranslate"><span class="pre">asv/benchmarks</span></code>.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-inference-is-fast">Why inference is fast</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runtime-and-training-options">Runtime and training options</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspecting-active-settings">Inspecting active settings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-modes">Precision modes</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-runs-in-16-bit-vs-fp32">What runs in 16-bit vs. FP32</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#empirical-accuracy-notes">Empirical accuracy notes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validating-precision-on-your-model">Validating precision on your model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-with-pytorch-s-global-tf32-flag">Interaction with PyTorch’s global TF32 flag</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmarking-guidelines">Benchmarking guidelines</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, The Newton Developers. Documentation licensed under CC-BY-4.0.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

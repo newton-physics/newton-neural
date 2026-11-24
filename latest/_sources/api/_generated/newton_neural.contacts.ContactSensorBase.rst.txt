@@ -1,0 +1,5 @@
+﻿newton\_neural.contacts.ContactSensorBase
+=========================================
+
+.. autoclass:: newton_neural.contacts.ContactSensorBase
+   :show-inheritance:

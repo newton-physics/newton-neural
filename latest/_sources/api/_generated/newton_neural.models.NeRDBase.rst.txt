@@ -1,0 +1,6 @@
+﻿newton\_neural.models.NeRDBase
+==============================
+
+.. autoclass:: newton_neural.models.NeRDBase
+   :show-inheritance:
+   :inherited-members: Module

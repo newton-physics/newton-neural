@@ -1,0 +1,6 @@
+﻿newton\_neural.models.FlashNeRD
+===============================
+
+.. autoclass:: newton_neural.models.FlashNeRD
+   :show-inheritance:
+   :inherited-members: Module

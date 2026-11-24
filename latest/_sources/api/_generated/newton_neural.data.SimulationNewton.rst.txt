@@ -1,0 +1,5 @@
+﻿newton\_neural.data.SimulationNewton
+====================================
+
+.. autoclass:: newton_neural.data.SimulationNewton
+   :show-inheritance:

@@ -1,0 +1,5 @@
+﻿newton\_neural.data.TrajectoryBatch
+===================================
+
+.. autoclass:: newton_neural.data.TrajectoryBatch
+   :show-inheritance:

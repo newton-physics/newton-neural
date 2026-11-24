@@ -1,0 +1,5 @@
+﻿newton\_neural.training.LossBase
+================================
+
+.. autoclass:: newton_neural.training.LossBase
+   :show-inheritance:

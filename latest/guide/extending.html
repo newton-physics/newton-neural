@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Extending &#8212; newton-neural</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a105fe31" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../_static/documentation_options.js?v=965fac30"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/extending';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Development" href="development.html" />
+    <link rel="prev" title="newton_neural.training.create_optimizer" href="../api/_generated/newton_neural.training.create_optimizer.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/newton-neural-logo-light.svg" class="logo__image only-light" alt="newton-neural logo"/>
+    <img src="../_static/newton-neural-logo-dark.svg" class="logo__image only-dark pst-js-only" alt="newton-neural logo"/>
+  
+  
+    <p class="title logo__title">newton-neural <span style='font-size: 0.8em; color: #888;'>(0.1.0.dev0)</span></p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="overview.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="models.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="recording.html">
+    Recording
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="training.html">
+    Training
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="evaluation.html">
+    Evaluation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="solvers.html">
+    Solvers
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contact.html">
+    Contact Input
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="coupling.html">
+    Coupling
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="performance.html">
+    Performance
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural.html">
+    newton_neural
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_backbones.html">
+    newton_neural.backbones
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_contacts.html">
+    newton_neural.contacts
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_data.html">
+    newton_neural.data
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_evaluation.html">
+    newton_neural.evaluation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_models.html">
+    newton_neural.models
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_predictions.html">
+    newton_neural.predictions
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_solvers.html">
+    newton_neural.solvers
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_systems.html">
+    newton_neural.systems
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_testing.html">
+    newton_neural.testing
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_training.html">
+    newton_neural.training
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="#" aria-current="page">
+    Extending
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="development.html">
+    Development
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/newton-physics/newton-neural">
+    GitHub
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/newton-physics/newton-neural" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="overview.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="models.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="recording.html">
+    Recording
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="training.html">
+    Training
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="evaluation.html">
+    Evaluation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="solvers.html">
+    Solvers
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contact.html">
+    Contact Input
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="coupling.html">
+    Coupling
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="performance.html">
+    Performance
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural.html">
+    newton_neural
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_backbones.html">
+    newton_neural.backbones
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_contacts.html">
+    newton_neural.contacts
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_data.html">
+    newton_neural.data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_evaluation.html">
+    newton_neural.evaluation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_models.html">
+    newton_neural.models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_predictions.html">
+    newton_neural.predictions
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_solvers.html">
+    newton_neural.solvers
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_systems.html">
+    newton_neural.systems
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_testing.html">
+    newton_neural.testing
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_training.html">
+    newton_neural.training
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#" aria-current="page">
+    Extending
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="development.html">
+    Development
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/newton-physics/newton-neural">
+    GitHub
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/newton-physics/newton-neural" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recording.html">Recording</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solvers.html">Solvers</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Concepts</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="contact.html">Contact Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coupling.html">Coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural.html">newton_neural</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_backbones.html">newton_neural.backbones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_contacts.html">newton_neural.contacts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_data.html">newton_neural.data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_evaluation.html">newton_neural.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_models.html">newton_neural.models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_predictions.html">newton_neural.predictions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_solvers.html">newton_neural.solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_systems.html">newton_neural.systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_testing.html">newton_neural.testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_training.html">newton_neural.training</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a aria-current="page" class="current reference internal" href="#">Extending</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/newton-physics/newton-neural">GitHub</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Extending</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="extending">
+<h1>Extending<a class="headerlink" href="#extending" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">newton-neural</span></code> is designed to be extended by subclassing. Any custom part or model family automatically works
+with recording, training losses, evaluation, checkpointing, and solvers without modifying library code.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 32.0%" />
+<col style="width: 48.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Extension point</p></th>
+<th class="head"><p>Base class</p></th>
+<th class="head"><p>Responsibility</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Backbone</p></td>
+<td><p><a class="reference internal" href="../api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase" title="newton_neural.backbones.BackboneBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackboneBase</span></code></a></p></td>
+<td><p>Temporal trunk mapping embedded frames to hidden states</p></td>
+</tr>
+<tr class="row-odd"><td><p>Prediction</p></td>
+<td><p><a class="reference internal" href="../api/_generated/newton_neural.predictions.PredictionBase.html#newton_neural.predictions.PredictionBase" title="newton_neural.predictions.PredictionBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">PredictionBase</span></code></a></p></td>
+<td><p>Network output definition, label signals, and supervision target</p></td>
+</tr>
+<tr class="row-even"><td><p>Contact input</p></td>
+<td><p><a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase" title="newton_neural.contacts.ContactInputBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactInputBase</span></code></a></p></td>
+<td><p>External contact sensing (Warp/PyTorch) and encoding</p></td>
+</tr>
+<tr class="row-odd"><td><p>System</p></td>
+<td><p><a class="reference internal" href="../api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase" title="newton_neural.systems.SystemBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemBase</span></code></a></p></td>
+<td><p>Signal layout, feature extraction, state increments/integration, and Newton binding</p></td>
+</tr>
+<tr class="row-even"><td><p>Model family</p></td>
+<td><p><a class="reference internal" href="../api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase" title="newton_neural.models.NeRDBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeRDBase</span></code></a></p></td>
+<td><p>Full network architecture and streaming inference contract</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The sections below implement one working example of each extension point, ordered from simplest to most involved.
+Every snippet uses only public imports and runs as part of the documentation test suite.</p>
+<section id="registration-and-serialization">
+<h2>Registration and serialization<a class="headerlink" href="#registration-and-serialization" title="Link to this heading">#</a></h2>
+<p>Each base class maintains a class-name registry populated automatically via <code class="docutils literal notranslate"><span class="pre">__init_subclass__</span></code>:</p>
+<ul class="simple">
+<li><p><strong>Naming:</strong> Registry names are global per base class. Prefix custom classes with their kind (e.g., <code class="docutils literal notranslate"><span class="pre">BackbonePair</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ContactInputHeight</span></code>). Re-defining the same class in the same module and qualname (e.g., rerunning a notebook
+cell or reloading a module) updates the entry; registering a colliding name from another location raises
+<code class="docutils literal notranslate"><span class="pre">TypeError</span></code>.</p></li>
+<li><p><strong>Configs:</strong> Every part implements <code class="docutils literal notranslate"><span class="pre">config()</span> <span class="pre">-&gt;</span> <span class="pre">dict[str,</span> <span class="pre">Any]</span></code> returning JSON-serializable plain data (by
+default, constructor keyword arguments) so <code class="docutils literal notranslate"><span class="pre">from_config(config)</span></code> and <code class="docutils literal notranslate"><span class="pre">Base.create(name,</span> <span class="pre">config)</span></code> can rebuild
+it. Model construction validates JSON serializability eagerly so serialization errors surface before training.</p></li>
+<li><p><strong>Loading external classes:</strong> Checkpoints store class names and configs, resolved via registries in
+<a class="reference internal" href="../api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.load" title="newton_neural.models.NeRDBase.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NeRDBase.load()</span></code></a>. Import the module defining your custom class before loading a checkpoint that references
+it. <code class="docutils literal notranslate"><span class="pre">load()</span></code> also compares saved signal specs against the rebuilt model and raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if a class
+changed its signal schema since saving.</p></li>
+</ul>
+</section>
+<section id="shared-test-harness">
+<h2>Shared test harness<a class="headerlink" href="#shared-test-harness" title="Link to this heading">#</a></h2>
+<p>Each part below is exercised through the full lifecycle (recording, one training step, save/load, and single-frame
+stepping) using Newton’s force-controlled cartpole and the helpers below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">newton</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">newton.examples</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural</span><span class="w"> </span><span class="kn">import</span> <span class="n">Frames</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulationNewton</span><span class="p">,</span> <span class="n">TrajectoryDataset</span><span class="p">,</span> <span class="n">TrajectoryRecorder</span><span class="p">,</span> <span class="n">TrajectoryWindows</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlashNeRD</span><span class="p">,</span> <span class="n">NeRDBase</span><span class="p">,</span> <span class="n">NeRDStepper</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.systems</span><span class="w"> </span><span class="kn">import</span> <span class="n">SystemArticulation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.training</span><span class="w"> </span><span class="kn">import</span> <span class="n">LossOneStep</span><span class="p">,</span> <span class="n">create_optimizer</span>
+
+<span class="n">WORLD_COUNT</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">device</span> <span class="o">=</span> <span class="s2">"cuda"</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"cpu"</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">replicate</span><span class="p">(</span><span class="n">robot</span><span class="p">:</span> <span class="n">newton</span><span class="o">.</span><span class="n">ModelBuilder</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">ground</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">newton</span><span class="o">.</span><span class="n">Model</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Build a replicated Newton model with one ``robot`` per world."""</span>
+    <span class="n">scene</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">ModelBuilder</span><span class="p">()</span>
+    <span class="n">scene</span><span class="o">.</span><span class="n">replicate</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">WORLD_COUNT</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ground</span><span class="p">:</span>
+        <span class="n">scene</span><span class="o">.</span><span class="n">add_ground_plane</span><span class="p">()</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">finalize</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">joint_effort_limit</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>  <span class="c1"># Bounds sampled joint forces [N or N*m]</span>
+    <span class="k">return</span> <span class="n">model</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">record</span><span class="p">(</span><span class="n">nerd</span><span class="p">:</span> <span class="n">NeRDBase</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">newton</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TrajectoryDataset</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Record a short dataset of all signals declared by ``nerd`` from MuJoCo Warp."""</span>
+    <span class="n">mujoco</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">SolverMuJoCo</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">njmax</span><span class="o">=</span><span class="mi">512</span><span class="p">)</span>
+    <span class="n">simulation</span> <span class="o">=</span> <span class="n">SimulationNewton</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mujoco</span><span class="p">,</span> <span class="n">nerd</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">frame_dt</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">substep_count</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">recorder</span> <span class="o">=</span> <span class="n">TrajectoryRecorder</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">nerd</span><span class="p">,</span> <span class="n">episode_frames</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">recorder</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">frame_count</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">try_out</span><span class="p">(</span><span class="n">nerd</span><span class="p">:</span> <span class="n">FlashNeRD</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">TrajectoryDataset</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">FlashNeRD</span><span class="p">,</span> <span class="n">Frames</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Run one training step, save and reload the checkpoint, and step one frame."""</span>
+    <span class="n">windows</span> <span class="o">=</span> <span class="n">TrajectoryWindows</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">nerd</span><span class="o">.</span><span class="n">fit_normalization</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">loader</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
+    <span class="n">loss</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="n">LossOneStep</span><span class="p">(),</span> <span class="n">create_optimizer</span><span class="p">(</span><span class="n">nerd</span><span class="p">)</span>
+    <span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">loader</span><span class="p">(</span><span class="n">WORLD_COUNT</span><span class="p">))</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">loss</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="n">nerd</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">loaded</span> <span class="o">=</span> <span class="n">FlashNeRD</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">stepper</span> <span class="o">=</span> <span class="n">NeRDStepper</span><span class="p">(</span><span class="n">loaded</span><span class="p">,</span> <span class="n">WORLD_COUNT</span><span class="p">)</span>
+    <span class="n">first_frames</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">value</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">batch</span><span class="o">.</span><span class="n">frames</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="k">if</span> <span class="n">loaded</span><span class="o">.</span><span class="n">prediction</span><span class="o">.</span><span class="n">integrates</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">loaded</span><span class="p">,</span> <span class="n">stepper</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">first_frames</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loaded</span><span class="p">,</span> <span class="n">stepper</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">first_frames</span><span class="p">)</span>
+
+
+<span class="n">robot</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">ModelBuilder</span><span class="p">()</span>
+<span class="n">robot</span><span class="o">.</span><span class="n">add_urdf</span><span class="p">(</span><span class="n">newton</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">get_asset</span><span class="p">(</span><span class="s2">"cartpole.urdf"</span><span class="p">),</span> <span class="n">floating</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">enable_self_collisions</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">cartpole</span> <span class="o">=</span> <span class="n">replicate</span><span class="p">(</span><span class="n">robot</span><span class="p">)</span>
+<span class="n">cartpole_system</span> <span class="o">=</span> <span class="n">SystemArticulation</span><span class="o">.</span><span class="n">from_model</span><span class="p">(</span><span class="n">cartpole</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="p">(</span><span class="s2">"joint_f"</span><span class="p">,))</span>
+</pre></div>
+</div>
+</section>
+<section id="custom-backbone">
+<h2>Custom backbone<a class="headerlink" href="#custom-backbone" title="Link to this heading">#</a></h2>
+<p>A backbone (<a class="reference internal" href="../api/_generated/newton_neural.backbones.BackboneBase.html#newton_neural.backbones.BackboneBase" title="newton_neural.backbones.BackboneBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackboneBase</span></code></a>) implements the temporal trunk in two equivalent ways:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">forward(h)</span></code>: Processes full training windows <code class="docutils literal notranslate"><span class="pre">[B,</span> <span class="pre">T,</span> <span class="pre">width]</span> <span class="pre">-&gt;</span> <span class="pre">[B,</span> <span class="pre">T,</span> <span class="pre">width]</span></code>, treating frame 0 as an episode
+start.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">step(h,</span> <span class="pre">history)</span></code>: Processes one frame <code class="docutils literal notranslate"><span class="pre">[B,</span> <span class="pre">width]</span> <span class="pre">-&gt;</span> <span class="pre">[B,</span> <span class="pre">width]</span></code> while updating <code class="docutils literal notranslate"><span class="pre">history</span></code> in place, with
+no data-dependent control flow or allocations (required for <code class="docutils literal notranslate"><span class="pre">torch.compile</span></code> and CUDA graphs).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">history(world_count,</span> <span class="pre">*,</span> <span class="pre">device,</span> <span class="pre">dtype)</span></code>: Allocates all-zero initial history tensors (a zeroed row must represent
+a freshly reset world, since resets zero out masked rows).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">receptive_field</span></code>: Number of frames a hidden state depends on (or <code class="docutils literal notranslate"><span class="pre">None</span></code> for unbounded/recurrent backbones;
+train those with <code class="docutils literal notranslate"><span class="pre">windows.loader(batch_size,</span> <span class="pre">weights=windows.episode_start)</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config()</span></code>: Returns constructor kwargs. Override <code class="docutils literal notranslate"><span class="pre">hidden_weights()</span></code> if you want to customize which parameters
+<a class="reference internal" href="../api/_generated/newton_neural.training.OptimizerMuon.html#newton_neural.training.OptimizerMuon" title="newton_neural.training.OptimizerMuon"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizerMuon</span></code></a> updates (defaults to all <code class="docutils literal notranslate"><span class="pre">nn.Linear</span></code> weights in the backbone).</p></li>
+</ul>
+<p>Below is a minimal two-frame backbone that combines the current embedded frame with the previous one:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.backbones</span><span class="w"> </span><span class="kn">import</span> <span class="n">BackboneBase</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">BackbonePair</span><span class="p">(</span><span class="n">BackboneBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Linear mix of the current embedded frame and the previous frame.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        width: Feature width of embedded frames and hidden states.</span>
+<span class="sd">    """</span>
+
+    <span class="n">receptive_field</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mix</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="c1"># Frame 0 starts an episode and duplicates itself as its own predecessor.</span>
+        <span class="n">previous</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">h</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">h</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">h</span><span class="p">,</span> <span class="n">previous</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">history</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="s2">"step"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="n">previous</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">history</span><span class="p">[</span><span class="s2">"previous"</span><span class="p">])</span>
+        <span class="n">history</span><span class="p">[</span><span class="s2">"previous"</span><span class="p">]</span><span class="o">.</span><span class="n">copy_</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+        <span class="n">history</span><span class="p">[</span><span class="s2">"step"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">h</span><span class="p">,</span> <span class="n">previous</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">history</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">world_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">dtype</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">"previous"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">world_count</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+            <span class="s2">"step"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">world_count</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">),</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"width"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Verify streaming/window equivalence, mid-episode resets (even with NaN-poisoned stale history), world isolation,
+buffer invariance, and <code class="docutils literal notranslate"><span class="pre">torch.autocast</span></code> behavior with <a class="reference internal" href="../api/_generated/newton_neural.testing.check_backbone_streaming.html#newton_neural.testing.check_backbone_streaming" title="newton_neural.testing.check_backbone_streaming"><code class="xref py py-func docutils literal notranslate"><span class="pre">check_backbone_streaming()</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.testing</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_backbone_streaming</span>
+
+<span class="n">check_backbone_streaming</span><span class="p">(</span><span class="n">BackbonePair</span><span class="p">())</span>
+<span class="n">check_backbone_streaming</span><span class="p">(</span><span class="n">BackbonePair</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">autocast</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Plug <code class="docutils literal notranslate"><span class="pre">BackbonePair</span></code> into <a class="reference internal" href="../api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD" title="newton_neural.models.FlashNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlashNeRD</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nerd</span> <span class="o">=</span> <span class="n">FlashNeRD</span><span class="p">(</span><span class="n">cartpole_system</span><span class="p">,</span> <span class="n">backbone</span><span class="o">=</span><span class="n">BackbonePair</span><span class="p">())</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">loaded</span><span class="p">,</span> <span class="n">following</span> <span class="o">=</span> <span class="n">try_out</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">record</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">cartpole</span><span class="p">,</span> <span class="s2">"data/pair"</span><span class="p">),</span> <span class="s2">"pair.pt"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">loaded</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">backbone</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">loaded</span><span class="o">.</span><span class="n">receptive_field</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">following</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>BackbonePair 2 ['joint_q', 'joint_qd']
+</pre></div>
+</div>
+</section>
+<section id="custom-prediction">
+<h2>Custom prediction<a class="headerlink" href="#custom-prediction" title="Link to this heading">#</a></h2>
+<p>A prediction (<a class="reference internal" href="../api/_generated/newton_neural.predictions.PredictionBase.html#newton_neural.predictions.PredictionBase" title="newton_neural.predictions.PredictionBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">PredictionBase</span></code></a>) defines what the network outputs and how its
+supervision label is computed from <a class="reference internal" href="../api/newton_neural.html#newton_neural.Frames" title="newton_neural.Frames"><code class="xref py py-type docutils literal notranslate"><span class="pre">Frames</span></code></a> (<a class="reference internal" href="overview.html"><span class="doc">Overview</span></a>):</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Member</p></th>
+<th class="head"><p>Contract</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">integrates</span></code></p></td>
+<td><p>Class bool. <code class="docutils literal notranslate"><span class="pre">True</span></code> if the model integrates the output itself via <code class="docutils literal notranslate"><span class="pre">system.integrate</span></code> (supervision comes
+from <code class="docutils literal notranslate"><span class="pre">(current,</span> <span class="pre">following)</span></code> pairs and supports state noise). <code class="docutils literal notranslate"><span class="pre">False</span></code> if an external solver consumes the
+output (supervision comes from recorded <code class="docutils literal notranslate"><span class="pre">LABEL</span></code> signals on each frame; <code class="docutils literal notranslate"><span class="pre">following</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">signals(system)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dict[str,</span> <span class="pre">SignalSpec]</span></code> of <code class="docutils literal notranslate"><span class="pre">SignalRole.LABEL</span></code> signals to record (empty if <code class="docutils literal notranslate"><span class="pre">integrates=True</span></code>).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_count(system)</span></code></p></td>
+<td><p>Output vector dimension.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">label(system,</span> <span class="pre">current,</span> <span class="pre">following)</span></code></p></td>
+<td><p>Target tensor in physical units.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">source(simulation)</span></code></p></td>
+<td><p><a class="reference internal" href="../api/_generated/newton_neural.data.SignalSource.html#newton_neural.data.SignalSource" title="newton_neural.data.SignalSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignalSource</span></code></a> capturing the label signals after each simulation step (must clone
+tensors before returning so future steps cannot overwrite them).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">config()</span></code></p></td>
+<td><p>Constructor kwargs (default <code class="docutils literal notranslate"><span class="pre">{}</span></code>).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Because <a class="reference internal" href="../api/_generated/newton_neural.predictions.PredictionStateIncrement.html#newton_neural.predictions.PredictionStateIncrement" title="newton_neural.predictions.PredictionStateIncrement"><code class="xref py py-class docutils literal notranslate"><span class="pre">PredictionStateIncrement</span></code></a> already covers integrating increments, custom
+predictions typically set <code class="docutils literal notranslate"><span class="pre">integrates</span> <span class="pre">=</span> <span class="pre">False</span></code> for consumption by a custom solver. This example predicts one-frame
+joint velocity changes <code class="docutils literal notranslate"><span class="pre">joint_qd_next</span> <span class="pre">-</span> <span class="pre">joint_qd</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural</span><span class="w"> </span><span class="kn">import</span> <span class="n">SignalRole</span><span class="p">,</span> <span class="n">SignalSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">SignalSource</span><span class="p">,</span> <span class="n">SimulationBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.predictions</span><span class="w"> </span><span class="kn">import</span> <span class="n">PredictionBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.systems</span><span class="w"> </span><span class="kn">import</span> <span class="n">SystemBase</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">PredictionVelocityChange</span><span class="p">(</span><span class="n">PredictionBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Predicts one-frame joint velocity change [m/s or rad/s].</span>
+
+<span class="sd">    Records ``joint_qd_next`` after each step and supervises against ``joint_qd_next - joint_qd``.</span>
+<span class="sd">    """</span>
+
+    <span class="n">integrates</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">signals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">system</span><span class="p">:</span> <span class="n">SystemBase</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SignalSpec</span><span class="p">]:</span>
+        <span class="n">velocity</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">signals</span><span class="p">[</span><span class="s2">"joint_qd"</span><span class="p">]</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">SignalSpec</span><span class="p">(</span><span class="s2">"joint_qd_next"</span><span class="p">,</span> <span class="n">velocity</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">SignalRole</span><span class="o">.</span><span class="n">LABEL</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">velocity</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">label</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">label</span><span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">output_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">system</span><span class="p">:</span> <span class="n">SystemBase</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">signals</span><span class="p">[</span><span class="s2">"joint_qd"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">system</span><span class="p">:</span> <span class="n">SystemBase</span><span class="p">,</span> <span class="n">current</span><span class="p">:</span> <span class="n">Frames</span><span class="p">,</span> <span class="n">following</span><span class="p">:</span> <span class="n">Frames</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">current</span><span class="p">[</span><span class="s2">"joint_qd_next"</span><span class="p">]</span> <span class="o">-</span> <span class="n">current</span><span class="p">[</span><span class="s2">"joint_qd"</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulation</span><span class="p">:</span> <span class="n">SimulationBase</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SignalSource</span><span class="p">:</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">binding</span><span class="o">.</span><span class="n">read_state</span><span class="p">(</span><span class="n">simulation</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">"joint_qd_next"</span><span class="p">:</span> <span class="n">state</span><span class="p">[</span><span class="s2">"joint_qd"</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()}</span>
+
+        <span class="k">return</span> <span class="n">SignalSource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="p">(</span><span class="n">simulation</span><span class="o">.</span><span class="n">system</span><span class="p">),</span> <span class="n">read</span><span class="p">,</span> <span class="n">after_step</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.backbones</span><span class="w"> </span><span class="kn">import</span> <span class="n">BackboneMLP</span>
+
+<span class="n">nerd</span> <span class="o">=</span> <span class="n">FlashNeRD</span><span class="p">(</span>
+    <span class="n">cartpole_system</span><span class="p">,</span>
+    <span class="n">backbone</span><span class="o">=</span><span class="n">BackboneMLP</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">prediction</span><span class="o">=</span><span class="n">PredictionVelocityChange</span><span class="p">(),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">loaded</span><span class="p">,</span> <span class="n">change</span> <span class="o">=</span> <span class="n">try_out</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">record</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">cartpole</span><span class="p">,</span> <span class="s2">"data/velocity"</span><span class="p">),</span> <span class="s2">"velocity.pt"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">loaded</span><span class="o">.</span><span class="n">prediction</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">loaded</span><span class="o">.</span><span class="n">signals</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">change</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>PredictionVelocityChange ['joint_q', 'joint_qd', 'joint_f', 'joint_qd_next'] (8, 3)
+</pre></div>
+</div>
+<p>Models with <code class="docutils literal notranslate"><span class="pre">integrates</span> <span class="pre">=</span> <span class="pre">False</span></code> must train with <code class="docutils literal notranslate"><span class="pre">noise=0</span></code> (recorded labels do not apply to perturbed states)
+and cannot run in <a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD" title="newton_neural.solvers.SolverNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRD</span></code></a>. Instead, call <a class="reference internal" href="../api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper.predict" title="newton_neural.models.NeRDStepper.predict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NeRDStepper.predict()</span></code></a> inside a solver that
+applies the prediction (analogous to <a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRDMuJoCo.html#newton_neural.solvers.SolverNeRDMuJoCo" title="newton_neural.solvers.SolverNeRDMuJoCo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRDMuJoCo</span></code></a>).</p>
+</section>
+<section id="custom-contact-input">
+<h2>Custom contact input<a class="headerlink" href="#custom-contact-input" title="Link to this heading">#</a></h2>
+<p>A contact input (<a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactInputBase.html#newton_neural.contacts.ContactInputBase" title="newton_neural.contacts.ContactInputBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactInputBase</span></code></a>) is a stateless configuration object that spawns
+two runtime components:</p>
+<ul class="simple">
+<li><p>A <a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactSensorBase.html#newton_neural.contacts.ContactSensorBase" title="newton_neural.contacts.ContactSensorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactSensorBase</span></code></a> that reads Newton state/contacts on-device into preallocated
+buffers (no host transfers).</p></li>
+<li><p>A PyTorch <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code> encoder that normalizes and maps contact signals into a fixed-width contact code (all
+learnable weights and normalizer buffers live on the encoder and are saved in the checkpoint).</p></li>
+</ul>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Member</p></th>
+<th class="head"><p>Contract</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">signals</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dict[str,</span> <span class="pre">SignalSpec]</span></code> with role <code class="docutils literal notranslate"><span class="pre">SignalRole.CONTACT</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">code_count</span></code></p></td>
+<td><p>Width of the encoded contact vector.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gated</span></code></p></td>
+<td><p>Class bool (default <code class="docutils literal notranslate"><span class="pre">False</span></code>). Hint telling model families like <a class="reference internal" href="../api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD" title="newton_neural.models.FlashNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlashNeRD</span></code></a> to gate the contact code
+starting near zero (recommended when the encoder has randomly initialized trainable weights).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">reads_contacts</span></code></p></td>
+<td><p>Class bool (default <code class="docutils literal notranslate"><span class="pre">False</span></code>). Set <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">sensor.update()</span></code> requires Newton’s <code class="docutils literal notranslate"><span class="pre">contacts</span></code> buffer.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sensor(model,</span> <span class="pre">binding)</span></code></p></td>
+<td><p>Returns a <a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactSensorBase.html#newton_neural.contacts.ContactSensorBase" title="newton_neural.contacts.ContactSensorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactSensorBase</span></code></a> whose <code class="docutils literal notranslate"><span class="pre">update(state,</span> <span class="pre">contacts)</span></code> writes into
+reused buffers and returns <code class="docutils literal notranslate"><span class="pre">[world_count,</span> <span class="pre">*shape]</span></code> tensors. If bounded by capacity, set <code class="docutils literal notranslate"><span class="pre">sensor.overflow</span></code>
+to an int32 Warp array to expose <code class="docutils literal notranslate"><span class="pre">CONTACT_ROW_OVERFLOW</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">encoder()</span></code></p></td>
+<td><p>Returns an <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code> implementing <code class="docutils literal notranslate"><span class="pre">forward(frames)</span> <span class="pre">-&gt;</span> <span class="pre">[...,</span> <span class="pre">code_count]</span></code> and <code class="docutils literal notranslate"><span class="pre">fit_inputs(frames)</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">recomputable</span></code>, <code class="docutils literal notranslate"><span class="pre">evaluate(system,</span> <span class="pre">frames)</span></code></p></td>
+<td><p>Set <code class="docutils literal notranslate"><span class="pre">recomputable</span> <span class="pre">=</span> <span class="pre">True</span></code> and implement <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> if the signals depend solely on joint state (enables
+recomputation during noisy training and open-loop rollouts).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">config()</span></code></p></td>
+<td><p>Constructor kwargs as plain data.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Because floating-base system features omit global base height, this example provides root-body height above <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">0</span></code>
+as a recomputable contact input:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warp</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">wp</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normalizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.contacts</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContactInputBase</span><span class="p">,</span> <span class="n">ContactSensorBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.systems</span><span class="w"> </span><span class="kn">import</span> <span class="n">BindingArticulation</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ContactInputHeight</span><span class="p">(</span><span class="n">ContactInputBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Floating-base root height above ``z = 0`` (signal ``root_height`` ``[1]`` [m]).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        code_count: Output width of the contact code.</span>
+<span class="sd">    """</span>
+
+    <span class="n">recomputable</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code_count</span> <span class="o">=</span> <span class="n">code_count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"root_height"</span><span class="p">:</span> <span class="n">SignalSpec</span><span class="p">(</span><span class="s2">"root_height"</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">SignalRole</span><span class="o">.</span><span class="n">CONTACT</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">"m"</span><span class="p">)}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">sensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">newton</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span> <span class="n">binding</span><span class="p">:</span> <span class="n">BindingArticulation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ContactSensorBase</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ContactSensorHeight</span><span class="p">(</span><span class="n">binding</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">system</span><span class="p">:</span> <span class="n">SystemBase</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">:</span>
+        <span class="c1"># Floating-base joint_q starts with root position (x, y, z).</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"root_height"</span><span class="p">:</span> <span class="n">frames</span><span class="p">[</span><span class="s2">"joint_q"</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">encoder</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ContactEncoderHeight</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code_count</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"code_count"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">code_count</span><span class="p">}</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ContactSensorHeight</span><span class="p">(</span><span class="n">ContactSensorBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Extracts root body z-coordinate per world from ``state.body_q``."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">binding</span><span class="p">:</span> <span class="n">BindingArticulation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">root_bodies</span> <span class="o">=</span> <span class="n">wp</span><span class="o">.</span><span class="n">to_torch</span><span class="p">(</span><span class="n">binding</span><span class="o">.</span><span class="n">body_ids</span><span class="p">)[:,</span> <span class="n">binding</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">root_body</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_bodies</span> <span class="o">=</span> <span class="n">root_bodies</span><span class="o">.</span><span class="n">long</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">binding</span><span class="o">.</span><span class="n">world_count</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">root_bodies</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">newton</span><span class="o">.</span><span class="n">State</span><span class="p">,</span> <span class="n">contacts</span><span class="p">:</span> <span class="n">newton</span><span class="o">.</span><span class="n">Contacts</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">copy_</span><span class="p">(</span><span class="n">wp</span><span class="o">.</span><span class="n">to_torch</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">body_q</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">root_bodies</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"root_height"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">}</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ContactEncoderHeight</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Normalizes root height and projects it to ``code_count``."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">code_count</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">frames</span><span class="p">[</span><span class="s2">"root_height"</span><span class="p">]))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">frames</span><span class="p">[</span><span class="s2">"root_height"</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>For heavier sensors, write a Warp kernel and call <a class="reference internal" href="../api/_generated/newton_neural.systems.robot_frame.html#newton_neural.systems.robot_frame" title="newton_neural.systems.robot_frame"><code class="xref py py-func docutils literal notranslate"><span class="pre">robot_frame()</span></code></a> so sensed quantities
+share the same coordinate frame as <a class="reference internal" href="../api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation" title="newton_neural.systems.SystemArticulation"><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemArticulation</span></code></a> features.</p>
+<p>For any recomputable contact input, verify that <code class="docutils literal notranslate"><span class="pre">evaluate()</span></code> matches <code class="docutils literal notranslate"><span class="pre">sensor.update()</span></code> using
+<a class="reference internal" href="../api/_generated/newton_neural.testing.check_contact_input_recompute.html#newton_neural.testing.check_contact_input_recompute" title="newton_neural.testing.check_contact_input_recompute"><code class="xref py py-func docutils literal notranslate"><span class="pre">check_contact_input_recompute()</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.testing</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_contact_input_recompute</span>
+
+<span class="n">robot</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">ModelBuilder</span><span class="p">()</span>
+<span class="n">robot</span><span class="o">.</span><span class="n">add_urdf</span><span class="p">(</span>
+    <span class="n">newton</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">get_asset</span><span class="p">(</span><span class="s2">"quadruped.urdf"</span><span class="p">),</span>
+    <span class="n">xform</span><span class="o">=</span><span class="n">wp</span><span class="o">.</span><span class="n">transform</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">),</span> <span class="n">wp</span><span class="o">.</span><span class="n">quat_identity</span><span class="p">()),</span>
+    <span class="n">floating</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">enable_self_collisions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">ignore_inertial_definitions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># URDF inertias are too small for stable simulation</span>
+<span class="p">)</span>
+<span class="n">quadruped</span> <span class="o">=</span> <span class="n">replicate</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">ground</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">quadruped_system</span> <span class="o">=</span> <span class="n">SystemArticulation</span><span class="o">.</span><span class="n">from_model</span><span class="p">(</span><span class="n">quadruped</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="p">(</span><span class="s2">"joint_f"</span><span class="p">,))</span>
+
+<span class="n">check_contact_input_recompute</span><span class="p">(</span><span class="n">ContactInputHeight</span><span class="p">(),</span> <span class="n">quadruped_system</span><span class="p">,</span> <span class="n">quadruped</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">ContactInputHeight</span></code> in training and <a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD" title="newton_neural.solvers.SolverNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRD</span></code></a> (where the contact code enters
+the network is controlled by the model family; see <a class="reference internal" href="contact.html#contact-injections"><span class="std std-ref">Contact injection points in FlashNeRD</span></a> for <a class="reference internal" href="../api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD" title="newton_neural.models.FlashNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlashNeRD</span></code></a>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nerd</span> <span class="o">=</span> <span class="n">FlashNeRD</span><span class="p">(</span><span class="n">quadruped_system</span><span class="p">,</span> <span class="n">backbone</span><span class="o">=</span><span class="n">BackbonePair</span><span class="p">(),</span> <span class="n">contact_input</span><span class="o">=</span><span class="n">ContactInputHeight</span><span class="p">())</span>
+<span class="n">nerd</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">loaded</span><span class="p">,</span> <span class="n">following</span> <span class="o">=</span> <span class="n">try_out</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">record</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">quadruped</span><span class="p">,</span> <span class="s2">"data/height"</span><span class="p">),</span> <span class="s2">"height.pt"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">loaded</span><span class="o">.</span><span class="n">contact_input</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">loaded</span><span class="o">.</span><span class="n">signals</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ContactInputHeight ['joint_q', 'joint_qd', 'joint_f', 'root_height']
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.solvers</span><span class="w"> </span><span class="kn">import</span> <span class="n">SolverNeRD</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">SolverNeRD</span><span class="p">(</span><span class="n">quadruped</span><span class="p">,</span> <span class="s2">"height.pt"</span><span class="p">)</span>
+<span class="n">state</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="n">quadruped</span><span class="o">.</span><span class="n">state</span><span class="p">(),</span> <span class="n">quadruped</span><span class="o">.</span><span class="n">control</span><span class="p">()</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># Updates body transforms before first step</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="custom-system">
+<h2>Custom system<a class="headerlink" href="#custom-system" title="Link to this heading">#</a></h2>
+<p>A system (<a class="reference internal" href="../api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase" title="newton_neural.systems.SystemBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemBase</span></code></a>) defines (1) the pure-PyTorch mapping between raw frames and
+network features/increments (buffers only, no trainable weights), and (2) an optional Newton binding via <code class="docutils literal notranslate"><span class="pre">bind()</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Member</p></th>
+<th class="head"><p>Contract</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">signals</span></code></p></td>
+<td><p>Ordered <code class="docutils literal notranslate"><span class="pre">dict[str,</span> <span class="pre">SignalSpec]</span></code> of <code class="docutils literal notranslate"><span class="pre">STATE</span></code> signals followed by <code class="docutils literal notranslate"><span class="pre">CONTROL</span></code> signals.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">feature_count</span></code>, <code class="docutils literal notranslate"><span class="pre">increment_count</span></code></p></td>
+<td><p>Feature and state-increment widths.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">features(frames)</span></code></p></td>
+<td><p>Maps frames (single-frame or windowed) to <code class="docutils literal notranslate"><span class="pre">[...,</span> <span class="pre">feature_count]</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">increment(current,</span> <span class="pre">following)</span></code></p></td>
+<td><p>Maps consecutive frames to <code class="docutils literal notranslate"><span class="pre">[...,</span> <span class="pre">increment_count]</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">integrate(current,</span> <span class="pre">increment)</span></code></p></td>
+<td><p>Exact inverse of <code class="docutils literal notranslate"><span class="pre">increment</span></code>; returns next <code class="docutils literal notranslate"><span class="pre">STATE</span></code> signals.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">perturb(current,</span> <span class="pre">noise)</span></code></p></td>
+<td><p>Applies state noise for noisy training (defaults to <code class="docutils literal notranslate"><span class="pre">integrate(current,</span> <span class="pre">noise)</span></code>).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">error(reference,</span> <span class="pre">other)</span></code></p></td>
+<td><p>Per-coordinate error dictionary used by evaluation (defaults to <code class="docutils literal notranslate"><span class="pre">|reference</span> <span class="pre">-</span> <span class="pre">other|</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bind(model,</span> <span class="pre">articulation)</span></code></p></td>
+<td><p>Returns a <a class="reference internal" href="../api/_generated/newton_neural.systems.BindingBase.html#newton_neural.systems.BindingBase" title="newton_neural.systems.BindingBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">BindingBase</span></code></a> for reading/writing Newton arrays (optional if stepping
+strictly on tensor frames).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">config()</span></code></p></td>
+<td><p>Constructor kwargs as plain data.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>All frame methods must tolerate extra keys in <code class="docutils literal notranslate"><span class="pre">frames</span></code> (e.g., contact signals) and support arbitrary leading batch
+dimensions. Keep <code class="docutils literal notranslate"><span class="pre">features</span></code> and <code class="docutils literal notranslate"><span class="pre">integrate</span></code> free of data-dependent control flow and matrix multiplications/linear
+layers so they compile cleanly and stay in IEEE FP32 across all deployment precisions.</p>
+<section id="subclassing-systemarticulation">
+<h3>Subclassing <code class="docutils literal notranslate"><span class="pre">SystemArticulation</span></code><a class="headerlink" href="#subclassing-systemarticulation" title="Link to this heading">#</a></h3>
+<p>To customize feature representation for an articulated robot while keeping Newton binding, solvers, and contact
+inputs working automatically, subclass <a class="reference internal" href="../api/_generated/newton_neural.systems.SystemArticulation.html#newton_neural.systems.SystemArticulation" title="newton_neural.systems.SystemArticulation"><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemArticulation</span></code></a>. Below, continuous
+revolute angles are encoded as <code class="docutils literal notranslate"><span class="pre">(sin(q),</span> <span class="pre">cos(q))</span></code> so full rotations produce identical features:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SystemArticulationPeriodic</span><span class="p">(</span><span class="n">SystemArticulation</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Fixed-base force-controlled articulation with ``(sin, cos)`` features for revolute joints."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="n">SystemArticulation</span><span class="o">.</span><span class="n">Spec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">floating_base</span> <span class="ow">or</span> <span class="n">spec</span><span class="o">.</span><span class="n">control</span> <span class="o">!=</span> <span class="p">(</span><span class="s2">"joint_f"</span><span class="p">,):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"SystemArticulationPeriodic supports a fixed base under joint forces only"</span><span class="p">)</span>
+        <span class="n">kinds</span> <span class="o">=</span> <span class="p">[</span><span class="n">joint</span><span class="o">.</span><span class="n">type</span> <span class="k">for</span> <span class="n">joint</span> <span class="ow">in</span> <span class="n">spec</span><span class="o">.</span><span class="n">joints</span> <span class="k">if</span> <span class="n">joint</span><span class="o">.</span><span class="n">actuated</span><span class="p">]</span>
+        <span class="n">angles</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">kind</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kinds</span><span class="p">)</span> <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">"revolute"</span><span class="p">]</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">kind</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kinds</span><span class="p">)</span> <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">"prismatic"</span><span class="p">]</span>
+        <span class="c1"># Non-persistent buffers are rebuilt from spec on load rather than stored in checkpoints.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">"angles"</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">),</span> <span class="n">persistent</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">"lengths"</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">lengths</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">),</span> <span class="n">persistent</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_count</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">joint_q</span> <span class="o">=</span> <span class="n">frames</span><span class="p">[</span><span class="s2">"joint_q"</span><span class="p">]</span>
+        <span class="n">angles</span><span class="p">,</span> <span class="n">lengths</span> <span class="o">=</span> <span class="n">joint_q</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">],</span> <span class="n">joint_q</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lengths</span><span class="p">]</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">(</span><span class="n">angles</span><span class="o">.</span><span class="n">sin</span><span class="p">(),</span> <span class="n">angles</span><span class="o">.</span><span class="n">cos</span><span class="p">(),</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">frames</span><span class="p">[</span><span class="s2">"joint_qd"</span><span class="p">],</span> <span class="n">frames</span><span class="p">[</span><span class="s2">"joint_f"</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">periodic</span> <span class="o">=</span> <span class="n">SystemArticulationPeriodic</span><span class="o">.</span><span class="n">from_model</span><span class="p">(</span><span class="n">cartpole</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="p">(</span><span class="s2">"joint_f"</span><span class="p">,))</span>
+<span class="n">nerd</span> <span class="o">=</span> <span class="n">FlashNeRD</span><span class="p">(</span><span class="n">periodic</span><span class="p">,</span> <span class="n">backbone</span><span class="o">=</span><span class="n">BackbonePair</span><span class="p">())</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">loaded</span><span class="p">,</span> <span class="n">following</span> <span class="o">=</span> <span class="n">try_out</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">record</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">cartpole</span><span class="p">,</span> <span class="s2">"data/periodic"</span><span class="p">),</span> <span class="s2">"periodic.pt"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">loaded</span><span class="o">.</span><span class="n">system</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">loaded</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">feature_count</span><span class="p">,</span> <span class="n">cartpole_system</span><span class="o">.</span><span class="n">feature_count</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SystemArticulationPeriodic 11 9
+</pre></div>
+</div>
+<p>Because <code class="docutils literal notranslate"><span class="pre">bind()</span></code> is inherited, checkpoints deploy straight into <a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD" title="newton_neural.solvers.SolverNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRD</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span> <span class="o">=</span> <span class="n">SolverNeRD</span><span class="p">(</span><span class="n">cartpole</span><span class="p">,</span> <span class="s2">"periodic.pt"</span><span class="p">)</span>
+<span class="n">state</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="n">cartpole</span><span class="o">.</span><span class="n">state</span><span class="p">(),</span> <span class="n">cartpole</span><span class="o">.</span><span class="n">control</span><span class="p">()</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="non-articulated-systems-systembase">
+<h3>Non-articulated systems (<code class="docutils literal notranslate"><span class="pre">SystemBase</span></code>)<a class="headerlink" href="#non-articulated-systems-systembase" title="Link to this heading">#</a></h3>
+<p>For non-articulated dynamics (such as a small particle system), subclass <a class="reference internal" href="../api/_generated/newton_neural.systems.SystemBase.html#newton_neural.systems.SystemBase" title="newton_neural.systems.SystemBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemBase</span></code></a>
+directly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SystemParticles</span><span class="p">(</span><span class="n">SystemBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Small particle system represented as mean-centered positions and velocities.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        particle_count: Number of particles per world.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">particle_count</span> <span class="o">=</span> <span class="n">particle_count</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">particle_count</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"particle_q"</span><span class="p">:</span> <span class="n">SignalSpec</span><span class="p">(</span><span class="s2">"particle_q"</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">SignalRole</span><span class="o">.</span><span class="n">STATE</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">"m"</span><span class="p">),</span>
+            <span class="s2">"particle_qd"</span><span class="p">:</span> <span class="n">SignalSpec</span><span class="p">(</span><span class="s2">"particle_qd"</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">SignalRole</span><span class="o">.</span><span class="n">STATE</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">"m/s"</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">increment_count</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">particle_count</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">frames</span><span class="p">[</span><span class="s2">"particle_q"</span><span class="p">]</span>
+        <span class="c1"># Center positions so features are translation-invariant.</span>
+        <span class="n">centered</span> <span class="o">=</span> <span class="n">position</span> <span class="o">-</span> <span class="n">position</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">centered</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="n">frames</span><span class="p">[</span><span class="s2">"particle_qd"</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="p">:</span> <span class="n">Frames</span><span class="p">,</span> <span class="n">following</span><span class="p">:</span> <span class="n">Frames</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">position_change</span> <span class="o">=</span> <span class="n">following</span><span class="p">[</span><span class="s2">"particle_q"</span><span class="p">]</span> <span class="o">-</span> <span class="n">current</span><span class="p">[</span><span class="s2">"particle_q"</span><span class="p">]</span>
+        <span class="n">velocity_change</span> <span class="o">=</span> <span class="n">following</span><span class="p">[</span><span class="s2">"particle_qd"</span><span class="p">]</span> <span class="o">-</span> <span class="n">current</span><span class="p">[</span><span class="s2">"particle_qd"</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">position_change</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="n">velocity_change</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="p">:</span> <span class="n">Frames</span><span class="p">,</span> <span class="n">increment</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">:</span>
+        <span class="n">changes</span> <span class="o">=</span> <span class="n">increment</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_count</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">position_change</span><span class="p">,</span> <span class="n">velocity_change</span> <span class="o">=</span> <span class="n">changes</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">"particle_q"</span><span class="p">:</span> <span class="n">current</span><span class="p">[</span><span class="s2">"particle_q"</span><span class="p">]</span> <span class="o">+</span> <span class="n">position_change</span><span class="p">,</span>
+            <span class="s2">"particle_qd"</span><span class="p">:</span> <span class="n">current</span><span class="p">[</span><span class="s2">"particle_qd"</span><span class="p">]</span> <span class="o">+</span> <span class="n">velocity_change</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"particle_count"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">particle_count</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Verify that <code class="docutils literal notranslate"><span class="pre">integrate</span></code> inverts <code class="docutils literal notranslate"><span class="pre">increment</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">particles</span> <span class="o">=</span> <span class="n">SystemParticles</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">current</span><span class="p">,</span> <span class="n">following</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">*</span><span class="n">spec</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">spec</span> <span class="ow">in</span> <span class="n">particles</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">integrated</span> <span class="o">=</span> <span class="n">particles</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">particles</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">following</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">integrated</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">following</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">following</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+<p>That mapping alone is enough to train, save, load, step with <a class="reference internal" href="../api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper" title="newton_neural.models.NeRDStepper"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeRDStepper</span></code></a>, and run
+<a class="reference internal" href="../api/_generated/newton_neural.evaluation.rollout_error.html#newton_neural.evaluation.rollout_error" title="newton_neural.evaluation.rollout_error"><code class="xref py py-func docutils literal notranslate"><span class="pre">rollout_error()</span></code></a> using datasets written with
+<a class="reference internal" href="../api/_generated/newton_neural.data.TrajectoryWriter.html#newton_neural.data.TrajectoryWriter" title="newton_neural.data.TrajectoryWriter"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrajectoryWriter</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrajectoryWriter</span>
+
+<span class="n">FRAME_COUNT</span> <span class="o">=</span> <span class="mi">64</span>
+
+<span class="n">chain</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">ModelBuilder</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">chain</span><span class="o">.</span><span class="n">add_particle</span><span class="p">((</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">index</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="n">mass</span><span class="o">=</span><span class="mf">0.0</span> <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">chain</span><span class="o">.</span><span class="n">add_spring</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ke</span><span class="o">=</span><span class="mf">1.0e3</span><span class="p">,</span> <span class="n">kd</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">scene</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">ModelBuilder</span><span class="p">()</span>
+<span class="n">scene</span><span class="o">.</span><span class="n">replicate</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">WORLD_COUNT</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">finalize</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">SolverXPBD</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="n">state</span><span class="p">,</span> <span class="n">next_state</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">state</span><span class="p">(),</span> <span class="n">model</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+<span class="n">velocity</span> <span class="o">=</span> <span class="n">wp</span><span class="o">.</span><span class="n">to_torch</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">particle_qd</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">WORLD_COUNT</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">velocity</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">WORLD_COUNT</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">frames</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"particle_q"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"particle_qd"</span><span class="p">:</span> <span class="p">[]}</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">FRAME_COUNT</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">frames</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wp</span><span class="o">.</span><span class="n">to_torch</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">WORLD_COUNT</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">())</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">clear_forces</span><span class="p">()</span>
+    <span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
+    <span class="n">state</span><span class="p">,</span> <span class="n">next_state</span> <span class="o">=</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">state</span>
+
+<span class="n">episode_start</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">WORLD_COUNT</span><span class="p">,</span> <span class="n">FRAME_COUNT</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+<span class="n">episode_start</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">WORLD_COUNT</span><span class="p">,</span> <span class="n">FRAME_COUNT</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+<span class="n">stacked</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">frames</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="k">with</span> <span class="n">TrajectoryWriter</span><span class="p">(</span><span class="s2">"data/chain"</span><span class="p">,</span> <span class="n">particles</span><span class="o">.</span><span class="n">signals</span><span class="p">,</span> <span class="n">frame_dt</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">stacked</span><span class="p">,</span> <span class="n">episode_start</span><span class="p">,</span> <span class="n">valid</span><span class="p">)</span>
+
+<span class="n">nerd</span> <span class="o">=</span> <span class="n">FlashNeRD</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="n">backbone</span><span class="o">=</span><span class="n">BackbonePair</span><span class="p">())</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">loaded</span><span class="p">,</span> <span class="n">following</span> <span class="o">=</span> <span class="n">try_out</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">TrajectoryDataset</span><span class="p">(</span><span class="s2">"data/chain"</span><span class="p">),</span> <span class="s2">"chain.pt"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">loaded</span><span class="o">.</span><span class="n">system</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">following</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SystemParticles {'particle_q': (8, 4, 3), 'particle_qd': (8, 4, 3)}
+</pre></div>
+</div>
+<p><em>(Flattening all particles into one feature vector suits small particle sets, not high-resolution meshes or cloth.)</em></p>
+<p>To integrate a non-articulated system into <a class="reference internal" href="../api/_generated/newton_neural.data.TrajectoryRecorder.html#newton_neural.data.TrajectoryRecorder" title="newton_neural.data.TrajectoryRecorder"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrajectoryRecorder</span></code></a>, live audits, and a
+custom Newton solver, implement three additional pieces (since <a class="reference internal" href="../api/_generated/newton_neural.data.SimulationNewton.html#newton_neural.data.SimulationNewton" title="newton_neural.data.SimulationNewton"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationNewton</span></code></a>,
+<a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD" title="newton_neural.solvers.SolverNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRD</span></code></a>, <a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRDMuJoCo.html#newton_neural.solvers.SolverNeRDMuJoCo" title="newton_neural.solvers.SolverNeRDMuJoCo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRDMuJoCo</span></code></a>, and built-in contact
+inputs target <a class="reference internal" href="../api/_generated/newton_neural.systems.BindingArticulation.html#newton_neural.systems.BindingArticulation" title="newton_neural.systems.BindingArticulation"><code class="xref py py-class docutils literal notranslate"><span class="pre">BindingArticulation</span></code></a>):</p>
+<ol class="arabic simple">
+<li><p>A <a class="reference internal" href="../api/_generated/newton_neural.systems.BindingBase.html#newton_neural.systems.BindingBase" title="newton_neural.systems.BindingBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">BindingBase</span></code></a> subclass (returned by <code class="docutils literal notranslate"><span class="pre">system.bind()</span></code>) providing
+<code class="docutils literal notranslate"><span class="pre">system</span></code>, <code class="docutils literal notranslate"><span class="pre">world_count</span></code>, <code class="docutils literal notranslate"><span class="pre">read_state</span></code>, <code class="docutils literal notranslate"><span class="pre">read_control</span></code>, <code class="docutils literal notranslate"><span class="pre">write_state</span></code>, <code class="docutils literal notranslate"><span class="pre">write_control</span></code>,
+<code class="docutils literal notranslate"><span class="pre">state_bounds</span></code>, and <code class="docutils literal notranslate"><span class="pre">command_bounds</span></code>. Override <code class="docutils literal notranslate"><span class="pre">place</span></code> if the worlds hold the system at different
+places of one scene, so that states drawn for one world start every world at its own place.</p></li>
+<li><p>A <a class="reference internal" href="../api/_generated/newton_neural.data.SimulationBase.html#newton_neural.data.SimulationBase" title="newton_neural.data.SimulationBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationBase</span></code></a> subclass wrapping your reference solver with <code class="docutils literal notranslate"><span class="pre">step</span></code> and
+<code class="docutils literal notranslate"><span class="pre">restart</span></code> (enabling <a class="reference internal" href="../api/_generated/newton_neural.data.TrajectoryRecorder.html#newton_neural.data.TrajectoryRecorder" title="newton_neural.data.TrajectoryRecorder"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrajectoryRecorder</span></code></a>, <a class="reference internal" href="../api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.sources" title="newton_neural.models.NeRDBase.sources"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NeRDBase.sources()</span></code></a>, and live
+audits).</p></li>
+<li><p>A Newton <a class="reference external" href="https://newton-physics.github.io/newton/stable/api/_generated/newton.solvers.SolverBase.html#newton.solvers.SolverBase" title="(in Newton Physics)"><code class="xref py py-class docutils literal notranslate"><span class="pre">newton.solvers.SolverBase</span></code></a> subclass that reads frames through the binding, steps
+<a class="reference internal" href="../api/_generated/newton_neural.models.NeRDStepper.html#newton_neural.models.NeRDStepper" title="newton_neural.models.NeRDStepper"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeRDStepper</span></code></a>, and writes predictions back.</p></li>
+</ol>
+</section>
+</section>
+<section id="custom-model-family">
+<h2>Custom model family<a class="headerlink" href="#custom-model-family" title="Link to this heading">#</a></h2>
+<p>To introduce a new network architecture, subclass <a class="reference internal" href="../api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase" title="newton_neural.models.NeRDBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeRDBase</span></code></a>. The base class already
+handles signal assembly, label extraction, state integration, recorder sources, output normalization, and
+checkpointing. Your subclass provides only the architecture and streaming contract:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Member</p></th>
+<th class="head"><p>Contract</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">__init__</span></code></p></td>
+<td><p>Call <code class="docutils literal notranslate"><span class="pre">super().__init__(system,</span> <span class="pre">contact_input=...,</span> <span class="pre">prediction=...,</span> <span class="pre">frame_dt=...)</span></code> before building submodules
+(initializes parts, <code class="docutils literal notranslate"><span class="pre">self.signals</span></code>, and <code class="docutils literal notranslate"><span class="pre">self.output_normalizer</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">forward(frames)</span></code></p></td>
+<td><p>Windowed training forward pass returning normalized predictions <code class="docutils literal notranslate"><span class="pre">[B,</span> <span class="pre">T,</span> <span class="pre">output_count]</span></code> (frame 0 = episode
+start).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">predict(frames,</span> <span class="pre">history)</span></code></p></td>
+<td><p>Streaming single-frame inference returning predictions <code class="docutils literal notranslate"><span class="pre">[B,</span> <span class="pre">output_count]</span></code> in physical units while updating
+<code class="docutils literal notranslate"><span class="pre">history</span></code> in place (no data-dependent control flow or allocations).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">history(world_count)</span></code>, <code class="docutils literal notranslate"><span class="pre">reset_history(history,</span> <span class="pre">world_mask)</span></code></p></td>
+<td><p>Allocates fixed-shape per-world history buffers on <code class="docutils literal notranslate"><span class="pre">self.device</span></code> and clears masked worlds (return <code class="docutils literal notranslate"><span class="pre">{}</span></code> if
+stateless).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">receptive_field</span></code></p></td>
+<td><p>Number of frames per prediction (including current), or <code class="docutils literal notranslate"><span class="pre">None</span></code> if unbounded.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fit_inputs(frames)</span></code></p></td>
+<td><p>Updates input/encoder normalizer statistics (called by <a class="reference internal" href="../api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.fit_normalization" title="newton_neural.models.NeRDBase.fit_normalization"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NeRDBase.fit_normalization()</span></code></a>).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">settings()</span></code></p></td>
+<td><p>Plain-data dict of non-part constructor kwargs stored in checkpoints and passed back on <code class="docutils literal notranslate"><span class="pre">load()</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">part_kinds</span></code></p></td>
+<td><p>Optional class dict extending <code class="docutils literal notranslate"><span class="pre">NeRDBase.part_kinds</span></code> with family-specific part kinds (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;backbone&quot;</span></code> in
+<a class="reference internal" href="../api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD" title="newton_neural.models.FlashNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlashNeRD</span></code></a>) so checkpoints serialize and rebuild them automatically.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If your family accepts a <code class="docutils literal notranslate"><span class="pre">contact_input</span></code>, instantiate <code class="docutils literal notranslate"><span class="pre">self.contact_encoder</span> <span class="pre">=</span> <span class="pre">contact_input.encoder()</span></code>, call
+<code class="docutils literal notranslate"><span class="pre">self.contact_encoder.fit_inputs(frames)</span></code> inside <code class="docutils literal notranslate"><span class="pre">fit_inputs</span></code>, and inject <code class="docutils literal notranslate"><span class="pre">self.contact_encoder(frames)</span></code>
+wherever your network needs it.</p>
+<p>Below is a minimal stateless family: a single linear layer mapping current frame features to outputs.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normalizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">NeRDBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.predictions</span><span class="w"> </span><span class="kn">import</span> <span class="n">PredictionBase</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">LinearNeRD</span><span class="p">(</span><span class="n">NeRDBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Stateless linear dynamics model over current-frame features."""</span>
+
+    <span class="n">receptive_field</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">system</span><span class="p">:</span> <span class="n">SystemBase</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">prediction</span><span class="p">:</span> <span class="n">PredictionBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">frame_dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">prediction</span><span class="o">=</span><span class="n">prediction</span><span class="p">,</span> <span class="n">frame_dt</span><span class="o">=</span><span class="n">frame_dt</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">feature_count</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">feature_count</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prediction</span><span class="o">.</span><span class="n">output_count</span><span class="p">(</span><span class="n">system</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_normalizer</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">frames</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">frames</span><span class="p">)))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">,</span> <span class="n">history</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_normalizer</span><span class="o">.</span><span class="n">denormalize</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="n">frames</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">history</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">world_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">{}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset_history</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">history</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="n">world_mask</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">{}</span>
+</pre></div>
+</div>
+<p>Record a dataset, fit normalizers, and verify streaming/window parity with
+<a class="reference internal" href="../api/_generated/newton_neural.testing.check_nerd_streaming.html#newton_neural.testing.check_nerd_streaming" title="newton_neural.testing.check_nerd_streaming"><code class="xref py py-func docutils literal notranslate"><span class="pre">check_nerd_streaming()</span></code></a> (which checks forward/predict agreement, mid-episode resets even
+with NaN history, and history buffer invariance):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nerd</span> <span class="o">=</span> <span class="n">LinearNeRD</span><span class="p">(</span><span class="n">cartpole_system</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">record</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">cartpole</span><span class="p">,</span> <span class="s2">"data/linear"</span><span class="p">)</span>
+<span class="n">windows</span> <span class="o">=</span> <span class="n">TrajectoryWindows</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">nerd</span><span class="o">.</span><span class="n">fit_normalization</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">loader</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">loader</span><span class="p">(</span><span class="n">WORLD_COUNT</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.testing</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_nerd_streaming</span>
+
+<span class="n">check_nerd_streaming</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">frames</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Train, save, reload through <a class="reference internal" href="../api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.load" title="newton_neural.models.NeRDBase.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NeRDBase.load()</span></code></a>, and deploy via <a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD" title="newton_neural.solvers.SolverNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRD</span></code></a> (use
+<code class="docutils literal notranslate"><span class="pre">&quot;adamw&quot;</span></code> because <code class="docutils literal notranslate"><span class="pre">LinearNeRD</span></code> declares no <code class="docutils literal notranslate"><span class="pre">hidden_weights()</span></code> for Muon):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="n">LossOneStep</span><span class="p">(),</span> <span class="n">create_optimizer</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="s2">"adamw"</span><span class="p">)</span>
+<span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+<span class="n">loss</span><span class="p">(</span><span class="n">nerd</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<span class="n">nerd</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"linear.pt"</span><span class="p">)</span>
+
+<span class="n">loaded</span> <span class="o">=</span> <span class="n">NeRDBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">"linear.pt"</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">SolverNeRD</span><span class="p">(</span><span class="n">cartpole</span><span class="p">,</span> <span class="s2">"linear.pt"</span><span class="p">)</span>
+<span class="n">state</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="n">cartpole</span><span class="o">.</span><span class="n">state</span><span class="p">(),</span> <span class="n">cartpole</span><span class="o">.</span><span class="n">control</span><span class="p">()</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">loaded</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">nerd</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">loaded</span><span class="o">.</span><span class="n">receptive_field</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>LinearNeRD LinearNeRD 1
+</pre></div>
+</div>
+</section>
+<section id="recording-custom-signals">
+<h2>Recording custom signals<a class="headerlink" href="#recording-custom-signals" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="../api/_generated/newton_neural.data.TrajectoryRecorder.html#newton_neural.data.TrajectoryRecorder" title="newton_neural.data.TrajectoryRecorder"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrajectoryRecorder</span></code></a> accepts either a model (via <a class="reference internal" href="../api/_generated/newton_neural.models.NeRDBase.html#newton_neural.models.NeRDBase.sources" title="newton_neural.models.NeRDBase.sources"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NeRDBase.sources()</span></code></a>) or an
+explicit list of <a class="reference internal" href="../api/_generated/newton_neural.data.SignalSource.html#newton_neural.data.SignalSource" title="newton_neural.data.SignalSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignalSource</span></code></a> objects. Each source declares its signal specs, a reader
+returning freshly cloned <code class="docutils literal notranslate"><span class="pre">[world_count,</span> <span class="pre">*shape]</span></code> tensors, and whether it runs before or after each simulation step
+(<code class="docutils literal notranslate"><span class="pre">after_step</span></code>).</p>
+<p>Append custom sources alongside <code class="docutils literal notranslate"><span class="pre">nerd.sources(simulation)</span></code> to log extra diagnostics (such as body positions) into
+the same dataset; training ignores unused signals automatically:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warp</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">wp</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural</span><span class="w"> </span><span class="kn">import</span> <span class="n">SignalRole</span><span class="p">,</span> <span class="n">SignalSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">SignalSource</span>
+
+<span class="n">nerd</span> <span class="o">=</span> <span class="n">FlashNeRD</span><span class="p">(</span><span class="n">cartpole_system</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">mujoco</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">SolverMuJoCo</span><span class="p">(</span><span class="n">cartpole</span><span class="p">)</span>
+<span class="n">simulation</span> <span class="o">=</span> <span class="n">SimulationNewton</span><span class="p">(</span><span class="n">cartpole</span><span class="p">,</span> <span class="n">mujoco</span><span class="p">,</span> <span class="n">cartpole_system</span><span class="p">,</span> <span class="n">frame_dt</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">substep_count</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">body_count</span> <span class="o">=</span> <span class="n">cartpole</span><span class="o">.</span><span class="n">body_count</span> <span class="o">//</span> <span class="n">WORLD_COUNT</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">read_positions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">:</span>
+    <span class="n">body_q</span> <span class="o">=</span> <span class="n">wp</span><span class="o">.</span><span class="n">to_torch</span><span class="p">(</span><span class="n">simulation</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">body_q</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">WORLD_COUNT</span><span class="p">,</span> <span class="n">body_count</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"body_position"</span><span class="p">:</span> <span class="n">body_q</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()}</span>
+
+
+<span class="n">spec</span> <span class="o">=</span> <span class="n">SignalSpec</span><span class="p">(</span><span class="s2">"body_position"</span><span class="p">,</span> <span class="p">(</span><span class="n">body_count</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">SignalRole</span><span class="o">.</span><span class="n">LABEL</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">"m"</span><span class="p">)</span>
+<span class="n">positions</span> <span class="o">=</span> <span class="n">SignalSource</span><span class="p">({</span><span class="n">spec</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">spec</span><span class="p">},</span> <span class="n">read_positions</span><span class="p">)</span>
+<span class="n">recorder</span> <span class="o">=</span> <span class="n">TrajectoryRecorder</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="p">[</span><span class="o">*</span><span class="n">nerd</span><span class="o">.</span><span class="n">sources</span><span class="p">(</span><span class="n">simulation</span><span class="p">),</span> <span class="n">positions</span><span class="p">],</span> <span class="n">episode_frames</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">recorder</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="s2">"data/positions"</span><span class="p">,</span> <span class="n">frame_count</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">signals</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>['joint_q', 'joint_qd', 'joint_f', 'body_position']
+</pre></div>
+</div>
+</section>
+<section id="contributing-extensions-upstream">
+<h2>Contributing extensions upstream<a class="headerlink" href="#contributing-extensions-upstream" title="Link to this heading">#</a></h2>
+<p>When contributing a class to <code class="docutils literal notranslate"><span class="pre">newton-neural</span></code>, place implementations under <code class="docutils literal notranslate"><span class="pre">newton_neural/_src/</span></code> and re-export
+public symbols via <code class="docutils literal notranslate"><span class="pre">__all__</span></code> in the top-level module (e.g., <a class="reference internal" href="../api/newton_neural_models.html#module-newton_neural.models" title="newton_neural.models"><code class="xref py py-mod docutils literal notranslate"><span class="pre">newton_neural.models</span></code></a>). Check layer boundaries
+with <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">lint-imports</span></code> (see <a class="reference internal" href="development.html"><span class="doc">Development</span></a>).</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#registration-and-serialization">Registration and serialization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shared-test-harness">Shared test harness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-backbone">Custom backbone</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-prediction">Custom prediction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-contact-input">Custom contact input</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-system">Custom system</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subclassing-systemarticulation">Subclassing <code class="docutils literal notranslate"><span class="pre">SystemArticulation</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-articulated-systems-systembase">Non-articulated systems (<code class="docutils literal notranslate"><span class="pre">SystemBase</span></code>)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-model-family">Custom model family</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recording-custom-signals">Recording custom signals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing-extensions-upstream">Contributing extensions upstream</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, The Newton Developers. Documentation licensed under CC-BY-4.0.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

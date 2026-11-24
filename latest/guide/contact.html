@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Contact Input &#8212; newton-neural</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a105fe31" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../_static/documentation_options.js?v=965fac30"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/contact';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Coupling" href="coupling.html" />
+    <link rel="prev" title="Solvers" href="solvers.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/newton-neural-logo-light.svg" class="logo__image only-light" alt="newton-neural logo"/>
+    <img src="../_static/newton-neural-logo-dark.svg" class="logo__image only-dark pst-js-only" alt="newton-neural logo"/>
+  
+  
+    <p class="title logo__title">newton-neural <span style='font-size: 0.8em; color: #888;'>(0.1.0.dev0)</span></p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="overview.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="models.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="recording.html">
+    Recording
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="training.html">
+    Training
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="evaluation.html">
+    Evaluation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="solvers.html">
+    Solvers
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="#" aria-current="page">
+    Contact Input
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="coupling.html">
+    Coupling
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="performance.html">
+    Performance
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural.html">
+    newton_neural
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_backbones.html">
+    newton_neural.backbones
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_contacts.html">
+    newton_neural.contacts
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_data.html">
+    newton_neural.data
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_evaluation.html">
+    newton_neural.evaluation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_models.html">
+    newton_neural.models
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_predictions.html">
+    newton_neural.predictions
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_solvers.html">
+    newton_neural.solvers
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_systems.html">
+    newton_neural.systems
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_testing.html">
+    newton_neural.testing
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/newton_neural_training.html">
+    newton_neural.training
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="extending.html">
+    Extending
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="development.html">
+    Development
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/newton-physics/newton-neural">
+    GitHub
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/newton-physics/newton-neural" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="overview.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="models.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="recording.html">
+    Recording
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="training.html">
+    Training
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="evaluation.html">
+    Evaluation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="solvers.html">
+    Solvers
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#" aria-current="page">
+    Contact Input
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="coupling.html">
+    Coupling
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="performance.html">
+    Performance
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural.html">
+    newton_neural
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_backbones.html">
+    newton_neural.backbones
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_contacts.html">
+    newton_neural.contacts
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_data.html">
+    newton_neural.data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_evaluation.html">
+    newton_neural.evaluation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_models.html">
+    newton_neural.models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_predictions.html">
+    newton_neural.predictions
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_solvers.html">
+    newton_neural.solvers
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_systems.html">
+    newton_neural.systems
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_testing.html">
+    newton_neural.testing
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/newton_neural_training.html">
+    newton_neural.training
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="extending.html">
+    Extending
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="development.html">
+    Development
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/newton-physics/newton-neural">
+    GitHub
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/newton-physics/newton-neural" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recording.html">Recording</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solvers.html">Solvers</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Concepts</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a aria-current="page" class="current reference internal" href="#">Contact Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coupling.html">Coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural.html">newton_neural</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_backbones.html">newton_neural.backbones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_contacts.html">newton_neural.contacts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_data.html">newton_neural.data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_evaluation.html">newton_neural.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_models.html">newton_neural.models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_predictions.html">newton_neural.predictions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_solvers.html">newton_neural.solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_systems.html">newton_neural.systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_testing.html">newton_neural.testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/newton_neural_training.html">newton_neural.training</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="extending.html">Extending</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/newton-physics/newton-neural">GitHub</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Contact Input</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="contact-input">
+<h1>Contact Input<a class="headerlink" href="#contact-input" title="Link to this heading">#</a></h1>
+<p>Standalone neural dynamics models need contact information <em>before</em> predicting the next frame. A <strong>contact input</strong>
+keeps collision geometry analytical: an on-device Warp sensor extracts contact signals from Newton, and a PyTorch
+encoder maps them into a fixed-size vector (<em>contact code</em>) consumed by the model.</p>
+<p>Two built-in contact inputs are provided (omit <code class="docutils literal notranslate"><span class="pre">contact_input</span></code> if the robot moves in free space or uses
+<a class="reference internal" href="coupling.html"><span class="doc">Coupling</span></a>):</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 39.0%" />
+<col style="width: 39.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p><a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes" title="newton_neural.contacts.ContactInputProbes"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactInputProbes</span></code></a></p></th>
+<th class="head"><p><a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet" title="newton_neural.contacts.ContactInputSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactInputSet</span></code></a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Contact geometry</p></td>
+<td><p>Spheres attached to specific bodies against a single ground plane</p></td>
+<td><p>Any link against any collision shape reported by Newton</p></td>
+</tr>
+<tr class="row-odd"><td><p>Best for</p></td>
+<td><p>Known contact points on flat ground (e.g., quadruped feet)</p></td>
+<td><p>Arbitrary contact locations (e.g., climbing, stairs, hands, platforms)</p></td>
+</tr>
+<tr class="row-even"><td><p>Collision detection</p></td>
+<td><p>Not required</p></td>
+<td><p>Caller must run <a class="reference external" href="https://newton-physics.github.io/newton/stable/api/_generated/newton.CollisionPipeline.html#newton.CollisionPipeline" title="(in Newton Physics)"><code class="xref py py-class docutils literal notranslate"><span class="pre">newton.CollisionPipeline</span></code></a> every step</p></td>
+</tr>
+<tr class="row-odd"><td><p>Recorded signals (per world)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">contact_probes</span></code> <code class="docutils literal notranslate"><span class="pre">[probe_count,</span> <span class="pre">8]</span></code> (float32)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">contact_rows</span></code> <code class="docutils literal notranslate"><span class="pre">[capacity,</span> <span class="pre">14]</span></code> (float32), <code class="docutils literal notranslate"><span class="pre">contact_links</span></code> <code class="docutils literal notranslate"><span class="pre">[capacity]</span></code> (int32), <code class="docutils literal notranslate"><span class="pre">contact_count</span></code> <code class="docutils literal notranslate"><span class="pre">[]</span></code> (int32)</p></td>
+</tr>
+<tr class="row-even"><td><p>Encoded code width</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">probe_count</span> <span class="pre">*</span> <span class="pre">8</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">slot_count</span> <span class="pre">*</span> <span class="pre">slot_dim</span> <span class="pre">+</span> <span class="pre">1</span></code> (default: <code class="docutils literal notranslate"><span class="pre">1025</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>State noise &amp; rollouts</p></td>
+<td><p>Recomputed on perturbed and predicted states via FK</p></td>
+<td><p>Reuses recorded rows (fixed to recorded trajectory)</p></td>
+</tr>
+<tr class="row-even"><td><p>Runtime overhead</p></td>
+<td><p>One lightweight Warp kernel</p></td>
+<td><p>Collision detection + contact extraction kernels + attention pooling encoder</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Prefer <a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes" title="newton_neural.contacts.ContactInputProbes"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactInputProbes</span></code></a> whenever contact happens at known locations against flat ground: it avoids
+collision detection overhead and stays exact during noisy training and open-loop rollouts. Switch to
+<a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet" title="newton_neural.contacts.ContactInputSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactInputSet</span></code></a> when contacts occur across arbitrary links or obstacle geometry.</p>
+<p>The runnable snippets below use the test fixture quadruped (floating base, foot spheres, force-controlled joints).
+For complete Newton scene construction, see <code class="docutils literal notranslate"><span class="pre">build_model</span></code> in
+<a class="extlink-github reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/examples/example_contact_probes.py">newton_neural/examples/example_contact_probes.py</a> and
+<a class="extlink-github reference external" href="https://github.com/newton-physics/newton-neural/blob/main/newton_neural/examples/example_contact_set.py">newton_neural/examples/example_contact_set.py</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">newton</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warp</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">wp</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.contacts</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContactInputProbes</span><span class="p">,</span> <span class="n">ContactInputSet</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulationNewton</span><span class="p">,</span> <span class="n">TrajectoryRecorder</span><span class="p">,</span> <span class="n">TrajectoryWindows</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlashNeRD</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.solvers</span><span class="w"> </span><span class="kn">import</span> <span class="n">SolverNeRD</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.systems</span><span class="w"> </span><span class="kn">import</span> <span class="n">SystemArticulation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">newton_neural.tests</span><span class="w"> </span><span class="kn">import</span> <span class="n">fixtures</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="s2">"cuda"</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"cpu"</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">fixtures</span><span class="o">.</span><span class="n">quadruped_model</span><span class="p">(</span><span class="n">world_count</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">joint_effort_limit</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>  <span class="c1"># Bounds sampled joint forces [N*m]</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">SystemArticulation</span><span class="o">.</span><span class="n">from_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">"quadruped"</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="p">(</span><span class="s2">"joint_f"</span><span class="p">,))</span>
+</pre></div>
+</div>
+<section id="fixed-ground-probes-contactinputprobes">
+<h2>Fixed ground probes (<code class="docutils literal notranslate"><span class="pre">ContactInputProbes</span></code>)<a class="headerlink" href="#fixed-ground-probes-contactinputprobes" title="Link to this heading">#</a></h2>
+<p>Each probe is a sphere rigidly attached to a robot body. Every frame, one Warp kernel computes 8 float32 features
+per probe in the robot frame:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[0]</span></code> <strong>gap</strong> [m]: signed distance from sphere surface to ground plane (negative when penetrating),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[1:4]</span></code> <strong>position</strong> [m]: sphere center in the robot frame,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[4:7]</span></code> <strong>velocity</strong> [m/s]: world velocity of the sphere center expressed in robot-frame axes,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[7]</span></code> <strong>touching</strong>: <code class="docutils literal notranslate"><span class="pre">1.0</span></code> if <code class="docutils literal notranslate"><span class="pre">gap</span> <span class="pre">&lt;</span> <span class="pre">touch_distance</span></code> (default <code class="docutils literal notranslate"><span class="pre">0.02</span></code> m), else <code class="docutils literal notranslate"><span class="pre">0.0</span></code>.</p></li>
+</ul>
+<p><a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes.from_model" title="newton_neural.contacts.ContactInputProbes.from_model"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ContactInputProbes.from_model()</span></code></a> places one probe on each body matching an <code class="docutils literal notranslate"><span class="pre">fnmatch</span></code> pattern and reads the
+ground plane from the Newton model. If a matched body has exactly one collision sphere, its center and radius are
+copied automatically; otherwise pass <code class="docutils literal notranslate"><span class="pre">radius=...</span></code> to place a probe at the body origin.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">probes</span> <span class="o">=</span> <span class="n">ContactInputProbes</span><span class="o">.</span><span class="n">from_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">bodies</span><span class="o">=</span><span class="s2">"*_SHANK"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">probes</span><span class="o">.</span><span class="n">probes</span><span class="p">),</span> <span class="n">probes</span><span class="o">.</span><span class="n">signals</span><span class="p">[</span><span class="s2">"contact_probes"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>4 (4, 8)
+</pre></div>
+</div>
+<p>You can also define probes and the ground plane manually (plane specified in the robot’s anchor frame):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">by_hand</span> <span class="o">=</span> <span class="n">ContactInputProbes</span><span class="p">(</span>
+    <span class="p">[{</span><span class="s2">"body"</span><span class="p">:</span> <span class="s2">"LF_SHANK"</span><span class="p">,</span> <span class="s2">"point"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">],</span> <span class="s2">"radius"</span><span class="p">:</span> <span class="mf">0.03</span><span class="p">}],</span>
+    <span class="n">ground</span><span class="o">=</span><span class="p">{</span><span class="s2">"normal"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="s2">"offset"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">},</span>
+    <span class="n">touch_distance</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Attach <code class="docutils literal notranslate"><span class="pre">probes</span></code> to the model. Recording, noisy training, rollout recomputation, and solver sensing work
+automatically:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nerd</span> <span class="o">=</span> <span class="n">FlashNeRD</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">contact_input</span><span class="o">=</span><span class="n">probes</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Probes sense only a single unbounded plane. Contacts with obstacles, stairs, or other links of the robot are
+invisible to <a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactInputProbes.html#newton_neural.contacts.ContactInputProbes" title="newton_neural.contacts.ContactInputProbes"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactInputProbes</span></code></a>.</p>
+</div>
+</section>
+<section id="detected-contact-sets-contactinputset">
+<h2>Detected contact sets (<code class="docutils literal notranslate"><span class="pre">ContactInputSet</span></code>)<a class="headerlink" href="#detected-contact-sets-contactinputset" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet" title="newton_neural.contacts.ContactInputSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactInputSet</span></code></a> converts every rigid contact involving a robot link reported by Newton’s collision detector
+into a row of 14 float32 features in the robot frame (one row per robot link involved, so self-contacts produce two
+rows):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[0:3]</span></code> contact point on the link’s margin-expanded surface [m],</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[3:6]</span></code> unit contact normal pointing from the link into the other body,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[6:9]</span></code> lever arm from the link origin to the contact point [m],</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[9]</span></code> surface gap along the normal [m] (negative when penetrating),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[10:13]</span></code> relative surface velocity (link minus other body) [m/s],</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[13]</span></code> dynamic flag (<code class="docutils literal notranslate"><span class="pre">1.0</span></code> if the other body is dynamic, <code class="docutils literal notranslate"><span class="pre">0.0</span></code> if static or kinematic).</p></li>
+</ul>
+<p>Each row is paired with its link index (<code class="docutils literal notranslate"><span class="pre">contact_links</span></code>, <code class="docutils literal notranslate"><span class="pre">-1</span></code> for padding) and the per-world active row count
+(<code class="docutils literal notranslate"><span class="pre">contact_count</span></code>). The learned encoder embeds each row + link ID and uses permutation-invariant softmax attention
+pooling across <code class="docutils literal notranslate"><span class="pre">slot_count</span></code> slots (default <code class="docutils literal notranslate"><span class="pre">16</span> <span class="pre">x</span> <span class="pre">64</span></code>), concatenating
+<code class="docutils literal notranslate"><span class="pre">log(1</span> <span class="pre">+</span> <span class="pre">count)</span> <span class="pre">/</span> <span class="pre">log(1</span> <span class="pre">+</span> <span class="pre">capacity)</span></code> to form a fixed-width code (all zeros when no contacts are present).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contact_set</span> <span class="o">=</span> <span class="n">ContactInputSet</span><span class="o">.</span><span class="n">from_system</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+<span class="n">nerd</span> <span class="o">=</span> <span class="n">FlashNeRD</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">contact_input</span><span class="o">=</span><span class="n">contact_set</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set <code class="docutils literal notranslate"><span class="pre">capacity</span></code> above the maximum expected contacts per world; excess rows are dropped and counted in
+<code class="docutils literal notranslate"><span class="pre">CONTACT_ROW_OVERFLOW</span></code>.</p>
+<p><strong>Recording.</strong> Recording and deployment must use the same collision pipeline. Create a
+<a class="reference external" href="https://newton-physics.github.io/newton/stable/api/_generated/newton.CollisionPipeline.html#newton.CollisionPipeline" title="(in Newton Physics)"><code class="xref py py-class docutils literal notranslate"><span class="pre">newton.CollisionPipeline</span></code></a> (without <code class="docutils literal notranslate"><span class="pre">body_pair_reduction</span></code>, which alters contact separation semantics and is
+rejected by the sensor and <a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD" title="newton_neural.solvers.SolverNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRD</span></code></a>), pass it to
+<a class="reference internal" href="../api/_generated/newton_neural.data.SimulationNewton.html#newton_neural.data.SimulationNewton" title="newton_neural.data.SimulationNewton"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationNewton</span></code></a>, and disable MuJoCo’s internal collision detector with
+<code class="docutils literal notranslate"><span class="pre">use_mujoco_contacts=False</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">CollisionPipeline</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">mujoco</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">SolverMuJoCo</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">use_mujoco_contacts</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">njmax</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+<span class="n">simulation</span> <span class="o">=</span> <span class="n">SimulationNewton</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mujoco</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">frame_dt</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">collision_pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">)</span>
+<span class="n">recorder</span> <span class="o">=</span> <span class="n">TrajectoryRecorder</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">nerd</span><span class="p">,</span> <span class="n">episode_frames</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">))</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">recorder</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="s2">"data/quadruped"</span><span class="p">,</span> <span class="n">frame_count</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
+
+<span class="n">windows</span> <span class="o">=</span> <span class="n">TrajectoryWindows</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">nerd</span><span class="o">.</span><span class="n">fit_normalization</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">loader</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Deployment.</strong> Train as in <a class="reference internal" href="training.html"><span class="doc">Training</span></a> (skipped below to demonstrate stepping). At runtime, call
+<code class="docutils literal notranslate"><span class="pre">pipeline.collide(state,</span> <span class="pre">contacts)</span></code> before each <code class="docutils literal notranslate"><span class="pre">solver.step()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span> <span class="o">=</span> <span class="n">SolverNeRD</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">nerd</span><span class="p">)</span>
+<span class="n">state</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">state</span><span class="p">(),</span> <span class="n">model</span><span class="o">.</span><span class="n">control</span><span class="p">()</span>
+<span class="n">contacts</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">contacts</span><span class="p">()</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># Ensures body transforms match initial joint_q</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">pipeline</span><span class="o">.</span><span class="n">collide</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">contacts</span><span class="p">)</span>
+    <span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">contacts</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="contact-force-and-overflow-observables">
+<span id="contact-observables"></span><h2>Contact force and overflow observables<a class="headerlink" href="#contact-force-and-overflow-observables" title="Link to this heading">#</a></h2>
+<p>Allocate observables once via <a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD.observables" title="newton_neural.solvers.SolverNeRD.observables"><code class="xref py py-meth docutils literal notranslate"><span class="pre">observables()</span></code></a> and pass them into <code class="docutils literal notranslate"><span class="pre">step()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kinds</span> <span class="o">=</span> <span class="p">[</span><span class="n">solver</span><span class="o">.</span><span class="n">ObservableKind</span><span class="o">.</span><span class="n">CONTACT_F</span><span class="p">,</span> <span class="n">solver</span><span class="o">.</span><span class="n">ObservableKind</span><span class="o">.</span><span class="n">CONTACT_ROW_OVERFLOW</span><span class="p">]</span>
+<span class="n">observables</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">observables</span><span class="p">(</span><span class="n">kinds</span><span class="p">,</span> <span class="n">contacts</span><span class="o">=</span><span class="n">contacts</span><span class="p">)</span>
+
+<span class="n">pipeline</span><span class="o">.</span><span class="n">collide</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">contacts</span><span class="p">)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">contacts</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="n">observables</span><span class="o">=</span><span class="n">observables</span><span class="p">)</span>
+
+<span class="n">forces</span> <span class="o">=</span> <span class="n">wp</span><span class="o">.</span><span class="n">to_torch</span><span class="p">(</span><span class="n">observables</span><span class="o">.</span><span class="n">contact_f</span><span class="p">)</span>  <span class="c1"># Per contact buffer slot</span>
+<span class="n">overflow</span> <span class="o">=</span> <span class="n">wp</span><span class="o">.</span><span class="n">to_torch</span><span class="p">(</span><span class="n">observables</span><span class="o">.</span><span class="n">contact_row_overflow</span><span class="p">)</span>  <span class="c1"># [world_count + 1], last entry is global world</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CONTACT_F</span></code>: Penalty-based contact force estimates (see <a class="reference internal" href="solvers.html#estimated-contact-forces"><span class="std std-ref">Estimated contact forces and overflow</span></a>). Available for any
+<a class="reference internal" href="../api/_generated/newton_neural.solvers.SolverNeRD.html#newton_neural.solvers.SolverNeRD" title="newton_neural.solvers.SolverNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SolverNeRD</span></code></a> instance whenever <code class="docutils literal notranslate"><span class="pre">contacts</span></code> are supplied.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CONTACT_ROW_OVERFLOW</span></code>: Rows dropped per world in the current step; increase <code class="docutils literal notranslate"><span class="pre">capacity</span></code> if non-zero.</p></li>
+</ul>
+</section>
+<section id="contact-injection-points-in-flashnerd">
+<span id="contact-injections"></span><h2>Contact injection points in <code class="docutils literal notranslate"><span class="pre">FlashNeRD</span></code><a class="headerlink" href="#contact-injection-points-in-flashnerd" title="Link to this heading">#</a></h2>
+<p>Contact inputs are decoupled from network architecture; each model family decides where the contact code enters its
+network. <a class="reference internal" href="../api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD" title="newton_neural.models.FlashNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlashNeRD</span></code></a> exposes <code class="docutils literal notranslate"><span class="pre">contact_injections</span></code> (accepting
+<a class="reference internal" href="../api/_generated/newton_neural.models.ContactInjection.html#newton_neural.models.ContactInjection" title="newton_neural.models.ContactInjection"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactInjection</span></code></a> enum members or their string values, saved in the checkpoint):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nerd</span> <span class="o">=</span> <span class="n">FlashNeRD</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">contact_input</span><span class="o">=</span><span class="n">probes</span><span class="p">,</span> <span class="n">contact_injections</span><span class="o">=</span><span class="p">[</span><span class="s2">"embedding"</span><span class="p">,</span> <span class="s2">"readout"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">place</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">place</span> <span class="ow">in</span> <span class="n">nerd</span><span class="o">.</span><span class="n">contact_injections</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>['embedding', 'readout']
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 78.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Injection point</p></th>
+<th class="head"><p>Where the contact code is added</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;embedding&quot;</span></code></p></td>
+<td><p>Added to the frame embedding before the temporal backbone so contact history propagates across frames.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;readout&quot;</span></code></p></td>
+<td><p>Added to the readout hidden layer so current contacts influence the prediction directly.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;increment&quot;</span></code></p></td>
+<td><p>Projected directly onto the output increment via a zero-initialized linear map.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>By default, all three injection points are enabled (matching the paths taken by raw frame features, so non-gated
+probes behave identically to concatenating probe features onto the frame features).</p>
+<p>Because <a class="reference internal" href="../api/_generated/newton_neural.contacts.ContactInputSet.html#newton_neural.contacts.ContactInputSet" title="newton_neural.contacts.ContactInputSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContactInputSet</span></code></a>’s encoder is trained end to end, its initial output is random. It sets
+<code class="docutils literal notranslate"><span class="pre">gated</span> <span class="pre">=</span> <span class="pre">True</span></code> so <a class="reference internal" href="../api/_generated/newton_neural.models.FlashNeRD.html#newton_neural.models.FlashNeRD" title="newton_neural.models.FlashNeRD"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlashNeRD</span></code></a> wraps each injection point with a learned gate
+initialized near zero, letting contact features enter smoothly as training progresses.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-ground-probes-contactinputprobes">Fixed ground probes (<code class="docutils literal notranslate"><span class="pre">ContactInputProbes</span></code>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detected-contact-sets-contactinputset">Detected contact sets (<code class="docutils literal notranslate"><span class="pre">ContactInputSet</span></code>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contact-force-and-overflow-observables">Contact force and overflow observables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contact-injection-points-in-flashnerd">Contact injection points in <code class="docutils literal notranslate"><span class="pre">FlashNeRD</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, The Newton Developers. Documentation licensed under CC-BY-4.0.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

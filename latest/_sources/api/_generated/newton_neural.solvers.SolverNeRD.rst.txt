@@ -1,0 +1,5 @@
+﻿newton\_neural.solvers.SolverNeRD
+=================================
+
+.. autoclass:: newton_neural.solvers.SolverNeRD
+   :show-inheritance:

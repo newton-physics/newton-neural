@@ -1,0 +1,5 @@
+﻿newton\_neural.data.TrajectoryDataset
+=====================================
+
+.. autoclass:: newton_neural.data.TrajectoryDataset
+   :show-inheritance:

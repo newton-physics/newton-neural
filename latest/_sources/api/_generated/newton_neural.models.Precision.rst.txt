@@ -1,0 +1,5 @@
+﻿newton\_neural.models.Precision
+===============================
+
+.. autoclass:: newton_neural.models.Precision
+   :show-inheritance:

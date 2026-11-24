@@ -1,0 +1,5 @@
+﻿newton\_neural.data.SamplerUniform
+==================================
+
+.. autoclass:: newton_neural.data.SamplerUniform
+   :show-inheritance:

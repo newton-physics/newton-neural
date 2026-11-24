@@ -1,0 +1,5 @@
+﻿newton\_neural.predictions.PredictionStateIncrement
+===================================================
+
+.. autoclass:: newton_neural.predictions.PredictionStateIncrement
+   :show-inheritance:
